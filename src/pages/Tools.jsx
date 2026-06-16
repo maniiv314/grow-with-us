@@ -695,7 +695,7 @@ export default function Tools() {
                 <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                   <img src="/assets/logo.png" alt="Grow With Us" style={{ height: '26px', width: 'auto' }} />
                 </Link>
-                <span style={{ color: 'var(--text-light)', fontSize: '0.9rem', opacity: 0.5 }}>/</span>
+                <span style={{ color: 'var(--text-light)', fontSize: '0.9rem', opacity: 0.5 }}>{"/"}</span>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-light)', fontWeight: 500 }}>Utilities</span>
               </div>
               <button 
