@@ -9,6 +9,7 @@ export default function Contact() {
     description: ''
   });
   const [status, setStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const projectGoals = [
     { id: 'MVP', label: 'Build an MVP', desc: 'Convert an idea into a working product' },
@@ -24,6 +25,7 @@ export default function Contact() {
   };
 
   const handleSelectGoal = (goalId) => {
+    if (isLoading) return;
     setFormData({
       ...formData,
       goal: goalId
@@ -32,6 +34,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setStatus('Formatting your project strategy outline...');
 
     const textMsg = `Hi Grow With Us, I'd like a custom product recommendation strategy!
@@ -47,6 +50,7 @@ export default function Contact() {
       window.open(whatsappUrl, '_blank');
       setStatus(`Thank you, ${formData.name}! Your strategy outline has been formatted. Click the opened WhatsApp window to send it.`);
       setFormData({ name: '', email: '', goal: 'MVP', description: '' });
+      setIsLoading(false);
     }, 1000);
   };
 
@@ -83,21 +87,24 @@ export default function Contact() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label htmlFor="name" style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px' }}>Full Name</label>
-                  <input type="text" id="name" name="name" className="form-input" placeholder="Your name" value={formData.name} onChange={handleChange} required style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)' }} />
+                  <input type="text" id="name" name="name" className="form-input" placeholder="Your name" value={formData.name} onChange={handleChange} required disabled={isLoading} style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)', opacity: isLoading ? 0.7 : 1 }} />
                 </div>
                 <div>
                   <label htmlFor="email" style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px' }}>Email</label>
-                  <input type="email" id="email" name="email" className="form-input" placeholder="you@work.in" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)' }} />
+                  <input type="email" id="email" name="email" className="form-input" placeholder="you@work.in" value={formData.email} onChange={handleChange} required disabled={isLoading} style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)', opacity: isLoading ? 0.7 : 1 }} />
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '10px' }}>Primary Goal</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label id="contact-goal-label" style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '10px' }}>Primary Goal</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }} role="radiogroup" aria-labelledby="contact-goal-label">
                   {projectGoals.map(g => (
                     <button
                       key={g.id}
                       type="button"
+                      role="radio"
+                      aria-checked={formData.goal === g.id}
+                      disabled={isLoading}
                       onClick={() => handleSelectGoal(g.id)}
                       style={{
                         padding: '12px 16px',
@@ -105,9 +112,10 @@ export default function Contact() {
                         border: formData.goal === g.id ? '2px solid var(--primary)' : '1px solid var(--border-light)',
                         background: formData.goal === g.id ? 'var(--primary-light)' : 'var(--bg-primary)',
                         color: 'var(--text-dark)',
-                        cursor: 'pointer',
+                        cursor: isLoading ? 'not-allowed' : 'pointer',
                         textAlign: 'left',
-                        transition: 'all 0.2s'
+                        transition: 'all 0.2s',
+                        opacity: isLoading ? 0.7 : 1
                       }}
                     >
                       <strong style={{ display: 'block', fontSize: '0.85rem' }}>{g.label}</strong>
@@ -119,14 +127,16 @@ export default function Contact() {
 
               <div>
                 <label htmlFor="description" style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '6px' }}>Project Context (Optional)</label>
-                <textarea id="description" name="description" className="form-input" rows="3" placeholder="Briefly describe your business challenge or MVP requirements..." value={formData.description} onChange={handleChange} style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)', resize: 'vertical' }} />
+                <textarea id="description" name="description" className="form-input" rows="3" placeholder="Briefly describe your business challenge or MVP requirements..." value={formData.description} onChange={handleChange} disabled={isLoading} style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)', resize: 'vertical', opacity: isLoading ? 0.7 : 1 }} />
               </div>
 
-              <button type="submit" className="btn btn-primary" style={{ padding: '14px', justifyContent: 'center', gap: '8px', fontSize: '0.95rem' }}>
-                <span>Send Strategy Request</span>
+              <button type="submit" className="btn btn-primary" disabled={isLoading} style={{ padding: '14px', justifyContent: 'center', gap: '8px', fontSize: '0.95rem', cursor: isLoading ? 'not-allowed' : 'pointer', opacity: isLoading ? 0.7 : 1 }}>
+                <span>{isLoading ? 'Formatting Outline...' : 'Send Strategy Request'}</span>
               </button>
 
-              {status && <div className="form-status success" style={{ display: 'block', fontSize: '0.85rem', padding: '10px', textAlign: 'center' }}>{status}</div>}
+              <div aria-live="polite" aria-atomic="true">
+                {status && <div className="form-status success" style={{ display: 'block', fontSize: '0.85rem', padding: '10px', textAlign: 'center' }}>{status}</div>}
+              </div>
             </form>
           </div>
 

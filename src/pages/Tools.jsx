@@ -566,8 +566,10 @@ export default function Tools() {
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}
           >
             {toolsMenu.map(t => (
-              <motion.div 
+              <motion.button 
                 key={t.id}
+                role="button"
+                aria-label={`Open ${t.name}: ${t.desc}`}
                 variants={{
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
@@ -575,6 +577,7 @@ export default function Tools() {
                 whileHover="hover"
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTool(t.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTool(t.id); } }}
                 style={{
                   background: 'var(--bg-secondary)',
                   borderRadius: 'var(--border-radius-md)',
@@ -587,7 +590,10 @@ export default function Tools() {
                   gap: '16px',
                   position: 'relative',
                   overflow: 'hidden',
-                  transition: 'all 0.2s ease'
+                  transition: 'all 0.2s ease',
+                  textAlign: 'left',
+                  width: '100%',
+                  fontFamily: 'inherit'
                 }}
               >
                 {/* Advanced Hover Glow Background */}
@@ -641,9 +647,8 @@ export default function Tools() {
                   >
                     {t.name}
                   </motion.h3>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '4px', margin: '4px 0 0 0', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.desc}</p>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </motion.div>
         )}

@@ -119,6 +119,12 @@ button, input, textarea, select {
   outline: none;
 }
 
+/* Global Accessibility Keyboard Focus Outlines */
+*:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
 /* ==========================================
    UTILITY CLASSES
    ========================================== */

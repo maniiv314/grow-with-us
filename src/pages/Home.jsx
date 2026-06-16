@@ -95,11 +95,15 @@ export default function Home() {
             <p style={{ color: 'var(--text-light)', marginTop: '8px' }}>Select your path below to see how we align with your specific challenges.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }} role="tablist" aria-label="Customer self-qualification paths">
             {qualificationPaths.map(path => (
-              <div 
+              <button 
                 key={path.id}
+                role="tab"
+                aria-selected={activePath === path.id}
+                tabIndex={0}
                 onClick={() => setActivePath(path.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActivePath(path.id); } }}
                 style={{
                   background: 'var(--bg-primary)',
                   padding: '30px',
@@ -107,7 +111,11 @@ export default function Home() {
                   border: activePath === path.id ? '2px solid var(--primary)' : '1px solid var(--border-light)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: activePath === path.id ? 'var(--shadow-lg)' : 'none'
+                  boxShadow: activePath === path.id ? 'var(--shadow-lg)' : 'none',
+                  textAlign: 'left',
+                  display: 'block',
+                  width: '100%',
+                  fontFamily: 'inherit'
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -115,8 +123,8 @@ export default function Home() {
                   <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: activePath === path.id ? 'var(--primary)' : 'transparent', border: '1px solid var(--border-light)' }} />
                 </div>
                 <h4 style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 600, marginBottom: '16px' }}>{path.sub}</h4>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{path.desc}</p>
-              </div>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5, margin: 0 }}>{path.desc}</p>
+              </button>
             ))}
           </div>
         </div>
@@ -195,15 +203,15 @@ export default function Home() {
 
             <form onSubmit={handleGetRecommendation} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '12px', color: 'var(--text-muted)' }}>What is your primary project goal?</label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                  <button type="button" onClick={() => setSelectedGoal('launch')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'launch' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'launch' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                <label id="project-goal-label" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '12px', color: 'var(--text-muted)' }}>What is your primary project goal?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }} role="radiogroup" aria-labelledby="project-goal-label">
+                  <button type="button" role="radio" aria-checked={selectedGoal === 'launch'} onClick={() => setSelectedGoal('launch')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'launch' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'launch' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
                     Launch an MVP
                   </button>
-                  <button type="button" onClick={() => setSelectedGoal('convert')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'convert' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'convert' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                  <button type="button" role="radio" aria-checked={selectedGoal === 'convert'} onClick={() => setSelectedGoal('convert')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'convert' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'convert' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
                     Improve Conversion & Speed
                   </button>
-                  <button type="button" onClick={() => setSelectedGoal('automate')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'automate' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'automate' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                  <button type="button" role="radio" aria-checked={selectedGoal === 'automate'} onClick={() => setSelectedGoal('automate')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'automate' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'automate' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
                     Automate Operations
                   </button>
                 </div>
@@ -212,16 +220,18 @@ export default function Home() {
               <button type="submit" className="btn btn-primary" style={{ padding: '14px', width: '100%' }}>Get Strategy recommendation</button>
             </form>
 
-            {recommendationResult && (
-              <div style={{ marginTop: '24px', padding: '24px', background: 'var(--primary-light)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--primary)' }}>
-                <h4 style={{ color: 'var(--primary)', fontWeight: 700, margin: '0 0 8px 0', fontSize: '0.95rem' }}>Our Recommendation:</h4>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5, margin: 0 }}>{recommendationResult}</p>
-                <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
-                  <Link to="/contact" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Apply Strategy to Inquiry</Link>
-                  <a href={`https://wa.me/918630170462?text=${encodeURIComponent('Hi, my primary goal is: ' + selectedGoal + '. Recommendation: ' + recommendationResult)}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Discuss on WhatsApp</a>
+            <div aria-live="polite" aria-atomic="true">
+              {recommendationResult && (
+                <div style={{ marginTop: '24px', padding: '24px', background: 'var(--primary-light)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--primary)' }}>
+                  <h4 style={{ color: 'var(--primary)', fontWeight: 700, margin: '0 0 8px 0', fontSize: '0.95rem' }}>Our Recommendation:</h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5, margin: 0 }}>{recommendationResult}</p>
+                  <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
+                    <Link to="/contact" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Apply Strategy to Inquiry</Link>
+                    <a href={`https://wa.me/918630170462?text=${encodeURIComponent('Hi, my primary goal is: ' + selectedGoal + '. Recommendation: ' + recommendationResult)}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Discuss on WhatsApp</a>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </section>
