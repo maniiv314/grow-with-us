@@ -564,7 +564,7 @@ export default function Tools() {
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { staggerChildren: 0.03 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '8px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px' }}
           >
             {toolsMenu.map(t => (
               <motion.div 
@@ -578,14 +578,14 @@ export default function Tools() {
                 onClick={() => setActiveTool(t.id)}
                 style={{
                   background: '#ffffff',
-                  borderRadius: '6px',
-                  padding: '8px 10px',
+                  borderRadius: '8px',
+                  padding: '12px 15px',
                   border: '1px solid var(--border-light)',
                   boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '12px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
@@ -616,9 +616,9 @@ export default function Tools() {
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 10 }}
                   style={{ 
-                    width: '34px', 
-                    height: '34px', 
-                    borderRadius: '6px', 
+                    width: '42px', 
+                    height: '42px', 
+                    borderRadius: '8px', 
                     background: `${t.color}15`, 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -628,7 +628,7 @@ export default function Tools() {
                     transition: 'background-color 0.25s ease'
                   }}
                 >
-                  <t.icon size={18} style={{ color: t.color }} />
+                  <t.icon size={22} style={{ color: t.color }} />
                 </motion.div>
 
                 {/* Right Text Space */}
@@ -637,7 +637,7 @@ export default function Tools() {
                     variants={{
                       hover: { color: t.color }
                     }}
-                    style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2, transition: 'color 0.2s ease' }}
+                    style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2, transition: 'color 0.2s ease' }}
                   >
                     {t.name}
                   </motion.h3>
