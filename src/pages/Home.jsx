@@ -180,33 +180,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US TEASER */}
-      <section className="section section-dark" id="why-choose-us">
-        <div className="container text-center">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Value Proposition</span>
-            <h2 className="section-title">Why Businesses Choose Us</h2>
-            <p className="section-subtitle">We combine top-tier premium design aesthetics with lightning-fast execution and transparent Indian pricing.</p>
-          </div>
-          <div style={{ marginTop: '40px' }}>
-            <Link to="/why-us" className="btn btn-primary">Discover Our Core USPs & Process Roadmap</Link>
-          </div>
-        </div>
-      </section>
 
-      {/* PORTFOLIO TEASER */}
-      <section className="section" id="portfolio">
-        <div className="container text-center">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Our Showcase</span>
-            <h2 className="section-title">Featured Success Stories</h2>
-            <p className="section-subtitle">Explore a selection of recent projects built to deliver high conversions and sleek user experiences for Indian startups and D2C brands.</p>
-          </div>
-          <div style={{ marginTop: '40px' }}>
-            <Link to="/portfolio" className="btn btn-primary">View Full Interactive Portfolio</Link>
-          </div>
-        </div>
-      </section>
 
       {/* TESTIMONIALS SECTION */}
       <section className="section" id="testimonials">
@@ -245,19 +219,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ TEASER */}
-      <section className="section" id="faq">
-        <div className="container text-center">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Common Inquiries</span>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-            <p className="section-subtitle">Have questions about our project-based pricing, development timelines, tech stack, or post-launch support?</p>
-          </div>
-          <div style={{ marginTop: '40px' }}>
-            <Link to="/faq" className="btn btn-primary">Visit Our FAQ Directory</Link>
-          </div>
-        </div>
-      </section>
+
 
       {/* FINAL CTA */}
       <section className="section section-dark" id="contact">
