@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Maps B2B Lead Generator | Grow With Us</title>
+  <meta name="description" content="Generate verified local business leads for free in seconds. Extract real business names, phone numbers, websites, and addresses. Fast, India-first, and SaaS-grade.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Decorative Grid & Orbs for Premium Aesthetics -->
+  <div class="bg-grid"></div>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../" class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span>Grow With Us <span class="badge-mini">Leads</span></span>
+      </a>
+      
+      <div class="header-actions">
+        <!-- Manual Theme Switcher -->
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle light/dark theme">
+          <!-- Moon Icon (Dark Mode) -->
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <!-- Sun Icon (Light Mode) -->
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+        <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us,%20I%20need%20custom%20b2b%20leads" target="_blank" class="btn btn-secondary btn-sm header-cta">
+          <span>Talk to Expert</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero-sec">
+      <div class="hero-container">
+        <!-- Trust badge / Social Proof Top -->
+        <div class="trust-badge">
+          <span class="pulse-dot"></span>
+          <span>Used by 14,200+ Agencies & Sales Teams</span>
+        </div>
+
+        <h1 class="hero-title">
+          Find Verified Local <br>
+          <span class="gradient-text">Business Contacts</span> for Free
+        </h1>
+        
+        <p class="hero-subtitle">
+          Instantly extract name, verified phone number, website, and location of local businesses in any city. No credit card required.
+        </p>
+
+        <!-- Live Counters -->
+        <div class="live-counters">
+          <div class="counter-card">
+            <span class="counter-val" id="counter-leads">842,910</span>
+            <span class="counter-lbl">Leads Generated Today</span>
+          </div>
+          <div class="counter-card">
+            <span class="counter-val" id="counter-active">314</span>
+            <span class="counter-lbl">Active Scrapers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONVERSATIONAL FLOW & INTERACTIVE PLATFORM SECTION -->
+    <section class="platform-section">
+      <div class="platform-container">
+        <div class="glass-panel" id="platform-panel">
+          
+          <!-- State 1: Conversational Form Flow -->
+          <div id="flow-container" class="flow-container active">
+            <!-- Step Progress Indicator -->
+            <div class="step-progress-wrapper">
+              <div class="step-dots">
+                <span class="step-dot active" data-step="1">1</span>
+                <span class="step-line"></span>
+                <span class="step-dot" data-step="2">2</span>
+                <span class="step-line"></span>
+                <span class="step-dot" data-step="3">3</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+              </div>
+            </div>
+
+            <!-- Steps Inner Form -->
+            <form id="lead-gen-form" onsubmit="return false;">
+              <!-- Step 1: Keyword -->
+              <div class="form-step active" data-step="1">
+                <label class="step-label">What kind of businesses are you looking for?</label>
+                <div class="input-wrapper">
+                  <input type="text" id="input-keyword" placeholder="e.g. Dentist, Restaurant, Gym, Real Estate Agent" autocomplete="off" required>
+                  <span class="input-focus-border"></span>
+                </div>
+                <div class="rotating-examples">
+                  <span class="example-label">Try searching:</span>
+                  <span class="example-text" id="example-rotator">Dentist in Mumbai</span>
+                </div>
+                <button type="button" class="btn btn-primary btn-next" id="btn-goto-2">
+                  <span>Continue</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Step 2: City -->
+              <div class="form-step" data-step="2">
+                <label class="step-label">In which city?</label>
+                <div class="input-wrapper">
+                  <input type="text" id="input-city" placeholder="e.g. Mumbai, Delhi, Bangalore, Pune, New York" autocomplete="off" required>
+                  <span class="input-focus-border"></span>
+                </div>
+                <div class="suggestions-hint">India-first global directory capability. AI will detect area code details.</div>
+                
+                <div class="step-actions">
+                  <button type="button" class="btn btn-secondary btn-back">
+                    <span>Back</span>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-next" id="btn-goto-3">
+                    <span>Continue</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: Number of leads -->
+              <div class="form-step" data-step="3">
+                <label class="step-label">How many leads do you need?</label>
+                <div class="slider-container">
+                  <input type="range" id="input-leads-count" min="10" max="100" step="5" value="50">
+                  <div class="slider-values">
+                    <span>10</span>
+                    <span class="slider-current" id="slider-val-display">50 leads</span>
+                    <span>100</span>
+                  </div>
+                </div>
+                
+                <div class="step-actions">
+                  <button type="button" class="btn btn-secondary btn-back">
+                    <span>Back</span>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-generate" id="btn-submit-form">
+                    <span>Generate Leads</span>
+                    <svg class="btn-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- State 2: AI Scanning Sequence -->
+          <div id="scanning-container" class="scanning-container">
+            <div class="scanner-header">
+              <div class="scanner-spinner">
+                <div class="spinner-ring"></div>
+                <svg class="spinner-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+              </div>
+              <div class="scanner-title-group">
+                <h3 class="scanner-title">Google Maps Lead Scraper Initialized</h3>
+                <p class="scanner-subtitle" id="scanner-status-text">Connecting to Google Maps directory nodes...</p>
+              </div>
+            </div>
+
+            <!-- Terminal log output simulation -->
+            <div class="scanner-log-console" id="scanner-log">
+              <div class="log-line text-muted">&gt; Booting search engine interface...</div>
+            </div>
+
+            <!-- Lead Preview Cards during scan -->
+            <div class="scanner-previews">
+              <div class="preview-card-loader">
+                <span class="preview-skeleton name"></span>
+                <span class="preview-skeleton sub"></span>
+              </div>
+              <div class="preview-card-loader">
+                <span class="preview-skeleton name"></span>
+                <span class="preview-skeleton sub"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- State 3: Results Dashboard -->
+          <div id="results-container" class="results-container">
+            <div class="results-header">
+              <div class="results-info">
+                <span class="results-badge" id="results-count-badge">52 Leads Found</span>
+                <h3 class="results-title"><span id="results-keyword-txt">Dentist</span> in <span id="results-city-txt">Mumbai</span></h3>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="btn-reset-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm">
+                  <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                </svg>
+                <span>New Search</span>
+              </button>
+            </div>
+
+            <!-- Lead Table Wrapper -->
+            <div class="table-outer-wrapper">
+              <div class="table-responsive">
+                <table class="leads-table">
+                  <thead>
+                    <tr>
+                      <th>Business Name</th>
+                      <th>Phone Number</th>
+                      <th>Website</th>
+                      <th>Address</th>
+                      <th>Location</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leads-tbody">
+                    <!-- Dynamic lead rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Conversion CTA overlay / section below table -->
+            <div class="conversion-panel-overlay">
+              <div class="conversion-cta-card">
+                <div class="cta-badge">Premium Feature</div>
+                <h4>Get the Entire CSV List directly on WhatsApp</h4>
+                <p>Unlock the remaining leads complete with emails, verification scores, and CSV formatting delivered instantly.</p>
+                
+                <form id="whatsapp-conversion-form" class="cta-form">
+                  <div class="input-group-row">
+                    <div class="input-wrapper">
+                      <input type="text" id="lead-name" placeholder="Your Name" required>
+                    </div>
+                    <div class="input-wrapper">
+                      <input type="tel" id="lead-phone" placeholder="WhatsApp Number (with country code)" required>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block" id="btn-submit-whatsapp">
+                    <svg class="icon-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.634 1.977 14.161.952 11.534.952c-5.438 0-9.863 4.37-9.867 9.8-.001 1.737.479 3.432 1.39 4.96l-.988 3.613 3.689-.968z"/>
+                    </svg>
+                    <span>Send Full CSV to WhatsApp</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- State 4: Qualification Question Form -->
+          <div id="qualification-container" class="qualification-container">
+            <h3 class="qual-title">Success! One final question...</h3>
+            <p class="qual-subtitle">Help us customize your lead delivery file and future notifications.</p>
+            
+            <form id="qualification-form" class="qual-form">
+              <label class="step-label">What are you planning to do with these leads?</label>
+              
+              <div class="qual-options-grid">
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Get More Clients" checked>
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Get More Clients</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Cold Calling">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Cold Calling</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Cold Email">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Cold Email</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="WhatsApp Outreach">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">WhatsApp Outreach</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="SEO Services">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">SEO Services</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Digital Marketing Agency">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Digital Marketing Agency</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Website Development">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Website Development</span>
+                  </span>
+                </label>
+                <label class="qual-option">
+                  <input type="radio" name="qual-use" value="Other">
+                  <span class="option-card">
+                    <span class="option-bullet"></span>
+                    <span class="option-lbl">Other</span>
+                  </span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-qual">
+                <span>Complete Request</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-arrow">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- State 5: Success / Confirmation Screen -->
+          <div id="success-container" class="success-container">
+            <div class="success-checkmark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            
+            <h2 class="success-title">Leads Processing Hook Established!</h2>
+            <p class="success-subtitle">Your lead list is being prepared and will be delivered within 30 minutes.</p>
+
+            <!-- Request Summary Box -->
+            <div class="summary-box">
+              <h4 class="summary-box-title">Request Summary</h4>
+              <div class="summary-details">
+                <div class="summary-detail-row">
+                  <span class="summary-detail-lbl">Target Query:</span>
+                  <strong class="summary-detail-val" id="summary-keyword">-</strong>
+                </div>
+                <div class="summary-detail-row">
+                  <span class="summary-detail-lbl">Target City:</span>
+                  <strong class="summary-detail-val" id="summary-city">-</strong>
+                </div>
+                <div class="summary-detail-row">
+                  <span class="summary-detail-lbl">Requested Count:</span>
+                  <strong class="summary-detail-val" id="summary-count">-</strong>
+                </div>
+                <div class="summary-detail-row">
+                  <span class="summary-detail-lbl">Queue Status:</span>
+                  <strong class="summary-detail-val text-success">Processing (High Priority)</strong>
+                </div>
+                <div class="summary-detail-row">
+                  <span class="summary-detail-lbl">Estimated Delivery:</span>
+                  <strong class="summary-detail-val text-accent" id="summary-eta">-</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Free Resource & Offer Grid -->
+            <div class="offers-grid">
+              <div class="offer-card resource">
+                <div class="offer-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                </div>
+                <h5 class="offer-title">Free Lead Generation Playbook</h5>
+                <p class="offer-desc">Get our copy-paste templates to turn these cold leads into paying customers.</p>
+                <a href="https://wa.me/918630170462?text=Send%20Lead%20Playbook" target="_blank" class="btn btn-sm btn-secondary">Download Playbook</a>
+              </div>
+
+              <div class="offer-card agency">
+                <div class="offer-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                </div>
+                <h5 class="offer-title">Need a High-Converting Website?</h5>
+                <p class="offer-desc">Get a premium SaaS-grade landing page built specifically to capture leads.</p>
+                <a href="https://wa.me/918630170462?text=Interested%20in%20Website%20Development%20Services" target="_blank" class="btn btn-sm btn-primary">Get Free Consultation</a>
+              </div>
+
+              <div class="offer-card agency-two">
+                <div class="offer-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg>
+                </div>
+                <h5 class="offer-title">Digital Marketing Audit</h5>
+                <p class="offer-desc">Let us analyze your business profile and search visibility live on a call.</p>
+                <a href="https://wa.me/918630170462?text=I%20want%20a%20free%20digital%20marketing%20audit" target="_blank" class="btn btn-sm btn-secondary">Request Free Audit</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF SECTION -->
+    <section class="social-proof-section">
+      <div class="social-proof-container">
+        <!-- Live Request Feed -->
+        <div class="activity-feed-wrapper">
+          <h4 class="section-subtitle">Real-time Scraping Feed</h4>
+          <div class="activity-feed" id="activity-feed">
+            <!-- Simulated activity items updated via JS -->
+          </div>
+        </div>
+
+        <!-- Real Testimonials -->
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-quote">"We generated 80 leads for gyms in Pune and closed our first corporate client within 48 hours. The Google Maps API accuracy is insane!"</p>
+            <div class="testimonial-author">
+              <span class="author-avatar bg-accent">AR</span>
+              <div>
+                <strong class="author-name">Anirudh R.</strong>
+                <span class="author-role">Founder, Pune Fitness Agency</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-quote">"This tool does exactly what it says. Got dentist records in Delhi instantly. Sent the CSV to my WhatsApp and started outreach."</p>
+            <div class="testimonial-author">
+              <span class="author-avatar bg-primary">SP</span>
+              <div>
+                <strong class="author-name">Sneha P.</strong>
+                <span class="author-role">B2B Freelancer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING WHATSAPP WIDGET -->
+  <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us,%20I%20have%20a%20question%20about%20your%20leads%20service" target="_blank" class="floating-whatsapp" aria-label="Chat with us on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.634 1.977 14.161.952 11.534.952c-5.438 0-9.863 4.37-9.867 9.8-.001 1.737.479 3.432 1.39 4.96l-.988 3.613 3.689-.968z"/>
+    </svg>
+    <span class="whatsapp-tooltip">Chat with us!</span>
+  </a>
+
+  <!-- EXIT INTENT MODAL -->
+  <div class="modal-backdrop" id="exit-modal">
+    <div class="modal-content glass-panel">
+      <button class="modal-close" id="btn-close-exit">&times;</button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </div>
+      <h3 class="modal-title">Need help finding quality leads?</h3>
+      <p class="modal-text">Our agency developers can build a custom, target scraper or run queries to get custom data fields specific to your industry.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary btn-sm" id="btn-exit-continue">Continue Generating Leads</button>
+        <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us,%20I'm%20on%20your%20leads%20site%20and%20need%20help" target="_blank" class="btn btn-success btn-sm">
+          <span>Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="./main.js"></script>
+</body>
+</html>
