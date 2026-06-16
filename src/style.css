@@ -872,15 +872,27 @@ button, input, textarea, select {
   transform: translateY(-6px);
 }
 
+.why-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
 .why-icon {
   color: var(--accent);
-  margin-bottom: 14px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .why-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   letter-spacing: -0.3px;
 }
 
