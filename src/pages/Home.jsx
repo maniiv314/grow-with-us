@@ -223,7 +223,7 @@ export default function Home() {
             <div aria-live="polite" aria-atomic="true">
               {recommendationResult && (
                 <div style={{ marginTop: '24px', padding: '24px', background: 'var(--primary-light)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--primary)' }}>
-                  <h4 style={{ color: 'var(--primary)', fontWeight: 700, margin: '0 0 8px 0', fontSize: '0.95rem' }}>Our Recommendation:</h4>
+                  <h3 style={{ color: 'var(--primary)', fontWeight: 700, margin: '0 0 8px 0', fontSize: '1.05rem' }}>Our Recommendation:</h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5, margin: 0 }}>{recommendationResult}</p>
                   <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
                     <Link to="/contact" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Apply Strategy to Inquiry</Link>

@@ -21,23 +21,23 @@ export default function Footer() {
         
         <div>
           <h4 className="footer-title" style={{ fontSize: '0.95rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px', color: 'var(--text-dark)' }}>Services</h4>
-          <ul className="footer-links" style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem' }}>
-            <li><Link to="/#services" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Website Development</Link></li>
-            <li><Link to="/#services" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Web App Development</Link></li>
-            <li><Link to="/#services" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Mobile App Development</Link></li>
-            <li><Link to="/#services" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>UI/UX Strategy</Link></li>
+          <ul className="footer-links" style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '0.9rem' }}>
+            <li><Link to="/#services" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Website Development</Link></li>
+            <li><Link to="/#services" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Web App Development</Link></li>
+            <li><Link to="/#services" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Mobile App Development</Link></li>
+            <li><Link to="/#services" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>UI/UX Strategy</Link></li>
           </ul>
         </div>
         
         <div>
           <h4 className="footer-title" style={{ fontSize: '0.95rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px', color: 'var(--text-dark)' }}>Quick Links</h4>
-          <ul className="footer-links" style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem' }}>
-            <li><Link to="/" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Home</Link></li>
-            <li><Link to="/#why-choose-us" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Why Us</Link></li>
-            <li><Link to="/#portfolio" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Featured Work</Link></li>
-            <li><Link to="/#process" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Roadmap</Link></li>
-            <li><Link to="/#faq" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>FAQs</Link></li>
-            <li><Link to="/tools" style={{ color: 'var(--text-light)' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Tools</Link></li>
+          <ul className="footer-links" style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '0.9rem' }}>
+            <li><Link to="/" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Home</Link></li>
+            <li><Link to="/#why-choose-us" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Why Us</Link></li>
+            <li><Link to="/#portfolio" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Featured Work</Link></li>
+            <li><Link to="/#process" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Roadmap</Link></li>
+            <li><Link to="/#faq" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>FAQs</Link></li>
+            <li><Link to="/tools" style={{ color: 'var(--text-light)', padding: '6px 0', display: 'inline-block' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-light)'}>Tools</Link></li>
           </ul>
         </div>
         
@@ -50,7 +50,7 @@ export default function Footer() {
             </div>
             <div className="footer-contact-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.202-1.362a9.92 9.92 0 0 0 4.807 1.246h.003c5.507 0 9.99-4.478 9.99-9.987 0-2.67-1.037-5.178-2.92-7.062C17.198 3.05 14.685 2 12.011 2z"/></svg>
-              <span>WhatsApp Chat Active 24/7</span>
+              <span>Replies in under 15 minutes</span>
             </div>
           </div>
         </div>

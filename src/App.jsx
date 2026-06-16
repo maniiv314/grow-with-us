@@ -83,9 +83,11 @@ export default function App() {
     };
   }, [location.pathname, location.hash]);
 
+  const isSubToolPage = location.pathname.startsWith('/tools/') && location.pathname !== '/tools' && location.pathname !== '/tools/';
+
   return (
     <>
-      <Navbar />
+      {!isSubToolPage && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -94,8 +96,8 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
-      <Footer />
-      <WhatsAppBubble />
+      {!isSubToolPage && <Footer />}
+      {!isSubToolPage && <WhatsAppBubble />}
     </>
   );
 }
