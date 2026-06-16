@@ -44,17 +44,23 @@ export default function App() {
 
     // 3. Sticky header listener
     const header = document.getElementById('header');
+    let scrollTimeout;
     const handleScroll = () => {
-      if (header) {
-        if (window.scrollY > 20) {
-          header.classList.add('header-scrolled');
-        } else {
-          header.classList.remove('header-scrolled');
-        }
+      if (!scrollTimeout) {
+        scrollTimeout = requestAnimationFrame(() => {
+          if (header) {
+            if (window.scrollY > 20) {
+              header.classList.add('header-scrolled');
+            } else {
+              header.classList.remove('header-scrolled');
+            }
+          }
+          scrollTimeout = null;
+        });
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Trigger initial state
 
     return () => {
