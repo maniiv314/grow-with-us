@@ -562,48 +562,55 @@ export default function Tools() {
             animate="visible"
             variants={{
               hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.04 } }
+              visible: { opacity: 1, transition: { staggerChildren: 0.03 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '10px' }}
           >
             {toolsMenu.map(t => (
               <motion.div 
                 key={t.id}
                 variants={{
-                  hidden: { opacity: 0, y: 12 },
+                  hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
                 }}
-                whileHover={{ y: -5, scale: 1.015, boxShadow: 'var(--shadow-md)' }}
+                whileHover={{ y: -3, scale: 1.01, boxShadow: 'var(--shadow-md)', borderColor: t.color }}
                 onClick={() => setActiveTool(t.id)}
                 style={{
                   background: '#ffffff',
-                  borderRadius: '8px',
-                  padding: '16px',
+                  borderRadius: '6px',
+                  padding: '10px 12px',
                   border: '1px solid var(--border-light)',
                   boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer',
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px'
+                  alignItems: 'center',
+                  gap: '12px',
+                  transition: 'border-color 0.2s ease-in-out'
                 }}
               >
+                {/* Left Icon Badge */}
                 <div style={{ 
-                  width: '38px', 
-                  height: '38px', 
+                  width: '34px', 
+                  height: '34px', 
                   borderRadius: '6px', 
                   background: `${t.color}15`, 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
-                  marginBottom: '2px'
+                  flexShrink: 0
                 }}>
-                  <t.icon size={20} style={{ color: t.color }} />
+                  <t.icon size={18} style={{ color: t.color }} />
                 </div>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-dark)' }}>{t.name}</h3>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.35, margin: 0 }}>{t.desc}</p>
-                <span style={{ fontSize: '0.76rem', fontWeight: 'bold', color: 'var(--primary)', marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                  Open Tool ➔
-                </span>
+
+                {/* Right Text Space */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2 }}>
+                    {t.name}
+                  </h3>
+                  <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.25, margin: '2px 0 0 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {t.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
