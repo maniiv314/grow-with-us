@@ -151,7 +151,7 @@ export default function Tools() {
       setCalcInput('');
     } else if (val === '=') {
       try {
-        const sanitized = calcInput.replace(/[^0-9+\-*/.]/g, '');
+        const sanitized = calcInput.replace(/[^0-9+\-*\/.]/g, '');
         const res = new Function(`return ${sanitized}`)();
         setCalcInput(String(res));
       } catch {
@@ -242,8 +242,8 @@ export default function Tools() {
       else if (fromUnit === 'lbs' && toUnit === 'kg') setUnitResult((val / 2.20462).toFixed(2));
       else setUnitResult(val);
     } else if (unitType === 'temp') {
-      if (fromUnit === 'C' && toUnit === 'F') setUnitResult((val * 9/5 + 32).toFixed(2));
-      else if (fromUnit === 'F' && toUnit === 'C') setUnitResult(((val - 32) * 5/9).toFixed(2));
+      if (fromUnit === 'C' && toUnit === 'F') setUnitResult((val * 9 / 5 + 32).toFixed(2));
+      else if (fromUnit === 'F' && toUnit === 'C') setUnitResult(((val - 32) * 5 / 9).toFixed(2));
       else setUnitResult(val);
     }
   }, [unitVal, fromUnit, toUnit, unitType]);
