@@ -36,9 +36,8 @@ New-Item -ItemType Directory -Path $BackupPath -Force | Out-Null
 
 Write-Host "Creating backup: $BackupFolderName..."
 
-# Copy files, excluding the .git history and backup script itself
 $ItemsToCopy = Get-ChildItem -Path $ProjectDir | Where-Object { 
-    $_.Name -ne ".git" -and $_.Name -ne "backup.ps1"
+    $_.Name -ne ".git" -and $_.Name -ne "backup.ps1" -and $_.Name -ne "node_modules" -and $_.Name -ne "dist"
 }
 
 foreach ($item in $ItemsToCopy) {
