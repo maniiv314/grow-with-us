@@ -607,9 +607,6 @@ export default function Tools() {
                   <h3 style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2 }}>
                     {t.name}
                   </h3>
-                  <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.25, margin: '2px 0 0 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {t.desc}
-                  </p>
                 </div>
               </motion.div>
             ))}
