@@ -767,7 +767,7 @@ button, input, textarea, select {
 }
 
 .service-icon {
-  background-color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.04);
   color: var(--primary);
   width: 64px;
   height: 64px;
@@ -776,15 +776,16 @@ button, input, textarea, select {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition: var(--transition-normal);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.06);
 }
 
 .service-card:hover .service-icon {
   background-color: var(--primary);
+  border-color: var(--primary);
   color: white;
   transform: scale(1.05) rotate(3deg);
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 8px 20px rgba(118, 192, 0, 0.25);
 }
 
 .service-title {

@@ -201,22 +201,22 @@ export default function Home() {
             {/* Service 1 */}
             <div className="service-card reveal active">
               <div className="service-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Website Development</h3>
               <p className="service-desc">Lightning-fast, responsive websites and landing pages engineered for maximum conversions.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Fully Responsive Layouts</span>
+                  <span>Responsive Layouts</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Built-in SEO Optimizations</span>
+                  <span>SEO Optimized</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Conversion-Optimized Flow</span>
+                  <span>High Converting</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">
@@ -228,22 +228,22 @@ export default function Home() {
             {/* Service 2 */}
             <div className="service-card reveal active">
               <div className="service-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Web App Development</h3>
               <p className="service-desc">Scalable SaaS platforms, custom portals, and database integrations built to run your business.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Scalable Application Architecture</span>
+                  <span>Scalable Architecture</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Secure Authentication & Database Setup</span>
+                  <span>Secure Database</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Custom Dashboard Development</span>
+                  <span>Custom Dashboards</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">
@@ -255,22 +255,22 @@ export default function Home() {
             {/* Service 3 */}
             <div className="service-card reveal active">
               <div className="service-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Mobile App Development</h3>
               <p className="service-desc">High-performance iOS and Android mobile applications built on Flutter and React Native.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Cross-Platform Fluid Operations</span>
+                  <span>Native Performance</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Native Core API Integration</span>
+                  <span>Core API Integration</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>App Store & Google Play Launch Setup</span>
+                  <span>App Store Launch</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">
@@ -282,22 +282,22 @@ export default function Home() {
             {/* Service 4 */}
             <div className="service-card reveal active">
               <div className="service-icon">
-                <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
               </div>
               <h3 className="service-title">UI/UX Strategy</h3>
               <p className="service-desc">Premium user journeys, high-fidelity layouts, and interactive prototypes built to engage.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Figma Prototypes & Clean Component Systems</span>
+                  <span>Figma Prototypes</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>User Journey Mapping & Design Research</span>
+                  <span>User Journey Map</span>
                 </li>
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Interactive Animations Mockups</span>
+                  <span>Interactive Mockups</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">
