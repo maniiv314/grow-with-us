@@ -12,13 +12,13 @@
   --bg-glass: rgba(255, 255, 255, 0.85);
   --bg-glass-dark: rgba(9, 13, 22, 0.85);
   
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --accent: #06b6d4;
-  --accent-light: #ecfeff;
+  --primary: #76c000;
+  --primary-hover: #609d00;
+  --primary-light: #f5fbe8;
+  --accent: #00bcd4;
+  --accent-light: #e0f7fa;
   --success: #10b981;
-  --glow-color: rgba(37, 99, 235, 0.15);
+  --glow-color: rgba(118, 192, 0, 0.15);
   
   --text-dark: #0f172a;
   --text-muted: #475569;
