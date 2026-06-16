@@ -40,9 +40,7 @@ export default function Contact() {
     <section className="section section-dark" id="contact" style={{ paddingTop: '160px' }}>
       <div className="container cta-grid">
         <div className="cta-content reveal active">
-          <span className="section-tag">Start Growing Today</span>
           <h2>Let's Build India's Next Digital Success Story</h2>
-          <p>Partner with us to build high-performance software that elevates your brand, streamlines operations, and helps your business grow in India's booming digital economy.</p>
           
           <div className="cta-whatsapp-box">
             <h3>Prefer an Instant Conversation?</h3>

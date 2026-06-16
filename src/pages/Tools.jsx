@@ -547,12 +547,8 @@ export default function Tools() {
       <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
         {/* Hub Header */}
-        <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-          <span className="section-tag" style={{ textTransform: 'uppercase', fontSize: '0.75rem' }}>Utilities Portal</span>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, marginTop: '3px' }}>Free Web <span>Utilities Suite</span></h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '500px', margin: '4px auto 0 auto', lineHeight: 1.4 }}>
-            Instant, browser-based tools. Clean, fast, and optimized for daily productivity.
-          </p>
+        <div style={{ textAlign: 'center', marginBottom: '15px' }}>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: 0 }}>Free Web <span>Utilities Suite</span></h1>
         </div>
 
         {/* CONDITION 1: DIRECTORY GRID VIEW (activeTool is null) */}

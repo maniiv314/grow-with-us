@@ -193,10 +193,8 @@ export default function Home() {
       {/* SERVICES SECTION */}
       <section className="section" id="services">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">High-Impact Services</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Digital Solutions Built to Convert</h2>
-            <p className="section-subtitle">We don't just write code. We build robust digital sales channels, optimize conversion metrics, and engineer automated systems that scale your operations.</p>
           </div>
           
           <div className="services-grid">
@@ -314,10 +312,8 @@ export default function Home() {
       {/* WHY CHOOSE US SECTION */}
       <section className="section section-dark" id="why-choose-us">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Value Proposition</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Why Businesses Partner With Us</h2>
-            <p className="section-subtitle">We merge speed, cost-efficiency, and premium aesthetics to give your brand a decisive advantage.</p>
           </div>
           
           <div className="why-grid">
@@ -375,10 +371,8 @@ export default function Home() {
       {/* ROADMAP / PROCESS */}
       <section className="section" id="process">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">How We Work</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Our Development Roadmap</h2>
-            <p className="section-subtitle">A simple, transparent 6-step workflow structured to deliver premium results on schedule.</p>
           </div>
           
           <div className="process-timeline">
@@ -424,10 +418,8 @@ export default function Home() {
       {/* PORTFOLIO SECTION */}
       <section className="section section-dark" id="portfolio">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Our Showcase</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Featured Success Stories</h2>
-            <p className="section-subtitle">Explore a selection of recent projects built to deliver high conversions and sleek user experiences.</p>
           </div>
           
           <div className="portfolio-filters reveal active">
@@ -470,10 +462,8 @@ export default function Home() {
       {/* TESTIMONIALS SECTION */}
       <section className="section" id="testimonials">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Client Feedback</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Partner Endorsements</h2>
-            <p className="section-subtitle">Don't take our word for it. Read how we've helped startups and established brands grow.</p>
           </div>
           
           <div className="testimonials-grid">
@@ -507,10 +497,8 @@ export default function Home() {
       {/* FAQ SECTION */}
       <section className="section section-dark" id="faq">
         <div className="container">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Common Inquiries</span>
+          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
             <h2 className="section-title">Frequently Asked Questions</h2>
-            <p className="section-subtitle">Have questions about process, timelines, or pricing? Find rapid answers below.</p>
           </div>
           
           <div className="faq-container reveal active">
