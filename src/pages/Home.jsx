@@ -1,630 +1,242 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, ChevronRight, HelpCircle, Sparkles, AlertCircle, PlayCircle, ShieldCheck } from 'lucide-react';
 
-const projects = [
+const qualificationPaths = [
   {
-    id: 1,
-    category: 'ecommerce',
-    title: 'Kavya Fabrics',
-    image: '/assets/ecommerce_platform.png',
-    tag: 'E-Commerce',
-    desc: 'A premium online store built for a Jaipur-based ethnic wear brand. Integrated with local payment gateways (UPI, NetBanking) and optimized for high-volume Indian festive sales.',
-    speed: '+120% page speed',
-    metric: '45% higher conversion',
-    waText: 'Discuss E-Com Project'
+    id: 'founder',
+    title: 'Startup Founder',
+    sub: 'Build MVPs & Scalable Products',
+    desc: 'You need an experienced engineering partner to build a product that attracts early investors, without the overhead of hiring an in-house team.'
   },
   {
-    id: 2,
-    category: 'webapp',
-    title: 'Arogya Care Dashboard',
-    image: '/assets/saas_dashboard.png',
-    tag: 'SaaS / Web App',
-    desc: 'A custom patient management and scheduling web app for a multi-specialty clinic chain in Bengaluru. Built to automate appointments and simplify reporting workflows.',
-    speed: '15+ hours/week',
-    metric: '5,00,000+ total bookings',
-    waText: 'Discuss Web App Project'
+    id: 'd2c',
+    title: 'D2C Storefront',
+    sub: 'Increase Checkouts & Page Speed',
+    desc: 'You want to optimize user flows, reduce page load times to under 1 second, and fix high drop-off rates on checkout steps.'
   },
   {
-    id: 3,
-    category: 'mobile',
-    title: 'DabbaExpress',
-    image: '/assets/mobile_app_preview.png',
-    tag: 'Mobile App',
-    desc: 'A cross-platform food delivery mobile app tailored for corporate workers in Mumbai. Designed with real-time GPS tracking and instant UPI payment integrations.',
-    speed: 'iOS & Android',
-    metric: '200k+ downloads',
-    waText: 'Discuss Mobile App Project'
+    id: 'local',
+    title: 'Local Service Enterprise',
+    sub: 'Automate Bookings & Schedules',
+    desc: 'You want to automate appointment scheduling, manage databases, and eliminate manual Excel/WhatsApp coordination.'
   }
 ];
 
-const faqs = [
+const businessProblems = [
   {
-    id: 1,
-    question: 'What is your agency pricing model?',
-    answer: 'We operate on a project-based pricing model starting from customized packages. Since we build fully custom solutions, we provide transparent project quotes detailing all features, deliverables, and milestone schedules during our Discovery phase.'
+    title: 'Losing customers due to slow load times?',
+    outcome: 'Convert More Visitors',
+    solution: 'We build static-first, lightweight web engines with optimized core web vitals. Pages load in under 500ms, immediately lowering bounce rates.'
   },
   {
-    id: 2,
-    question: 'How long does a typical project take?',
-    answer: 'A standard marketing website typically takes 3 to 5 weeks. Complex web applications or native mobile apps take between 8 to 12 weeks, depending on database requirements, integration points, and overall scope complexity.'
+    title: 'Managing customer bookings manually?',
+    outcome: 'Automate Internal Operations',
+    solution: 'We design custom patient, client, and order scheduling systems that sync with calendar systems automatically.'
   },
   {
-    id: 3,
-    question: 'Do you offer post-launch support & revisions?',
-    answer: 'Yes, we include a 30-day post-launch support warranty covering bug fixes and minor adjustments. We also offer ongoing monthly maintenance plans that include security patches, regular backups, cloud infrastructure monitoring, and feature updates.'
-  },
-  {
-    id: 4,
-    question: 'Which technologies do you build with?',
-    answer: 'For frontend websites, we use HTML5, CSS3, modern JavaScript, Next.js, and React. For mobile apps, we utilize Flutter or React Native. Backends are constructed using Node.js, Express, or Firebase, depending on scaling needs.'
-  },
-  {
-    id: 5,
-    question: 'How does the AI-powered development workflow help me?',
-    answer: 'We leverage advanced AI coding agents (like Antigravity) to automate standard backend boilerplate setups, component structures, and initial test coverage. This reduces development time, meaning you get a premium product launched faster and at a lower cost.'
+    title: 'Over-engineering simple workflows?',
+    outcome: 'Simplify Before You Build',
+    solution: 'We identify features to remove, prioritizing clear layouts and clean conversion paths before writing a single line of backend code.'
   }
 ];
 
 export default function Home() {
-  const [filter, setFilter] = useState('all');
-  const [activeFaqId, setActiveFaqId] = useState(null);
-  const [heroTab, setHeroTab] = useState('metrics');
+  const [activePath, setActivePath] = useState('founder');
+  const [selectedGoal, setSelectedGoal] = useState('launch');
+  const [budgetRange, setBudgetRange] = useState('mid');
+  const [recommendationResult, setRecommendationResult] = useState('');
+  const navigate = useNavigate();
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
-
-  const toggleFAQ = (id) => {
-    setActiveFaqId(activeFaqId === id ? null : id);
+  const handleGetRecommendation = (e) => {
+    e.preventDefault();
+    let solution = '';
+    if (selectedGoal === 'launch') {
+      solution = 'We recommend a scoping sprint to design a lightweight React MVP. Focus on core user actions first, with a target launch window of 6 weeks.';
+    } else if (selectedGoal === 'convert') {
+      solution = 'We recommend a conversion rate audit and page-speed optimization program. We will refactor frontend layouts to static-first React structures to lower bounce rates.';
+    } else {
+      solution = 'We recommend building a bespoke internal workspace dashboard. This will automate database updates and sync schedules to reduce manual operations.';
+    }
+    setRecommendationResult(solution);
   };
 
   return (
     <>
-      {/* HERO SECTION */}
-      <section className="hero" id="hero">
-        <div className="container hero-grid">
-          <div className="hero-content reveal active">
-            <div className="hero-badge">
-              <div className="hero-badge-dot"></div>
-              <span>Empowering India's Digital Revolution 🇮🇳</span>
-            </div>
-            <h1 className="hero-title">
-              Websites & Apps Engineered for <span>Business Growth</span>
-            </h1>
-            <p className="hero-desc">
-              We build high-converting websites, custom web applications, and mobile apps engineered to scale Indian startups, MSMEs, D2C brands, and local retailers.
-            </p>
-            <div className="hero-actions">
-              <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us!%20I%20want%20to%20discuss%20a%20new%20project." target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.202-1.362a9.92 9.92 0 0 0 4.807 1.246h.003c5.507 0 9.99-4.478 9.99-9.987 0-2.67-1.037-5.178-2.92-7.062C17.198 3.05 14.685 2 12.011 2zm0 1.644c2.227 0 4.322.868 5.898 2.448 1.577 1.579 2.445 3.678 2.445 5.908 0 4.597-3.738 8.337-8.337 8.337a8.27 8.27 0 0 1-4.223-1.155l-.303-.18-3.138.82.835-3.06-.197-.314a8.27 8.27 0 0 1-1.265-4.456c.002-4.599 3.744-8.34 8.34-8.34zm-3.6 5.48c-.198-.44-.407-.449-.595-.458l-.508-.007c-.176 0-.462.066-.704.33-.243.264-.926.903-.926 2.201 0 1.297.945 2.55 1.077 2.726.133.176 1.861 2.84 4.507 3.985 2.203.953 2.651.764 3.125.72.473-.044 1.528-.624 1.74-.1.22-.524.22-.973.154-1.077-.066-.105-.242-.167-.508-.3-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.683.859-.837 1.035-.154.176-.308.198-.573.066-.264-.132-1.117-.412-2.128-1.314-.787-.7-1.317-1.564-1.472-1.828-.154-.264-.016-.407.116-.539.118-.118.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.587-1.44-.814-1.94z"/></svg>
-                <span>Chat on WhatsApp</span>
-              </a>
-              <a href="#portfolio" className="btn btn-secondary">View Our Work</a>
-            </div>
-            <div className="hero-features">
-              <div className="hero-feature-item">
-                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span>Affordable Pricing</span>
-              </div>
-              <div className="hero-feature-item">
-                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span>Premium Design Quality</span>
-              </div>
-              <div className="hero-feature-item">
-                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span>AI-Driven Rapid Execution</span>
-              </div>
-            </div>
-          </div>
+      {/* 1. HERO SECTION */}
+      <section className="hero" id="hero" style={{ paddingTop: '160px', paddingBottom: '80px', background: 'var(--bg-primary)' }}>
+        <div className="container" style={{ maxWidth: '1000px', textAlign: 'center' }}>
+          <span className="section-tag" style={{ marginBottom: '24px' }}>Certainty Over Complexity</span>
+          <h1 style={{ fontSize: '3.2rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-1.5px', color: 'var(--text-dark)', marginBottom: '24px' }}>
+            We build web products that solve clear business problems.
+          </h1>
+          <p style={{ fontSize: '1.2rem', color: 'var(--text-light)', maxWidth: '750px', margin: '0 auto 40px auto', lineHeight: 1.6 }}>
+            Launch MVPs without over-engineering, optimize slow checkouts to lower bounce rates, and automate booking pipelines—built with clean code that scales.
+          </p>
           
-          <div className="hero-visual reveal active reveal-delay-2" style={{ position: 'relative' }}>
-            <div className="hero-mockup-wrapper" style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.4)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(17, 24, 39, 0.7)', backdropFilter: 'blur(12px)' }}>
-              <div className="hero-mockup">
-                <div className="mockup-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', background: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                  <div style={{ display: 'flex', gap: '6px' }}>
-                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56', display: 'inline-block' }}></span>
-                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e', display: 'inline-block' }}></span>
-                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f', display: 'inline-block' }}></span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {['metrics', 'architecture', 'api'].map(tab => (
-                      <button 
-                        key={tab} 
-                        onClick={() => setHeroTab(tab)}
-                        style={{
-                          background: heroTab === tab ? 'rgba(255,255,255,0.08)' : 'transparent',
-                          border: 'none',
-                          borderRadius: '4px',
-                          color: heroTab === tab ? 'var(--primary)' : '#94a3b8',
-                          padding: '4px 10px',
-                          fontSize: '0.75rem',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          textTransform: 'capitalize',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="mockup-content" style={{ padding: '24px', minHeight: '220px' }}>
-                  {heroTab === 'metrics' && (
-                    <div>
-                      <h4 style={{ fontSize: '0.85rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>Live Web Performance</h4>
-                      <div className="mockup-chart" style={{ display: 'flex', alignItems: 'flex-end', height: '90px', gap: '10px', marginBottom: '20px' }}>
-                        <span className="chart-bar" style={{ height: '35%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '55%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '40%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '75%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '60%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '90%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                        <span className="chart-bar" style={{ height: '98%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
-                      </div>
-                      <div className="mockup-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div className="mockup-stat-card" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '10px 14px', borderRadius: '8px' }}>
-                          <div className="mockup-stat-label" style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Conversions</div>
-                          <div className="mockup-stat-val" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--primary)', marginTop: '4px' }}>+142%</div>
-                        </div>
-                        <div className="mockup-stat-card" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '10px 14px', borderRadius: '8px' }}>
-                          <div className="mockup-stat-label" style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Load Velocity</div>
-                          <div className="mockup-stat-val" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--accent)', marginTop: '4px' }}>0.4s</div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {heroTab === 'architecture' && (
-                    <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#cbd5e1', lineHeight: '1.5' }}>
-                      <div><span style={{ color: '#ec4899' }}>const</span> <span style={{ color: '#3b82f6' }}>agencyStack</span> = &#123;</div>
-                      <div style={{ paddingLeft: '16px' }}>frontend: <span style={{ color: '#10b981' }}>'NextJS / React'</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}>styling: <span style={{ color: '#10b981' }}>'Vanilla CSS / Tailwind'</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}>animations: <span style={{ color: '#10b981' }}>'Framer Motion'</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}>infrastructure: <span style={{ color: '#10b981' }}>'Vercel / Cloudflare'</span></div>
-                      <div>&#125;;</div>
-                      <div style={{ marginTop: '12px', color: '#64748b' }}>// Optimized Core Web Vitals (SEO 100)</div>
-                    </div>
-                  )}
-
-                  {heroTab === 'api' && (
-                    <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#cbd5e1', lineHeight: '1.5' }}>
-                      <div>&#123;</div>
-                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"status"</span>: <span style={{ color: '#10b981' }}>"success"</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"response_ms"</span>: <span style={{ color: '#76c000' }}>400</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"load_speed"</span>: <span style={{ color: '#10b981' }}>"instant"</span>,</div>
-                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"metrics"</span>: &#123;</div>
-                      <div style={{ paddingLeft: '32px' }}><span style={{ color: '#00bcd4' }}>"conversions"</span>: <span style={{ color: '#10b981' }}>"+142%"</span>,</div>
-                      <div style={{ paddingLeft: '32px' }}><span style={{ color: '#00bcd4' }}>"satisfaction"</span>: <span style={{ color: '#10b981' }}>"99.4%"</span></div>
-                      <div style={{ paddingLeft: '16px' }}>&#125;</div>
-                      <div>&#125;</div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            {/* Elegant Floating Indicators */}
-            <div className="float-card float-card-1" style={{ position: 'absolute', top: '10px', left: '-50px', background: 'rgba(17, 24, 39, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)', padding: '10px 18px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-              <div className="float-icon" style={{ color: 'var(--primary)', fontWeight: 'bold' }}>★</div>
-              <div className="float-info">
-                <h4 style={{ fontSize: '0.8rem', fontWeight: '700', color: '#fff', margin: 0 }}>Premium Quality</h4>
-                <p style={{ fontSize: '0.7rem', color: '#cbd5e1', margin: 0 }}>Bespoke HSL Theme</p>
-              </div>
-            </div>
-            
-            <div className="float-card float-card-2" style={{ position: 'absolute', bottom: '10px', right: '-30px', background: 'rgba(17, 24, 39, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)', padding: '10px 18px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-              <div className="float-icon" style={{ color: 'var(--accent)', fontWeight: 'bold' }}>⚡</div>
-              <div className="float-info">
-                <h4 style={{ fontSize: '0.8rem', fontWeight: '700', color: '#fff', margin: 0 }}>Active Leads</h4>
-                <p style={{ fontSize: '0.7rem', color: '#cbd5e1', margin: 0 }}>Real-time Delivery</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* METRICS SECTION */}
-      <section className="metrics" id="metrics">
-        <div className="container metrics-grid">
-          <div className="metric-card">
-            <div className="metric-num">150+</div>
-            <div className="metric-label">Projects Delivered</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-num">12+</div>
-            <div className="metric-label">Industries Served</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-num">99.4%</div>
-            <div className="metric-label">Client Satisfaction</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-num">15+</div>
-            <div className="metric-label">Years Combined Exp.</div>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES SECTION */}
-      <section className="section" id="services">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Digital Solutions Built to Convert</h2>
-          </div>
-          
-          <div className="services-grid">
-            {/* Service 1 */}
-            <div className="service-card reveal active">
-              <div className="service-card-header">
-                <div className="service-icon">
-                  <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 className="service-title">Website Development</h3>
-              </div>
-              <p className="service-desc">Lightning-fast, responsive websites and landing pages engineered for maximum conversions.</p>
-              <ul className="service-features">
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Responsive Layouts</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>SEO Optimized</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>High Converting</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Ultra Fast Speed</span>
-                </li>
-              </ul>
-              <Link to="/contact" className="service-link">
-                <span>Get Started</span>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </Link>
-            </div>
-            
-            {/* Service 2 */}
-            <div className="service-card reveal active">
-              <div className="service-card-header">
-                <div className="service-icon">
-                  <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 className="service-title">Web App Development</h3>
-              </div>
-              <p className="service-desc">Scalable SaaS platforms, custom portals, and database integrations built to run your business.</p>
-              <ul className="service-features">
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Scalable Architecture</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Secure Database</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Custom Dashboards</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>API Integrations</span>
-                </li>
-              </ul>
-              <Link to="/contact" className="service-link">
-                <span>Get Started</span>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </Link>
-            </div>
-            
-            {/* Service 3 */}
-            <div className="service-card reveal active">
-              <div className="service-card-header">
-                <div className="service-icon">
-                  <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 className="service-title">Mobile App Development</h3>
-              </div>
-              <p className="service-desc">High-performance iOS and Android mobile applications built on Flutter and React Native.</p>
-              <ul className="service-features">
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Native Performance</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Core API Integration</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>App Store Launch</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Cross-Platform</span>
-                </li>
-              </ul>
-              <Link to="/contact" className="service-link">
-                <span>Get Started</span>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </Link>
-            </div>
-            
-            {/* Service 4 */}
-            <div className="service-card reveal active">
-              <div className="service-card-header">
-                <div className="service-icon">
-                  <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
-                </div>
-                <h3 className="service-title">UI/UX Strategy</h3>
-              </div>
-              <p className="service-desc">Premium user journeys, high-fidelity layouts, and interactive prototypes built to engage.</p>
-              <ul className="service-features">
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Figma Prototypes</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>User Journey Map</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Interactive Mockups</span>
-                </li>
-                <li className="service-feature-li">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <span>Design Systems</span>
-                </li>
-              </ul>
-              <Link to="/contact" className="service-link">
-                <span>Get Started</span>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE US SECTION */}
-      <section className="section section-dark" id="why-choose-us">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Why Businesses Partner With Us</h2>
-          </div>
-          
-          <div className="why-grid">
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </div>
-                <h3 className="why-title">Affordable Pricing</h3>
-              </div>
-              <p className="why-desc">Premium custom designs and high-end code without bloated agency pricing.</p>
-            </div>
-            
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                </div>
-                <h3 className="why-title">Premium Design Quality</h3>
-              </div>
-              <p className="why-desc">Zero templates. Every component is custom-designed and pixel-perfect.</p>
-            </div>
-            
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <h3 className="why-title">Rapid Indian Execution</h3>
-              </div>
-              <p className="why-desc">Top-tier engineering talent combined with AI tools to launch in half the time.</p>
-            </div>
-            
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                </div>
-                <h3 className="why-title">Fully Custom Solutions</h3>
-              </div>
-              <p className="why-desc">Bespoke clean code built to integrate seamlessly with your existing tech stack.</p>
-            </div>
-
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
-                <h3 className="why-title">SEO-Friendly Code</h3>
-              </div>
-              <p className="why-desc">Semantic HTML and optimized Core Web Vitals to maximize search rankings.</p>
-            </div>
-
-            <div className="why-card reveal active">
-              <div className="why-card-header">
-                <div className="why-icon">
-                  <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                </div>
-                <h3 className="why-title">End-to-End Service</h3>
-              </div>
-              <p className="why-desc">Full lifecycle support from planning and design to cloud launch and maintenance.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROADMAP / PROCESS */}
-      <section className="section" id="process">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Our Development Roadmap</h2>
-          </div>
-          
-          <div className="process-timeline">
-            <div className="process-step reveal active">
-              <div className="step-num-circle">01</div>
-              <h3 className="step-title">Discovery</h3>
-              <p className="step-desc">Identifying goals, analyzing target audiences, and building project requirements.</p>
-            </div>
-            
-            <div className="process-step reveal active reveal-delay-1">
-              <div className="step-num-circle">02</div>
-              <h3 className="step-title">UX/UI Planning</h3>
-              <p className="step-desc">Designing wireframes and modern interfaces tailored to brand design systems.</p>
-            </div>
-            
-            <div className="process-step reveal active reveal-delay-2">
-              <div className="step-num-circle">03</div>
-              <h3 className="step-title">Development</h3>
-              <p className="step-desc">Engineering with clean CSS, modern markup, and optimized backend frameworks.</p>
-            </div>
-            
-            <div className="process-step reveal active reveal-delay-3">
-              <div className="step-num-circle">04</div>
-              <h3 className="step-title">QA & Review</h3>
-              <p className="step-desc">Extensive performance testing, mobile-responsive validations, and device checks.</p>
-            </div>
-            
-            <div className="process-step reveal active reveal-delay-4">
-              <div className="step-num-circle">05</div>
-              <h3 className="step-title">Launch</h3>
-              <p className="step-desc">Configuring servers, domain mappings, and performance optimization integrations.</p>
-            </div>
-            
-            <div className="process-step reveal active reveal-delay-5">
-              <div className="step-num-circle">06</div>
-              <h3 className="step-title">Support</h3>
-              <p className="step-desc">On-demand optimization cycles, regular backups, and feature expansions.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PORTFOLIO SECTION */}
-      <section className="section section-dark" id="portfolio">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Featured Success Stories</h2>
-          </div>
-          
-          <div className="portfolio-filters reveal active">
-            <button className={`filter-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>All Projects</button>
-            <button className={`filter-btn ${filter === 'ecommerce' ? 'active' : ''}`} onClick={() => setFilter('ecommerce')}>E-Commerce</button>
-            <button className={`filter-btn ${filter === 'webapp' ? 'active' : ''}`} onClick={() => setFilter('webapp')}>Web Apps</button>
-            <button className={`filter-btn ${filter === 'mobile' ? 'active' : ''}`} onClick={() => setFilter('mobile')}>Mobile Apps</button>
-          </div>
-          
-          <div className="portfolio-grid">
-            {filteredProjects.map(project => (
-              <div key={project.id} className="portfolio-item reveal active" data-category={project.category} style={{ display: 'grid', opacity: 1, transform: 'translateY(0)' }}>
-                <div className="portfolio-visual">
-                  <img src={project.image} alt={`${project.title} Mockup`} />
-                </div>
-                <div className="portfolio-info">
-                  <span className="portfolio-tag">{project.tag}</span>
-                  <h3 className="portfolio-title">{project.title}</h3>
-                  <p className="portfolio-desc">{project.desc}</p>
-                  <div className="portfolio-meta">
-                    <div>
-                      <strong>Speed Boost</strong>
-                      <span>{project.speed}</span>
-                    </div>
-                    <div>
-                      <strong>Growth Metric</strong>
-                      <span>{project.metric}</span>
-                    </div>
-                  </div>
-                  <a href={`https://wa.me/918630170462?text=Hi%20Grow%20With%20Us!%20I'd%20like%20to%20know%20more%20about%20your%20${project.tag}%20solutions.`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                    {project.waText}
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS SECTION */}
-      <section className="section" id="testimonials">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Partner Endorsements</h2>
-          </div>
-          
-          <div className="testimonials-grid">
-            <div className="testimonial-card reveal active">
-              <div className="rating-stars">★★★★★</div>
-              <p className="testimonial-text">"Grow With Us rebuilt our ethnic wear platform. Our load speed went from 4.8s to 0.5s, and our conversion rate in festive sales shot up by 45%. Highly recommended for any D2C brand!"</p>
-              <div className="testimonial-author">
-                <div className="author-img">PS</div>
-                <div className="author-info">
-                  <h4>Priya Sharma</h4>
-                  <p>Founder, Kavya Fabrics (Jaipur)</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="testimonial-card reveal active">
-              <div className="rating-stars">★★★★★</div>
-              <p className="testimonial-text">"The mobile app they built using Flutter is smooth and handles high concurrent user requests without any lag. Their UPI integration is robust and secure. Launching was seamless."</p>
-              <div className="testimonial-author">
-                <div className="author-img">RM</div>
-                <div className="author-info">
-                  <h4>Rohan Mehta</h4>
-                  <p>Co-Founder, DabbaExpress (Mumbai)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ SECTION */}
-      <section className="section section-dark" id="faq">
-        <div className="container">
-          <div className="section-header text-center reveal active" style={{ marginBottom: '25px' }}>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-          </div>
-          
-          <div className="faq-container reveal active">
-            {faqs.map(faq => (
-              <div key={faq.id} className={`faq-item ${activeFaqId === faq.id ? 'active' : ''}`}>
-                <div className="faq-header" onClick={() => toggleFAQ(faq.id)}>
-                  <span className="faq-question">{faq.question}</span>
-                  <span className="faq-icon">{activeFaqId === faq.id ? '▲' : '▼'}</span>
-                </div>
-                <div className="faq-content" style={{ display: activeFaqId === faq.id ? 'block' : 'none' }}>
-                  <div className="faq-answer">{faq.answer}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="section" id="contact-cta">
-        <div className="container text-center">
-          <div className="section-header text-center reveal active">
-            <span className="section-tag">Start Growing Today</span>
-            <h2>Let's Build India's Next Digital Success Story</h2>
-            <p className="section-subtitle">Partner with us to build high-performance software that elevates your brand, streamlines operations, and helps your business grow in India's booming digital economy.</p>
-          </div>
-          <div style={{ marginTop: '40px', display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us!%20I'd%20like%20to%20get%20a%20project%20estimate." target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.202-1.362a9.92 9.92 0 0 0 4.807 1.246h.003c5.507 0 9.99-4.478 9.99-9.987 0-2.67-1.037-5.178-2.92-7.062C17.198 3.05 14.685 2 12.011 2zm0 1.644c2.227 0 4.322.868 5.898 2.448 1.577 1.579 2.445 3.678 2.445 5.908 0 4.597-3.738 8.337-8.337 8.337a8.27 8.27 0 0 1-4.223-1.155l-.303-.18-3.138.82.835-3.06-.197-.314a8.27 8.27 0 0 1-1.265-4.456c.002-4.599 3.744-8.34 8.34-8.34zm-3.6 5.48c-.198-.44-.407-.449-.595-.458l-.508-.007c-.176 0-.462.066-.704.33-.243.264-.926.903-.926 2.201 0 1.297.945 2.55 1.077 2.726.133.176 1.861 2.84 4.507 3.985 2.203.953 2.651.764 3.125.72.473-.044 1.528-.624 1.74-.1.22-.524.22-.973.154-1.077-.066-.105-.242-.167-.508-.3-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.683.859-.837 1.035-.154.176-.308.198-.573.066-.264-.132-1.117-.412-2.128-1.314-.787-.7-1.317-1.564-1.472-1.828-.154-.264-.016-.407.116-.539.118-.118.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.587-1.44-.814-1.94z"/></svg>
-              <span>Chat on WhatsApp</span>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/contact" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '0.95rem' }}>
+              <span>Get Scope Recommendation</span>
+              <ArrowRight size={16} />
+            </Link>
+            <a href="https://wa.me/918630170462?text=Hi%20Grow%20With%20Us,%20I'd%20like%20to%20discuss%20a%20project!" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '0.95rem' }}>
+              <span>Quick WhatsApp Chat</span>
             </a>
-            <Link to="/contact" className="btn btn-secondary">Fill Enquiry Form</Link>
           </div>
+        </div>
+      </section>
+
+      {/* 2. WHO WE HELP SECTION */}
+      <section className="section" id="how-we-help" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid rgba(0,0,0,0.05)', borderBottom: '1px solid rgba(0,0,0,0.05)', padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '1100px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <span className="section-tag">Self-Qualify</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.8px', color: 'var(--text-dark)', marginTop: '8px' }}>Are we the right partner for your project?</h2>
+            <p style={{ color: 'var(--text-light)', marginTop: '8px' }}>Select your path below to see how we align with your specific challenges.</p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+            {qualificationPaths.map(path => (
+              <div 
+                key={path.id}
+                onClick={() => setActivePath(path.id)}
+                style={{
+                  background: 'var(--bg-primary)',
+                  padding: '30px',
+                  borderRadius: 'var(--border-radius-md)',
+                  border: activePath === path.id ? '2px solid var(--primary)' : '1px solid var(--border-light)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: activePath === path.id ? 'var(--shadow-lg)' : 'none'
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0, color: 'var(--text-dark)' }}>{path.title}</h3>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: activePath === path.id ? 'var(--primary)' : 'transparent', border: '1px solid var(--border-light)' }} />
+                </div>
+                <h4 style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 600, marginBottom: '16px' }}>{path.sub}</h4>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{path.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. WHAT WE SOLVE SECTION */}
+      <section className="section" style={{ background: 'var(--bg-primary)', padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <span className="section-tag">Focus on Outcomes</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.8px', color: 'var(--text-dark)', marginTop: '8px' }}>Problems we solve regularly</h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {businessProblems.map((prob, i) => (
+              <div 
+                key={i}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '24px',
+                  padding: '32px',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 'var(--border-radius-md)',
+                  border: '1px solid var(--border-light)',
+                  alignItems: 'center'
+                }}
+              >
+                <div>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '0.5px' }}>{prob.outcome}</span>
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '8px 0 0 0', color: 'var(--text-dark)' }}>{prob.title}</h3>
+                </div>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>
+                  {prob.solution}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. REAL PROOF & DESIGN THINKING */}
+      <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid rgba(0,0,0,0.05)', borderBottom: '1px solid rgba(0,0,0,0.05)', padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <span className="section-tag">How We Work</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.8px', color: 'var(--text-dark)', marginTop: '8px' }}>Our design & product philosophy</h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
+            <div style={{ padding: '24px', background: 'var(--bg-primary)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--border-light)' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '12px', color: 'var(--text-dark)' }}>Business Goals First</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5, margin: 0 }}>We align engineering scope with business outcomes. We do not write code for features that do not drive conversions or automate manual work.</p>
+            </div>
+            <div style={{ padding: '24px', background: 'var(--bg-primary)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--border-light)' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '12px', color: 'var(--text-dark)' }}>Simplify Before We Build</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5, margin: 0 }}>We identify features to remove before writing code. Simplifying user flows reduces development time and prevents complex bugs.</p>
+            </div>
+            <div style={{ padding: '24px', background: 'var(--bg-primary)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--border-light)' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '12px', color: 'var(--text-dark)' }}>Maintainable Architectures</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.5, margin: 0 }}>We build with standard, lightweight web frameworks. Your system remains easy to scale, modify, or hand over to an in-house team later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. INTERACTIVE RECOMMENDATION ENGINE */}
+      <section className="section" id="recommendation-engine" style={{ background: 'var(--bg-primary)', padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <div style={{ padding: '40px', background: 'var(--bg-secondary)', borderRadius: 'var(--border-radius-md)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-premium)' }}>
+            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+              <span className="section-tag">Interactive Scoper</span>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-dark)', marginTop: '8px' }}>Get a tailored product recommendation</h2>
+              <p style={{ color: 'var(--text-light)', fontSize: '0.9rem', marginTop: '6px' }}>Select your goals below to receive a strategic recommendations summary before you contact us.</p>
+            </div>
+
+            <form onSubmit={handleGetRecommendation} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '12px', color: 'var(--text-muted)' }}>What is your primary project goal?</label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                  <button type="button" onClick={() => setSelectedGoal('launch')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'launch' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'launch' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                    Launch an MVP
+                  </button>
+                  <button type="button" onClick={() => setSelectedGoal('convert')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'convert' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'convert' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                    Improve Conversion & Speed
+                  </button>
+                  <button type="button" onClick={() => setSelectedGoal('automate')} style={{ padding: '14px', borderRadius: 'var(--border-radius-sm)', border: selectedGoal === 'automate' ? '2px solid var(--primary)' : '1px solid var(--border-light)', background: selectedGoal === 'automate' ? 'var(--primary-light)' : 'var(--bg-primary)', color: 'var(--text-dark)', fontWeight: 500, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}>
+                    Automate Operations
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" className="btn btn-primary" style={{ padding: '14px', width: '100%' }}>Get Strategy recommendation</button>
+            </form>
+
+            {recommendationResult && (
+              <div style={{ marginTop: '24px', padding: '24px', background: 'var(--primary-light)', borderRadius: 'var(--border-radius-sm)', border: '1px solid var(--primary)' }}>
+                <h4 style={{ color: 'var(--primary)', fontWeight: 700, margin: '0 0 8px 0', fontSize: '0.95rem' }}>Our Recommendation:</h4>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5, margin: 0 }}>{recommendationResult}</p>
+                <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
+                  <Link to="/contact" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Apply Strategy to Inquiry</Link>
+                  <a href={`https://wa.me/918630170462?text=${encodeURIComponent('Hi, my primary goal is: ' + selectedGoal + '. Recommendation: ' + recommendationResult)}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Discuss on WhatsApp</a>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. TOOLS DIRECTORY LINK */}
+      <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid rgba(0,0,0,0.05)', padding: '60px 0' }}>
+        <div className="container text-center" style={{ maxWidth: '800px' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: '12px' }}>Free Startup Utilities Registry</h2>
+          <p style={{ color: 'var(--text-light)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: 1.5 }}>
+            We build and maintain a suite of client-side web utility tools for startups and developers. Explore our live calculators, estimators, and conversion tools.
+          </p>
+          <Link to="/tools" className="btn btn-secondary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span>Explore Free Utilities Suite</span>
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
     </>

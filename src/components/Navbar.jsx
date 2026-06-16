@@ -5,21 +5,21 @@ import { Sun, Moon } from 'lucide-react';
 export default function Navbar() {
   const [mobileActive, setMobileActive] = useState(false);
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'dark';
+    return localStorage.getItem('theme') || 'light';
   });
   const location = useLocation();
 
   useEffect(() => {
-    if (theme === 'light') {
-      document.body.classList.add('light-theme');
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
     } else {
-      document.body.classList.remove('light-theme');
+      document.body.classList.remove('dark-theme');
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
   const isHashActive = (hash) => {
@@ -43,7 +43,7 @@ export default function Navbar() {
         
         <nav>
           <ul className={`nav-links ${mobileActive ? 'active' : ''}`} id="nav-menu">
-            <li>
+             <li>
               <Link 
                 to="/" 
                 className={`nav-link ${isHomeActive() ? 'active' : ''}`}
@@ -54,38 +54,11 @@ export default function Navbar() {
             </li>
             <li>
               <Link 
-                to="/#services" 
-                className={`nav-link ${isHashActive('#services') ? 'active' : ''}`}
+                to="/#how-we-help" 
+                className={`nav-link ${isHashActive('#how-we-help') ? 'active' : ''}`}
                 onClick={() => setMobileActive(false)}
               >
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/#why-choose-us" 
-                className={`nav-link ${isHashActive('#why-choose-us') ? 'active' : ''}`}
-                onClick={() => setMobileActive(false)}
-              >
-                Why Us
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/#portfolio" 
-                className={`nav-link ${isHashActive('#portfolio') ? 'active' : ''}`}
-                onClick={() => setMobileActive(false)}
-              >
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/#faq" 
-                className={`nav-link ${isHashActive('#faq') ? 'active' : ''}`}
-                onClick={() => setMobileActive(false)}
-              >
-                FAQ
+                How We Help
               </Link>
             </li>
             <li>
@@ -95,7 +68,7 @@ export default function Navbar() {
                 style={{ color: 'var(--primary)', fontWeight: 700 }}
                 onClick={() => setMobileActive(false)}
               >
-                Tools
+                Free Utilities
               </Link>
             </li>
             <li>
@@ -104,7 +77,7 @@ export default function Navbar() {
                 className={`nav-link ${isPathActive('/contact') ? 'active' : ''}`}
                 onClick={() => setMobileActive(false)}
               >
-                Contact
+                Get Strategy Recommendation
               </Link>
             </li>
           </ul>

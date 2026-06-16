@@ -543,13 +543,14 @@ export default function Tools() {
   ];
 
   return (
-    <section className="section section-dark" id="tools-hub-section" style={{ paddingTop: '140px', minHeight: '100vh', paddingBottom: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <section className="section" id="tools-hub-section" style={{ paddingTop: '140px', minHeight: '100vh', paddingBottom: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', background: 'var(--bg-primary)' }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
         
         {/* Hub Header */}
         {activeTool === null && (
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, color: '#ffffff' }}>Free Web <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Utilities Suite</span></h1>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>Free Startup <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Utilities Suite</span></h1>
+            <p style={{ color: 'var(--text-light)', marginTop: '8px' }}>Verifiable, client-side tools built to accelerate startup workflows without databases or sign-ups.</p>
           </div>
         )}
 
@@ -562,7 +563,7 @@ export default function Tools() {
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { staggerChildren: 0.03 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}
           >
             {toolsMenu.map(t => (
               <motion.div 
@@ -575,19 +576,18 @@ export default function Tools() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTool(t.id)}
                 style={{
-                  background: 'rgba(17, 24, 39, 0.45)',
-                  borderRadius: '10px',
-                  padding: '16px 20px',
-                  border: '1px solid rgba(255, 255, 255, 0.06)',
-                  backdropFilter: 'blur(10px)',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 'var(--border-radius-md)',
+                  padding: '24px',
+                  border: '1px solid var(--border-light)',
+                  boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '14px',
+                  gap: '16px',
                   position: 'relative',
                   overflow: 'hidden',
-                  transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+                  transition: 'all 0.2s ease'
                 }}
               >
                 {/* Advanced Hover Glow Background */}
@@ -603,7 +603,7 @@ export default function Tools() {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    background: `radial-gradient(circle at 10% 20%, ${t.color}15 0%, transparent 70%)`,
+                    background: `radial-gradient(circle at 10% 20%, ${t.color}10 0%, transparent 70%)`,
                     pointerEvents: 'none',
                     zIndex: 0
                   }}
@@ -612,14 +612,14 @@ export default function Tools() {
                 {/* Left Icon Badge with Spring Animate */}
                 <motion.div 
                   variants={{
-                    hover: { scale: 1.08, rotate: 6, backgroundColor: `${t.color}25` }
+                    hover: { scale: 1.08, rotate: 6, backgroundColor: `${t.color}20` }
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 10 }}
                   style={{ 
-                    width: '44px', 
-                    height: '44px', 
-                    borderRadius: '8px', 
-                    background: `${t.color}15`, 
+                    width: '48px', 
+                    height: '48px', 
+                    borderRadius: '10px', 
+                    background: `${t.color}10`, 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
@@ -635,12 +635,13 @@ export default function Tools() {
                 <div style={{ flex: 1, minWidth: 0, zIndex: 1 }}>
                   <motion.h3 
                     variants={{
-                      hover: { color: t.color }
+                      hover: { color: 'var(--primary)' }
                     }}
-                    style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', margin: 0, lineHeight: 1.2, transition: 'color 0.2s ease' }}
+                    style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2, transition: 'color 0.2s ease' }}
                   >
                     {t.name}
                   </motion.h3>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '4px', margin: '4px 0 0 0', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.desc}</p>
                 </div>
               </motion.div>
             ))}
