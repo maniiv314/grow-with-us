@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppBubble from './components/WhatsAppBubble';
@@ -12,6 +12,51 @@ import Tools from './pages/Tools';
 import Contact from './pages/Contact';
 
 export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 1. Scroll to top on navigation
+    window.scrollTo(0, 0);
+
+    // 2. Initialize scroll reveals
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(element => {
+      revealObserver.observe(element);
+    });
+
+    // 3. Sticky header listener
+    const header = document.getElementById('header');
+    const handleScroll = () => {
+      if (header) {
+        if (window.scrollY > 20) {
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.remove('header-scrolled');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Trigger initial state
+
+    return () => {
+      revealObserver.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [location.pathname]);
+
   return (
     <>
       <Navbar />
