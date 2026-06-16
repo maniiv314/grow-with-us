@@ -68,6 +68,7 @@ const faqs = [
 export default function Home() {
   const [filter, setFilter] = useState('all');
   const [activeFaqId, setActiveFaqId] = useState(null);
+  const [heroTab, setHeroTab] = useState('metrics');
 
   const filteredProjects = filter === 'all' 
     ? projects 
@@ -116,52 +117,108 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="hero-visual reveal active reveal-delay-2">
-            <div className="hero-mockup-wrapper">
+          <div className="hero-visual reveal active reveal-delay-2" style={{ position: 'relative' }}>
+            <div className="hero-mockup-wrapper" style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.4)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(17, 24, 39, 0.7)', backdropFilter: 'blur(12px)' }}>
               <div className="hero-mockup">
-                <div className="mockup-header">
-                  <span className="mockup-dot"></span>
-                  <span className="mockup-dot"></span>
-                  <span className="mockup-dot"></span>
+                <div className="mockup-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', background: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56', display: 'inline-block' }}></span>
+                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e', display: 'inline-block' }}></span>
+                    <span className="mockup-dot" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f', display: 'inline-block' }}></span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {['metrics', 'architecture', 'api'].map(tab => (
+                      <button 
+                        key={tab} 
+                        onClick={() => setHeroTab(tab)}
+                        style={{
+                          background: heroTab === tab ? 'rgba(255,255,255,0.08)' : 'transparent',
+                          border: 'none',
+                          borderRadius: '4px',
+                          color: heroTab === tab ? 'var(--primary)' : '#94a3b8',
+                          padding: '4px 10px',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          textTransform: 'capitalize',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="mockup-content">
-                  <h3 className="mockup-title">Conversion Dashboard</h3>
-                  <div className="mockup-chart">
-                    <span className="chart-bar" style={{ height: '35%', animationDelay: '0.1s' }}></span>
-                    <span className="chart-bar" style={{ height: '55%', animationDelay: '0.3s' }}></span>
-                    <span className="chart-bar" style={{ height: '40%', animationDelay: '0.2s' }}></span>
-                    <span className="chart-bar" style={{ height: '75%', animationDelay: '0.5s' }}></span>
-                    <span className="chart-bar" style={{ height: '60%', animationDelay: '0.4s' }}></span>
-                    <span className="chart-bar" style={{ height: '90%', animationDelay: '0.7s' }}></span>
-                    <span className="chart-bar" style={{ height: '98%', animationDelay: '0.6s' }}></span>
-                  </div>
-                  <div className="mockup-stats">
-                    <div className="mockup-stat-card">
-                      <div className="mockup-stat-label">Conversions</div>
-                      <div className="mockup-stat-val">+142%</div>
+                
+                <div className="mockup-content" style={{ padding: '24px', minHeight: '220px' }}>
+                  {heroTab === 'metrics' && (
+                    <div>
+                      <h4 style={{ fontSize: '0.85rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>Live Web Performance</h4>
+                      <div className="mockup-chart" style={{ display: 'flex', alignItems: 'flex-end', height: '90px', gap: '10px', marginBottom: '20px' }}>
+                        <span className="chart-bar" style={{ height: '35%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '55%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '40%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '75%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '60%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '90%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                        <span className="chart-bar" style={{ height: '98%', width: '100%', background: 'linear-gradient(to top, var(--primary), var(--accent))', borderRadius: '4px', display: 'inline-block' }}></span>
+                      </div>
+                      <div className="mockup-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                        <div className="mockup-stat-card" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '10px 14px', borderRadius: '8px' }}>
+                          <div className="mockup-stat-label" style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Conversions</div>
+                          <div className="mockup-stat-val" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--primary)', marginTop: '4px' }}>+142%</div>
+                        </div>
+                        <div className="mockup-stat-card" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '10px 14px', borderRadius: '8px' }}>
+                          <div className="mockup-stat-label" style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Load Velocity</div>
+                          <div className="mockup-stat-val" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--accent)', marginTop: '4px' }}>0.4s</div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="mockup-stat-card">
-                      <div className="mockup-stat-label">Load Velocity</div>
-                      <div className="mockup-stat-val">0.4s</div>
+                  )}
+
+                  {heroTab === 'architecture' && (
+                    <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#cbd5e1', lineHeight: '1.5' }}>
+                      <div><span style={{ color: '#ec4899' }}>const</span> <span style={{ color: '#3b82f6' }}>agencyStack</span> = &#123;</div>
+                      <div style={{ paddingLeft: '16px' }}>frontend: <span style={{ color: '#10b981' }}>'NextJS / React'</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}>styling: <span style={{ color: '#10b981' }}>'Vanilla CSS / Tailwind'</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}>animations: <span style={{ color: '#10b981' }}>'Framer Motion'</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}>infrastructure: <span style={{ color: '#10b981' }}>'Vercel / Cloudflare'</span></div>
+                      <div>&#125;;</div>
+                      <div style={{ marginTop: '12px', color: '#64748b' }}>// Optimized Core Web Vitals (SEO 100)</div>
                     </div>
-                  </div>
+                  )}
+
+                  {heroTab === 'api' && (
+                    <div style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#cbd5e1', lineHeight: '1.5' }}>
+                      <div>&#123;</div>
+                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"status"</span>: <span style={{ color: '#10b981' }}>"success"</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"response_ms"</span>: <span style={{ color: '#76c000' }}>400</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"load_speed"</span>: <span style={{ color: '#10b981' }}>"instant"</span>,</div>
+                      <div style={{ paddingLeft: '16px' }}><span style={{ color: '#00bcd4' }}>"metrics"</span>: &#123;</div>
+                      <div style={{ paddingLeft: '32px' }}><span style={{ color: '#00bcd4' }}>"conversions"</span>: <span style={{ color: '#10b981' }}>"+142%"</span>,</div>
+                      <div style={{ paddingLeft: '32px' }}><span style={{ color: '#00bcd4' }}>"satisfaction"</span>: <span style={{ color: '#10b981' }}>"99.4%"</span></div>
+                      <div style={{ paddingLeft: '16px' }}>&#125;</div>
+                      <div>&#125;</div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
             
-            <div className="float-card float-card-1">
-              <div className="float-icon">★</div>
+            {/* Elegant Floating Indicators */}
+            <div className="float-card float-card-1" style={{ position: 'absolute', top: '10px', left: '-50px', background: 'rgba(17, 24, 39, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)', padding: '10px 18px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+              <div className="float-icon" style={{ color: 'var(--primary)', fontWeight: 'bold' }}>★</div>
               <div className="float-info">
-                <h4>Premium Design</h4>
-                <p>Tailored HSL theme</p>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: '700', color: '#fff', margin: 0 }}>Premium Quality</h4>
+                <p style={{ fontSize: '0.7rem', color: '#cbd5e1', margin: 0 }}>Bespoke HSL Theme</p>
               </div>
             </div>
             
-            <div className="float-card float-card-2">
-              <div className="float-icon">💻</div>
+            <div className="float-card float-card-2" style={{ position: 'absolute', bottom: '10px', right: '-30px', background: 'rgba(17, 24, 39, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)', padding: '10px 18px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+              <div className="float-icon" style={{ color: 'var(--accent)', fontWeight: 'bold' }}>⚡</div>
               <div className="float-info">
-                <h4>Active Leads</h4>
-                <p>18 Inquiries today</p>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: '700', color: '#fff', margin: 0 }}>Active Leads</h4>
+                <p style={{ fontSize: '0.7rem', color: '#cbd5e1', margin: 0 }}>Real-time Delivery</p>
               </div>
             </div>
           </div>

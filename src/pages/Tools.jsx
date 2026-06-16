@@ -649,7 +649,7 @@ export default function Tools() {
 
         {/* CONDITION 2: DEDICATED TOOL SCREEN (activeTool is not null) */}
         {activeTool !== null && (
-          <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ maxWidth: '1000px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
             {/* Focused Active Tool Area */}
             <motion.div 
@@ -657,13 +657,13 @@ export default function Tools() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
               style={{ 
-                background: 'rgba(17, 24, 39, 0.75)', 
-                backdropFilter: 'blur(10px)',
-                borderRadius: '12px', 
-                padding: '28px', 
+                background: 'var(--bg-glass-dark)', 
+                backdropFilter: 'blur(16px)',
+                borderRadius: 'var(--border-radius-md)', 
+                padding: '36px', 
                 border: '1px solid rgba(255, 255, 255, 0.08)', 
-                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
-                color: '#ffffff'
+                boxShadow: 'var(--shadow-premium)',
+                color: 'var(--text-dark)'
               }}
             >
               {(() => {
