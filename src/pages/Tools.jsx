@@ -151,7 +151,7 @@ export default function Tools() {
       setCalcInput('');
     } else if (val === '=') {
       try {
-        const sanitized = calcInput.replace(/[^0-9+\-*\/.]/g, '');
+        const sanitized = calcInput.replace(new RegExp('[^0-9+\\-*/.]', 'g'), '');
         const res = new Function(`return ${sanitized}`)();
         setCalcInput(String(res));
       } catch {
@@ -372,7 +372,7 @@ export default function Tools() {
       setReadingTime(0);
       return;
     }
-    const words = text.split(/\s+/).filter(word => word.length > 0);
+    const words = text.split(new RegExp('\\s+')).filter(word => word.length > 0);
     setWordCount(words.length);
     setCharCount(counterText.length);
     setReadingTime(Math.ceil(words.length / 220));
