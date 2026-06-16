@@ -136,14 +136,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Gather input data
       const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const budget = document.getElementById('budget').value;
+      const message = document.getElementById('message').value;
 
-      // Simulate API post
-      formStatus.textContent = 'Submitting message...';
+      formStatus.textContent = 'Redirecting to WhatsApp to send your inquiry...';
       formStatus.className = 'form-status';
       formStatus.style.display = 'block';
 
+      // Format WhatsApp Message
+      const textMsg = `Hi Grow With Us, I want to submit a project inquiry!
+- Name: ${name}
+- Email: ${email}
+- Budget Estimate: ${budget}
+- Project Details: ${message}`;
+
+      const encodedMsg = encodeURIComponent(textMsg);
+      const whatsappUrl = `https://wa.me/918630170462?text=${encodedMsg}`;
+
       setTimeout(() => {
-        formStatus.textContent = `Thank you, ${name}! Your inquiry has been received. We'll contact you shortly.`;
+        window.open(whatsappUrl, '_blank');
+        formStatus.textContent = `Thank you, ${name}! Your inquiry has been formatted. Please send the message in the opened WhatsApp window.`;
         formStatus.className = 'form-status success';
         contactForm.reset();
       }, 1000);
