@@ -220,6 +220,10 @@ export default function Home() {
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                   <span>High Converting</span>
                 </li>
+                <li className="service-feature-li">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  <span>Ultra Fast Speed</span>
+                </li>
               </ul>
               <Link to="/contact" className="service-link">
                 <span>Get Started</span>
@@ -248,6 +252,10 @@ export default function Home() {
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                   <span>Custom Dashboards</span>
+                </li>
+                <li className="service-feature-li">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  <span>API Integrations</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">
@@ -278,6 +286,10 @@ export default function Home() {
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                   <span>App Store Launch</span>
                 </li>
+                <li className="service-feature-li">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  <span>Cross-Platform</span>
+                </li>
               </ul>
               <Link to="/contact" className="service-link">
                 <span>Get Started</span>
@@ -306,6 +318,10 @@ export default function Home() {
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                   <span>Interactive Mockups</span>
+                </li>
+                <li className="service-feature-li">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  <span>Design Systems</span>
                 </li>
               </ul>
               <Link to="/contact" className="service-link">

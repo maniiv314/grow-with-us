@@ -820,15 +820,18 @@ button, input, textarea, select {
   margin-bottom: 20px;
   margin-top: auto;
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
 }
 
 .service-feature-li {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 15px;
+  gap: 8px;
+  font-size: 14px;
   color: var(--text-muted);
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .service-feature-li svg {
