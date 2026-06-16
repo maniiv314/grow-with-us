@@ -564,7 +564,7 @@ export default function Tools() {
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { staggerChildren: 0.03 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: '8px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '8px' }}
           >
             {toolsMenu.map(t => (
               <motion.div 
@@ -573,7 +573,8 @@ export default function Tools() {
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
                 }}
-                whileHover={{ y: -3, scale: 1.01, boxShadow: 'var(--shadow-md)', borderColor: t.color }}
+                whileHover="hover"
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTool(t.id)}
                 style={{
                   background: '#ffffff',
@@ -585,28 +586,61 @@ export default function Tools() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'border-color 0.2s ease-in-out'
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
-                {/* Left Icon Badge */}
-                <div style={{ 
-                  width: '34px', 
-                  height: '34px', 
-                  borderRadius: '6px', 
-                  background: `${t.color}15`, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
+                {/* Advanced Hover Glow Background */}
+                <motion.div 
+                  variants={{
+                    hover: { opacity: 1, scale: 1.2 }
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: `radial-gradient(circle at 10% 20%, ${t.color}08 0%, transparent 70%)`,
+                    pointerEvents: 'none',
+                    zIndex: 0
+                  }}
+                />
+
+                {/* Left Icon Badge with Spring Animate */}
+                <motion.div 
+                  variants={{
+                    hover: { scale: 1.08, rotate: 6, backgroundColor: `${t.color}25` }
+                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+                  style={{ 
+                    width: '34px', 
+                    height: '34px', 
+                    borderRadius: '6px', 
+                    background: `${t.color}15`, 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    zIndex: 1,
+                    transition: 'background-color 0.25s ease'
+                  }}
+                >
                   <t.icon size={18} style={{ color: t.color }} />
-                </div>
+                </motion.div>
 
                 {/* Right Text Space */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <h3 style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2 }}>
+                <div style={{ flex: 1, minWidth: 0, zIndex: 1 }}>
+                  <motion.h3 
+                    variants={{
+                      hover: { color: t.color }
+                    }}
+                    style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0, lineHeight: 1.2, transition: 'color 0.2s ease' }}
+                  >
                     {t.name}
-                  </h3>
+                  </motion.h3>
                 </div>
               </motion.div>
             ))}
