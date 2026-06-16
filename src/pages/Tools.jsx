@@ -564,7 +564,7 @@ export default function Tools() {
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { staggerChildren: 0.03 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '10px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: '8px' }}
           >
             {toolsMenu.map(t => (
               <motion.div 
@@ -578,13 +578,13 @@ export default function Tools() {
                 style={{
                   background: '#ffffff',
                   borderRadius: '6px',
-                  padding: '10px 12px',
+                  padding: '8px 10px',
                   border: '1px solid var(--border-light)',
                   boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
+                  gap: '8px',
                   transition: 'border-color 0.2s ease-in-out'
                 }}
               >
