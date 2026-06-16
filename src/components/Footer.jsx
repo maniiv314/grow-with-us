@@ -22,10 +22,10 @@ export default function Footer() {
         <div>
           <h4 className="footer-title">Services</h4>
           <ul className="footer-links">
-            <li><Link to="/services">Website Development</Link></li>
-            <li><Link to="/services">Web App Development</Link></li>
-            <li><Link to="/services">Mobile App Development</Link></li>
-            <li><Link to="/services">UI/UX Strategy</Link></li>
+            <li><Link to="/#services">Website Development</Link></li>
+            <li><Link to="/#services">Web App Development</Link></li>
+            <li><Link to="/#services">Mobile App Development</Link></li>
+            <li><Link to="/#services">UI/UX Strategy</Link></li>
           </ul>
         </div>
         
@@ -33,10 +33,10 @@ export default function Footer() {
           <h4 className="footer-title">Quick Links</h4>
           <ul className="footer-links">
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/why-us">Why Us</Link></li>
-            <li><Link to="/portfolio">Featured Work</Link></li>
-            <li><Link to="/why-us">Roadmap</Link></li>
-            <li><Link to="/faq">FAQs</Link></li>
+            <li><Link to="/#why-choose-us">Why Us</Link></li>
+            <li><Link to="/#portfolio">Featured Work</Link></li>
+            <li><Link to="/#process">Roadmap</Link></li>
+            <li><Link to="/#faq">FAQs</Link></li>
             <li><Link to="/tools">Tools</Link></li>
           </ul>
         </div>
