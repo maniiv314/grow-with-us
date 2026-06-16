@@ -204,7 +204,7 @@ export default function Home() {
                 <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Website Development</h3>
-              <p className="service-desc">Stunning agency-grade marketing websites and conversion-focused landing pages built with lightning-fast load times and seamless responsiveness.</p>
+              <p className="service-desc">Lightning-fast, responsive websites and landing pages engineered for maximum conversions.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -231,7 +231,7 @@ export default function Home() {
                 <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Web App Development</h3>
-              <p className="service-desc">Robust SaaS applications, custom customer portals, internal CRM systems, and database integrations tailored to your technical workflow demands.</p>
+              <p className="service-desc">Scalable SaaS platforms, custom portals, and database integrations built to run your business.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -258,7 +258,7 @@ export default function Home() {
                 <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
               </div>
               <h3 className="service-title">Mobile App Development</h3>
-              <p className="service-desc">Cross-platform iOS and Android mobile applications utilizing single-codebase architectures (Flutter / React Native) for rapid time-to-market.</p>
+              <p className="service-desc">High-performance iOS and Android mobile applications built on Flutter and React Native.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -285,7 +285,7 @@ export default function Home() {
                 <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
               </div>
               <h3 className="service-title">UI/UX Strategy</h3>
-              <p className="service-desc">Strategic user research, low-fidelity wireframing, high-fidelity layouts, interactive prototyping, and seamless handoff to engineering teams.</p>
+              <p className="service-desc">Premium user journeys, high-fidelity layouts, and interactive prototypes built to engage.</p>
               <ul className="service-features">
                 <li className="service-feature-li">
                   <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -322,7 +322,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               </div>
               <h3 className="why-title">Affordable Pricing</h3>
-              <p className="why-desc">High-end engineering and custom designs structured to deliver exceptional quality without bloated digital agency price tags.</p>
+              <p className="why-desc">Premium custom designs and high-end code without bloated agency pricing.</p>
             </div>
             
             <div className="why-card reveal active">
@@ -330,7 +330,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
               </div>
               <h3 className="why-title">Premium Design Quality</h3>
-              <p className="why-desc">We steer clear of basic templates. Every component is custom-designed, pixel-perfect, and fully matches your brand persona.</p>
+              <p className="why-desc">Zero templates. Every component is custom-designed and pixel-perfect.</p>
             </div>
             
             <div className="why-card reveal active">
@@ -338,7 +338,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
               </div>
               <h3 className="why-title">Rapid Indian Execution</h3>
-              <p className="why-desc">We combine localized AI development tools with top-tier Indian engineering talent to launch projects in half the time.</p>
+              <p className="why-desc">Top-tier engineering talent combined with AI tools to launch in half the time.</p>
             </div>
             
             <div className="why-card reveal active">
@@ -346,7 +346,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
               </div>
               <h3 className="why-title">Fully Custom Solutions</h3>
-              <p className="why-desc">Tailor-made software tailored to your specific workflows. We write maintainable, clean code that integrates with your tech stack.</p>
+              <p className="why-desc">Bespoke clean code built to integrate seamlessly with your existing tech stack.</p>
             </div>
 
             <div className="why-card reveal active">
@@ -354,7 +354,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
               </div>
               <h3 className="why-title">SEO-Friendly Code</h3>
-              <p className="why-desc">We structure clean, semantic HTML5, implement microdata/schema tags, and optimize Core Web Vitals to maximize search visibility.</p>
+              <p className="why-desc">Semantic HTML and optimized Core Web Vitals to maximize search rankings.</p>
             </div>
 
             <div className="why-card reveal active">
@@ -362,7 +362,7 @@ export default function Home() {
                 <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
               </div>
               <h3 className="why-title">End-to-End Service</h3>
-              <p className="why-desc">We manage every stage of your project lifecycle: from planning and wireframing, to staging development, cloud launch, and support.</p>
+              <p className="why-desc">Full lifecycle support from planning and design to cloud launch and maintenance.</p>
             </div>
           </div>
         </div>
