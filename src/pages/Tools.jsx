@@ -651,12 +651,37 @@ export default function Tools() {
                 boxShadow: 'var(--shadow-md)' 
               }}
             >
+              {(() => {
+                const currentTool = toolsMenu.find(t => t.id === activeTool);
+                if (!currentTool) return null;
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', borderBottom: '1px solid var(--border-light)', paddingBottom: '12px' }}>
+                    <div style={{ 
+                      width: '36px', 
+                      height: '36px', 
+                      borderRadius: '6px', 
+                      background: `${currentTool.color}15`, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center' 
+                    }}>
+                      <currentTool.icon size={18} style={{ color: currentTool.color }} />
+                    </div>
+                    <div>
+                      <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>
+                        {currentTool.name}
+                      </h2>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.76rem', margin: '2px 0 0 0', lineHeight: 1.3 }}>
+                        {currentTool.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
               
               {/* 1. WEATHER FORECASTER */}
               {activeTool === 'weather' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🌤️ Weather Forecast & Checker</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Access current weather statistics and atmospheric indexes globally.</p>
                   <form onSubmit={checkWeather} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                     <input type="text" className="form-input" value={weatherCity} onChange={(e) => setWeatherCity(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search City..." />
                     <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={weatherLoading}>
@@ -682,8 +707,6 @@ export default function Tools() {
               {/* 2. DICTIONARY */}
               {activeTool === 'dictionary' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📖 English Dictionary & Definer</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Search word meanings, phonetics, and synonyms using a free open api.</p>
                   <form onSubmit={lookupWord} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                     <input type="text" className="form-input" value={dictWord} onChange={(e) => setDictWord(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search English word..." />
                     <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={dictLoading}>
@@ -712,8 +735,6 @@ export default function Tools() {
               {/* 3. CALCULATOR */}
               {activeTool === 'calculator' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧮 Standard Calculator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Perform standard math calculations directly in the browser.</p>
                   <div style={{ maxWidth: '280px', margin: '0 auto', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
                     <div style={{ background: '#ffffff', padding: '10px', fontSize: '1.5rem', borderRadius: '6px', textAlign: 'right', minHeight: '50px', marginBottom: '15px', border: '1px solid var(--border-light)', wordBreak: 'break-all' }}>
                       {calcInput || '0'}
@@ -736,8 +757,6 @@ export default function Tools() {
               {/* 4. STOPWATCH */}
               {activeTool === 'stopwatch' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⏱️ Stopwatch & Precision Timer</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure precision lap times and intervals client-side.</p>
                   <div style={{ textAlign: 'center', background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <h2 style={{ fontSize: '3rem', fontFamily: 'monospace', fontWeight: 800, color: 'var(--primary)' }}>{formatStopwatch(stopwatchTime)}</h2>
                     <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
@@ -755,8 +774,6 @@ export default function Tools() {
               {/* 5. SPEED TEST */}
               {activeTool === 'speedtest' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚡ Internet Speed Test</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure ping latency and mock local network speed downloads.</p>
                   <div style={{ display: 'flex', alignItems: 'center', justify: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '130px', height: '130px', borderRadius: '50%', border: '6px solid var(--border-light)', position: 'relative' }}>
                       <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary)' }}>{speedState === 'testing' ? '...' : downloadSpeed || '0'}</div>
@@ -775,8 +792,6 @@ export default function Tools() {
               {/* 6. UNIT CONVERTER */}
               {activeTool === 'unit' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔄 Universal Unit Converter</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert metric and imperial lengths, weights, and temperatures.</p>
                   <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
                     {['length', 'weight', 'temp'].map(type => (
                       <button key={type} onClick={() => handleUnitTypeChange(type)} style={{ padding: '6px 12px', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border-light)', background: unitType === type ? 'var(--primary)' : '#fff', color: unitType === type ? '#fff' : 'var(--text-dark)', cursor: 'pointer', textTransform: 'capitalize' }}>
@@ -809,8 +824,6 @@ export default function Tools() {
               {/* 7. QR CODE GENERATOR */}
               {activeTool === 'qr' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎨 Custom QR Code Generator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Make styled custom QR codes. Adjust background, color, and add central icons.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                       <input type="text" className="form-input" value={qrText} onChange={(e) => setQrText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Target Link URL..." />
@@ -836,8 +849,6 @@ export default function Tools() {
               {/* 8. IMAGE COMPRESSOR */}
               {activeTool === 'compressor' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🖼️ Image Compressor & Resizer</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Reduce image file sizes directly inside the browser canvas.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <input type="file" accept="image/*" onChange={handleImageUpload} style={{ width: '100%', fontSize: '0.85rem' }} />
@@ -871,8 +882,6 @@ export default function Tools() {
               {/* 9. WORD COUNTER */}
               {activeTool === 'wordcounter' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📝 Word & Character Counter</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Paste text to retrieve words, characters, and reading times.</p>
                   <textarea className="form-input" rows="4" placeholder="Type or paste text..." value={counterText} onChange={(e) => setCounterText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.95rem', fontFamily: 'inherit' }} />
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '15px' }}>
                     {[['Words', wordCount], ['Characters', charCount], ['Read Time', `${readingTime}m`]].map(([lbl, val]) => (
@@ -888,8 +897,6 @@ export default function Tools() {
               {/* 10. CURRENCY CONVERTER */}
               {activeTool === 'currency' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>💵 Currency Converter</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert currencies using real-time open exchange indexes.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', alignItems: 'center' }}>
                     <input type="number" className="form-input" value={currencyAmount} onChange={(e) => setCurrencyAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} />
                     <select className="form-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
@@ -908,8 +915,6 @@ export default function Tools() {
               {/* 11. PASSWORD GENERATOR */}
               {activeTool === 'password' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔑 Password Generator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Build secure passwords client-side.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <label style={{ fontSize: '0.85rem' }}>Length: {passLength}</label>
@@ -932,8 +937,6 @@ export default function Tools() {
               {/* 12. JSON FORMATTER */}
               {activeTool === 'json' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚙️ JSON Formatter & Validator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Validate syntax parameters and pretty-print JSON payload structures.</p>
                   <textarea className="form-input" rows="5" placeholder="Paste minified JSON here..." value={jsonInput} onChange={(e) => { setJsonInput(e.target.value); setJsonError(''); }} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.85rem', fontFamily: 'monospace' }} />
                   {jsonError && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '5px', fontFamily: 'monospace' }}>Error: {jsonError}</div>}
                   <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '10px', padding: '8px 20px', fontSize: '0.85rem' }}>Format & Validate</button>
@@ -943,8 +946,6 @@ export default function Tools() {
               {/* 13. GST CALCULATOR */}
               {activeTool === 'gst' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧾 GST Tax Calculator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Compute tax breakdowns for standard Indian invoice slabs.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <input type="number" className="form-input" value={gstAmount} onChange={(e) => setGstAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Amount..." />
@@ -972,8 +973,6 @@ export default function Tools() {
               {/* 14. AGE CALCULATOR */}
               {activeTool === 'age' && (
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎂 Age Calculator</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Determine exact age in years, months, and days based on birth date.</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', alignItems: 'center' }}>
                     <div className="form-group">
                       <label style={{ fontSize: '0.85rem', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Date of Birth</label>
