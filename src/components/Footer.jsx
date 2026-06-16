@@ -57,7 +57,7 @@ export default function Footer() {
       </div>
       
       <div className="container footer-bottom" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '24px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '16px', fontSize: '0.85rem', color: 'var(--text-light)' }}>
-        <p>&copy; 2026 Grow With Us. All rights reserved.</p>
+        <p>{"©"} 2026 Grow With Us. All rights reserved.</p>
         <p>Custom Built via AI-Powered Agent Stack.</p>
       </div>
     </footer>

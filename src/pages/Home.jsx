@@ -171,7 +171,7 @@ export default function Home() {
         <div className="container" style={{ maxWidth: '1000px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <span className="section-tag">How We Work</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.8px', color: 'var(--text-dark)', marginTop: '8px' }}>Our design & product philosophy</h2>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, letterSpacing: '-0.8px', color: 'var(--text-dark)', marginTop: '8px' }}>Our design and product philosophy</h2>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>

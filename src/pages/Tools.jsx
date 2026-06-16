@@ -1010,7 +1010,7 @@ export default function Tools() {
                         <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}><input type="checkbox" checked={includeUpper} onChange={(e) => setIncludeUpper(e.target.checked)} /><span>ABC</span></label>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}><input type="checkbox" checked={includeLower} onChange={(e) => setIncludeLower(e.target.checked)} /><span>abc</span></label>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}><input type="checkbox" checked={includeNumbers} onChange={(e) => setIncludeNumbers(e.target.checked)} /><span>123</span></label>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}><input type="checkbox" checked={includeSymbols} onChange={(e) => setIncludeSymbols(e.target.checked)} /><span>#$&</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}><input type="checkbox" checked={includeSymbols} onChange={(e) => setIncludeSymbols(e.target.checked)} /><span>{"#$&"}</span></label>
                       </div>
                     </div>
                     <div style={{ background: 'var(--bg-primary)', padding: '20px', borderRadius: 'var(--border-radius-md)', border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
@@ -1026,7 +1026,7 @@ export default function Tools() {
                 <div>
                   <textarea className="form-input" rows="5" placeholder="Paste minified JSON here..." value={jsonInput} onChange={(e) => { setJsonInput(e.target.value); setJsonError(''); }} style={{ width: '100%', padding: '12px 14px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', borderRadius: 'var(--border-radius-sm)', color: 'var(--text-dark)', fontSize: '0.85rem', fontFamily: 'monospace' }} />
                   {jsonError && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '8px', fontFamily: 'monospace' }}>Error: {jsonError}</div>}
-                  <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '12px', padding: '10px 20px', fontSize: '0.85rem', borderRadius: 'var(--border-radius-sm)' }}>Format & Validate</button>
+                  <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '12px', padding: '10px 20px', fontSize: '0.85rem', borderRadius: 'var(--border-radius-sm)' }}>Format and Validate</button>
                 </div>
               )}
 
