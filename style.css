@@ -299,7 +299,7 @@ button, input, textarea, select {
 }
 
 .logo img {
-  height: 44px;
+  height: 54px;
   width: auto;
   transition: var(--transition-normal);
 }
