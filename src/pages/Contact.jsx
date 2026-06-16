@@ -6,7 +6,6 @@ export default function Contact() {
     name: '',
     email: '',
     service: 'Web App Development',
-    budget: '₹2L - ₹5L',
     message: ''
   });
   const [status, setStatus] = useState('');
@@ -17,8 +16,6 @@ export default function Contact() {
     { id: 'Mobile App Development', label: 'Mobile App', icon: Smartphone },
     { id: 'UI/UX Strategy', label: 'UI/UX Strategy', icon: Compass }
   ];
-
-  const budgets = ['Under ₹2L', '₹2L - ₹5L', '₹5L - ₹10L', '₹10L+'];
 
   const handleChange = (e) => {
     setFormData({
@@ -34,13 +31,6 @@ export default function Contact() {
     });
   };
 
-  const handleSelectBudget = (budgetValue) => {
-    setFormData({
-      ...formData,
-      budget: budgetValue
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('Redirecting to WhatsApp to send your inquiry...');
@@ -49,7 +39,6 @@ export default function Contact() {
 - Name: ${formData.name}
 - Email: ${formData.email}
 - Service Required: ${formData.service}
-- Budget Estimate: ${formData.budget}
 - Project Details: ${formData.message || 'Not specified'}`;
 
     const encodedMsg = encodeURIComponent(textMsg);
@@ -58,7 +47,7 @@ export default function Contact() {
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       setStatus(`Thank you, ${formData.name}! Your inquiry has been formatted. Please send the message in the opened WhatsApp window.`);
-      setFormData({ name: '', email: '', service: 'Web App Development', budget: '₹2L - ₹5L', message: '' });
+      setFormData({ name: '', email: '', service: 'Web App Development', message: '' });
     }, 1000);
   };
 
@@ -140,35 +129,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="form-group" style={{ marginBottom: '16px' }}>
-                <label className="form-label" style={{ marginBottom: '8px' }}>Project Budget (Estimated)</label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-                  {budgets.map((value) => {
-                    const isSelected = formData.budget === value;
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => handleSelectBudget(value)}
-                        style={{
-                          padding: '8px 12px',
-                          borderRadius: 'var(--border-radius-sm)',
-                          background: isSelected ? 'rgba(118, 192, 0, 0.12)' : 'rgba(255, 255, 255, 0.02)',
-                          border: isSelected ? '1px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)',
-                          color: isSelected ? 'var(--primary)' : 'var(--text-light)',
-                          cursor: 'pointer',
-                          textAlign: 'center',
-                          fontWeight: '500',
-                          fontSize: '0.8rem',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        {value}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+
 
               <div className="form-group" style={{ marginBottom: '16px' }}>
                 <label htmlFor="message" className="form-label">Project Description (Optional)</label>
