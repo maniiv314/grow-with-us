@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const [mobileActive, setMobileActive] = useState(false);
+  const location = useLocation();
+
+  const isHashActive = (hash) => {
+    return location.pathname === '/' && location.hash === hash;
+  };
+
+  const isHomeActive = () => {
+    return location.pathname === '/' && !location.hash;
+  };
+
+  const isPathActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <header className="header" id="header">
@@ -13,13 +26,70 @@ export default function Navbar() {
         
         <nav>
           <ul className={`nav-links ${mobileActive ? 'active' : ''}`} id="nav-menu">
-            <li><NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} end onClick={() => setMobileActive(false)}>Home</NavLink></li>
-            <li><NavLink to="/services" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileActive(false)}>Services</NavLink></li>
-            <li><NavLink to="/why-us" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileActive(false)}>Why Us</NavLink></li>
-            <li><NavLink to="/portfolio" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileActive(false)}>Portfolio</NavLink></li>
-            <li><NavLink to="/faq" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileActive(false)}>FAQ</NavLink></li>
-            <li><NavLink to="/tools" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} style={{ color: 'var(--primary)', fontWeight: 700 }} onClick={() => setMobileActive(false)}>Tools</NavLink></li>
-            <li><NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileActive(false)}>Contact</NavLink></li>
+            <li>
+              <Link 
+                to="/" 
+                className={`nav-link ${isHomeActive() ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/#services" 
+                className={`nav-link ${isHashActive('#services') ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/#why-choose-us" 
+                className={`nav-link ${isHashActive('#why-choose-us') ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                Why Us
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/#portfolio" 
+                className={`nav-link ${isHashActive('#portfolio') ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                Portfolio
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/#faq" 
+                className={`nav-link ${isHashActive('#faq') ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                FAQ
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/tools" 
+                className={`nav-link ${isPathActive('/tools') ? 'active' : ''}`}
+                style={{ color: 'var(--primary)', fontWeight: 700 }}
+                onClick={() => setMobileActive(false)}
+              >
+                Tools
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/contact" 
+                className={`nav-link ${isPathActive('/contact') ? 'active' : ''}`}
+                onClick={() => setMobileActive(false)}
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
         </nav>
         

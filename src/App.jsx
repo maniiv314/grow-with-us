@@ -4,10 +4,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppBubble from './components/WhatsAppBubble';
 import Home from './pages/Home';
-import Services from './pages/Services';
-import WhyUs from './pages/WhyUs';
-import Portfolio from './pages/Portfolio';
-import FAQ from './pages/FAQ';
 import Tools from './pages/Tools';
 import Contact from './pages/Contact';
 
@@ -15,8 +11,18 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // 1. Scroll to top on navigation
-    window.scrollTo(0, 0);
+    // 1. Handle scroll (either hash scrolling or top scrolling)
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo(0, 0);
+    }
 
     // 2. Initialize scroll reveals
     const revealElements = document.querySelectorAll('.reveal');
@@ -55,7 +61,7 @@ export default function App() {
       revealObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   return (
     <>
@@ -63,10 +69,6 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/why-us" element={<WhyUs />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/faq" element={<FAQ />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
