@@ -24,23 +24,26 @@ export default function App() {
       window.scrollTo(0, 0);
     }
 
-    // 2. Initialize scroll reveals
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
+    // 2. Initialize scroll reveals (deferred to prevent blocking UI thread and INP issues)
+    let revealObserver;
+    const observerTimeout = setTimeout(() => {
+      const revealElements = document.querySelectorAll('.reveal');
+      revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
       });
-    }, {
-      threshold: 0.08,
-      rootMargin: '0px 0px -40px 0px'
-    });
 
-    revealElements.forEach(element => {
-      revealObserver.observe(element);
-    });
+      revealElements.forEach(element => {
+        revealObserver.observe(element);
+      });
+    }, 100);
 
     // 3. Sticky header listener
     const header = document.getElementById('header');
@@ -64,7 +67,10 @@ export default function App() {
     handleScroll(); // Trigger initial state
 
     return () => {
-      revealObserver.disconnect();
+      clearTimeout(observerTimeout);
+      if (revealObserver) {
+        revealObserver.disconnect();
+      }
       window.removeEventListener('scroll', handleScroll);
     };
   }, [location.pathname, location.hash]);

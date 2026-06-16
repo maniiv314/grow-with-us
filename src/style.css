@@ -5,27 +5,27 @@
 
 :root {
   /* Color Palette */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
+  --bg-primary: #090d16;
+  --bg-secondary: #111827;
   --bg-dark: #090d16;
   --bg-dark-accent: #111827;
-  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-glass: rgba(9, 13, 22, 0.85);
   --bg-glass-dark: rgba(9, 13, 22, 0.85);
   
   --primary: #76c000;
   --primary-hover: #609d00;
-  --primary-light: #f5fbe8;
+  --primary-light: rgba(118, 192, 0, 0.1);
   --accent: #00bcd4;
-  --accent-light: #e0f7fa;
+  --accent-light: rgba(0, 188, 212, 0.15);
   --success: #10b981;
-  --glow-color: rgba(118, 192, 0, 0.15);
+  --glow-color: rgba(118, 192, 0, 0.2);
   
-  --text-dark: #0f172a;
-  --text-muted: #475569;
+  --text-dark: #ffffff;
+  --text-muted: #cbd5e1;
   --text-light: #94a3b8;
   --text-white: #ffffff;
   
-  --border-light: #e2e8f0;
+  --border-light: #1f2937;
   --border-dark: #1f2937;
   
   /* Fonts */
@@ -940,7 +940,7 @@ button, input, textarea, select {
 
 .portfolio-visual {
   position: relative;
-  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  background: linear-gradient(135deg, var(--bg-secondary), var(--border-light));
   border-radius: var(--border-radius-md);
   overflow: hidden;
   aspect-ratio: 16/10;
