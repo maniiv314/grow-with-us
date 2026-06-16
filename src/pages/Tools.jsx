@@ -549,6 +549,10 @@ export default function Tools() {
     t.desc.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const halfGstRate = gstRate / 2;
+  const originalKB = (originalSize / 1024).toFixed(1);
+  const compressedKB = (compressedSize / 1024).toFixed(1);
+
   return (
     <section className="section" id="tools-hub-section" style={{ paddingTop: activeTool ? '40px' : '140px', minHeight: '100vh', paddingBottom: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', background: 'var(--bg-primary)' }}>
       <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -953,8 +957,8 @@ export default function Tools() {
                         <div style={{ width: '100%', textAlign: 'center' }}>
                           <img src={compressedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '6px', border: '1px solid var(--border-light)' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginTop: '12px', color: 'var(--text-muted)' }}>
-                            <span>Original: {(originalSize / 1024).toFixed(1)} KB</span>
-                            <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Compressed: {(compressedSize / 1024).toFixed(1)} KB</span>
+                            <span>Original: {originalKB} KB</span>
+                            <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Compressed: {compressedKB} KB</span>
                           </div>
                           <button onClick={downloadCompressedImage} className="btn btn-primary" style={{ marginTop: '12px', width: '100%', padding: '10px 0', fontSize: '0.85rem', borderRadius: 'var(--border-radius-sm)' }}>Download Image</button>
                         </div>
@@ -1049,8 +1053,8 @@ export default function Tools() {
                     </div>
                     <div style={{ background: 'var(--bg-primary)', padding: '20px', borderRadius: 'var(--border-radius-md)', border: '1px solid var(--border-light)', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>Net:</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.baseAmount}</strong></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>CGST ({gstRate / 2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.cgst}</strong></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>SGST ({gstRate / 2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.sgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>CGST ({halfGstRate}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.cgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>SGST ({halfGstRate}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.sgst}</strong></div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-light)', paddingTop: '10px', marginTop: '10px', fontSize: '1.05rem' }}><span style={{ fontWeight: 700 }}>Total Value:</span><strong style={{ color: 'var(--primary)' }}>₹{gstResult.totalAmount}</strong></div>
                     </div>
                   </div>
