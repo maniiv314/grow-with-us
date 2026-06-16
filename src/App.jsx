@@ -17,7 +17,15 @@ export default function App() {
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const header = document.getElementById('header');
+          const headerHeight = header ? header.offsetHeight : 96;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          // Subtly offset to leave a small gap above the header
+          const offsetPosition = elementPosition - headerHeight - 10;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         }
       }, 150);
     } else {
