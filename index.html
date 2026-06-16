@@ -599,6 +599,77 @@
   </section>
 
   <!-- ==========================================
+       ROI & ESTIMATOR SECTION
+       ========================================== -->
+  <section class="section section-dark" id="estimator">
+    <div class="container">
+      <div class="section-header text-center reveal">
+        <span class="section-tag">Instant Quote & ROI</span>
+        <h2 class="section-title">Calculate Your Growth & Budget</h2>
+        <p class="section-subtitle">Select your project parameters below. See your potential conversion lift, speed promise, and instantly claim your project slot.</p>
+      </div>
+
+      <div class="estimator-grid reveal">
+        <!-- Input controls -->
+        <div class="estimator-controls">
+          <div class="estimator-group">
+            <label class="estimator-label">What are we building?</label>
+            <div class="estimator-select-grid">
+              <button class="estimator-select-btn active" data-type="website" data-base="150000">Website</button>
+              <button class="estimator-select-btn" data-type="ecommerce" data-base="250000">E-Commerce</button>
+              <button class="estimator-select-btn" data-type="webapp" data-base="350000">Web App</button>
+              <button class="estimator-select-btn" data-type="mobile" data-base="450000">Mobile App</button>
+            </div>
+          </div>
+
+          <div class="estimator-group">
+            <label class="estimator-label" id="pages-label">Project Scope: 1-5 Pages</label>
+            <input type="range" id="scope-slider" min="1" max="4" value="1" class="estimator-slider">
+          </div>
+
+          <div class="estimator-group">
+            <label class="estimator-label" id="traffic-label">Monthly Traffic: 5,000 Visitors</label>
+            <input type="range" id="traffic-slider" min="1" max="5" value="1" class="estimator-slider">
+          </div>
+
+          <div class="estimator-group">
+            <label class="estimator-label" id="revenue-label">Average Monthly Sales: ₹2,00,000</label>
+            <input type="range" id="revenue-slider" min="1" max="5" value="2" class="estimator-slider">
+          </div>
+        </div>
+
+        <!-- Real-time quote cards -->
+        <div class="estimator-results">
+          <div class="result-card main-result">
+            <h4>Estimated Investment</h4>
+            <div class="result-value" id="calc-price">₹1,50,000 - ₹2,00,000</div>
+            <p>Fully custom codebase, SEO setup, and launch optimization included.</p>
+          </div>
+
+          <div class="result-sub-grid">
+            <div class="result-card">
+              <h4>Potential Monthly Revenue Lift</h4>
+              <div class="result-value green-text" id="calc-roi">+₹30,000/mo</div>
+              <p>Based on a conservative 15% increase in conversion optimization.</p>
+            </div>
+
+            <div class="result-card">
+              <h4>Load Speed Promise</h4>
+              <div class="result-value" id="calc-speed">&lt; 0.8s</div>
+              <p>Core Web Vitals optimized, zero bloat guarantee.</p>
+            </div>
+          </div>
+
+          <a href="#" id="estimator-cta" target="_blank" rel="noopener" class="btn btn-whatsapp estimator-cta-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.202-1.362a9.92 9.92 0 0 0 4.807 1.246h.003c5.507 0 9.99-4.478 9.99-9.987 0-2.67-1.037-5.178-2.92-7.062C17.198 3.05 14.685 2 12.011 2zm0 1.644c2.227 0 4.322.868 5.898 2.448 1.577 1.579 2.445 3.678 2.445 5.908 0 4.597-3.738 8.337-8.337 8.337a8.27 8.27 0 0 1-4.223-1.155l-.303-.18-3.138.82.835-3.06-.197-.314a8.27 8.27 0 0 1-1.265-4.456c.002-4.599 3.744-8.34 8.34-8.34zm-3.6 5.48c-.198-.44-.407-.449-.595-.458l-.508-.007c-.176 0-.462.066-.704.33-.243.264-.926.903-.926 2.201 0 1.297.945 2.55 1.077 2.726.133.176 1.861 2.84 4.507 3.985 2.203.953 2.651.764 3.125.72.473-.044 1.528-.624 1.74-.1.22-.524.22-.973.154-1.077-.066-.105-.242-.167-.508-.3-.264-.132-1.562-.771-1.804-.859-.242-.088-.418-.132-.594.132-.176.264-.683.859-.837 1.035-.154.176-.308.198-.573.066-.264-.132-1.117-.412-2.128-1.314-.787-.7-1.317-1.564-1.472-1.828-.154-.264-.016-.407.116-.539.118-.118.264-.308.396-.462.132-.154.176-.264.264-.44.088-.176.044-.33-.022-.462-.066-.132-.587-1.44-.814-1.94z"/></svg>
+            <span>Claim My Speed & ROI Guarantee</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
        FAQ SECTION
        ========================================== -->
   <section class="section" id="faq">
