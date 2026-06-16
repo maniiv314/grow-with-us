@@ -1049,8 +1049,8 @@ export default function Tools() {
                     </div>
                     <div style={{ background: 'var(--bg-primary)', padding: '20px', borderRadius: 'var(--border-radius-md)', border: '1px solid var(--border-light)', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>Net:</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.baseAmount}</strong></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>CGST ({gstRate/2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.cgst}</strong></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>SGST ({gstRate/2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.sgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>CGST ({gstRate / 2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.cgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}><span>SGST ({gstRate / 2}%):</span><strong style={{ color: 'var(--text-dark)' }}>₹{gstResult.sgst}</strong></div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-light)', paddingTop: '10px', marginTop: '10px', fontSize: '1.05rem' }}><span style={{ fontWeight: 700 }}>Total Value:</span><strong style={{ color: 'var(--primary)' }}>₹{gstResult.totalAmount}</strong></div>
                     </div>
                   </div>
