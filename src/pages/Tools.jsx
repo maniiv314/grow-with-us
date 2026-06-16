@@ -543,7 +543,7 @@ export default function Tools() {
   ];
 
   return (
-    <section className="section section-dark" id="tools-hub-section" style={{ paddingTop: '110px', minHeight: '100vh', paddingBottom: '60px' }}>
+    <section className="section section-dark" id="tools-hub-section" style={{ paddingTop: '110px', minHeight: '100vh', paddingBottom: '60px', display: 'flex', alignItems: 'center' }}>
       <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         
         {/* Hub Header */}

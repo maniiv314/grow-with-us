@@ -63,7 +63,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="section section-dark" id="contact" style={{ paddingTop: '110px', paddingBottom: '60px' }}>
+    <section className="section section-dark" id="contact" style={{ paddingTop: '110px', paddingBottom: '60px', minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
       <div className="container" style={{ maxWidth: '900px' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '38px', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.5px' }}>
