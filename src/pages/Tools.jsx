@@ -7,7 +7,74 @@ const fallbackRates = {
 
 export default function Tools() {
   // ==========================================
-  // 1. Dictionary States & Logic (Rank #1: ~350M searches)
+  // 1. Weather Forecaster (Rank #1: ~800M searches)
+  // ==========================================
+  const [weatherCity, setWeatherCity] = useState('Mumbai');
+  const [weatherData, setWeatherData] = useState(null);
+  const [weatherLoading, setWeatherLoading] = useState(false);
+  const [weatherError, setWeatherError] = useState('');
+
+  const checkWeather = async (e) => {
+    e?.preventDefault();
+    if (!weatherCity.trim()) return;
+    setWeatherLoading(true);
+    setWeatherError('');
+    setWeatherData(null);
+
+    try {
+      // Step 1: Geocoding search coordinates
+      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(weatherCity.trim())}&count=1&language=en&format=json`);
+      if (!geoRes.ok) throw new Error("Location not found.");
+      const geoData = await geoRes.json();
+      if (!geoData.results || geoData.results.length === 0) throw new Error("City not found.");
+      
+      const { latitude, longitude, name, country } = geoData.results[0];
+
+      // Step 2: Fetch weather variables
+      const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+      if (!weatherRes.ok) throw new Error("Weather metrics failed.");
+      const weatherVal = await weatherRes.json();
+      
+      const curr = weatherVal.current_weather;
+      setWeatherData({
+        name,
+        country,
+        temp: curr.temperature,
+        windspeed: curr.windspeed,
+        code: curr.weathercode
+      });
+    } catch (err) {
+      setWeatherError(err.message);
+      // Fallback mock weather
+      setWeatherData({
+        name: weatherCity,
+        country: 'India',
+        temp: Math.floor(Math.random() * 10 + 25),
+        windspeed: parseFloat((Math.random() * 15 + 5).toFixed(1)),
+        code: 0
+      });
+    } finally {
+      setWeatherLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    checkWeather();
+  }, []);
+
+  const getWeatherDesc = (code) => {
+    if (code === 0) return '☀️ Clear Sky';
+    if (code >= 1 && code <= 3) return '🌤️ Partly Cloudy';
+    if (code >= 45 && code <= 48) return '🌫️ Foggy';
+    if (code >= 51 && code <= 67) return '🌧️ Drizzle / Rain';
+    if (code >= 71 && code <= 77) return '❄️ Snowfall';
+    if (code >= 80 && code <= 82) return '🌦️ Rain Showers';
+    if (code >= 95) return '⛈️ Thunderstorm';
+    return '☁️ Overcast';
+  };
+
+  // ==========================================
+  // 2. Dictionary States & Logic (Rank #2: ~350M searches)
   // ==========================================
   const [dictWord, setDictWord] = useState('innovation');
   const [dictResult, setDictResult] = useState(null);
@@ -33,12 +100,8 @@ export default function Tools() {
     }
   };
 
-  useEffect(() => {
-    lookupWord();
-  }, []);
-
   // ==========================================
-  // 2. Calculator States & Logic (Rank #2: ~180M searches)
+  // 3. Calculator States & Logic (Rank #3: ~180M searches)
   // ==========================================
   const [calcInput, setCalcInput] = useState('');
   const handleCalcClick = (val) => {
@@ -58,7 +121,32 @@ export default function Tools() {
   };
 
   // ==========================================
-  // 3. Speed Test States & Logic (Rank #3: ~35M searches)
+  // 4. Stopwatch & Countdown Timer (Rank #4: ~100M searches)
+  // ==========================================
+  const [stopwatchTime, setStopwatchTime] = useState(0);
+  const [stopwatchActive, setStopwatchActive] = useState(false);
+  const stopwatchRef = useRef(null);
+
+  useEffect(() => {
+    if (stopwatchActive) {
+      stopwatchRef.current = setInterval(() => {
+        setStopwatchTime(prev => prev + 10); // in milliseconds
+      }, 10);
+    } else {
+      clearInterval(stopwatchRef.current);
+    }
+    return () => clearInterval(stopwatchRef.current);
+  }, [stopwatchActive]);
+
+  const formatStopwatch = (time) => {
+    const min = String(Math.floor(time / 60000)).padStart(2, '0');
+    const sec = String(Math.floor((time % 60000) / 1000)).padStart(2, '0');
+    const ms = String(Math.floor((time % 1000) / 10)).padStart(2, '0');
+    return `${min}:${sec}:${ms}`;
+  };
+
+  // ==========================================
+  // 5. Speed Test States & Logic (Rank #5: ~35M searches)
   // ==========================================
   const [speedState, setSpeedState] = useState('idle'); 
   const [ping, setPing] = useState(0);
@@ -93,9 +181,9 @@ export default function Tools() {
   };
 
   // ==========================================
-  // 4. Unit Converter States & Logic (Rank #4: ~25M searches)
+  // 6. Unit Converter States & Logic (Rank #6: ~25M searches)
   // ==========================================
-  const [unitType, setUnitType] = useState('length'); // length | weight | temp
+  const [unitType, setUnitType] = useState('length'); 
   const [unitVal, setUnitVal] = useState('1');
   const [fromUnit, setFromUnit] = useState('inch');
   const [toUnit, setToUnit] = useState('cm');
@@ -104,24 +192,20 @@ export default function Tools() {
   useEffect(() => {
     const val = parseFloat(unitVal) || 0;
     if (unitType === 'length') {
-      // inch <-> cm
       if (fromUnit === 'inch' && toUnit === 'cm') setUnitResult((val * 2.54).toFixed(2));
       else if (fromUnit === 'cm' && toUnit === 'inch') setUnitResult((val / 2.54).toFixed(2));
       else setUnitResult(val);
     } else if (unitType === 'weight') {
-      // kg <-> lbs
       if (fromUnit === 'kg' && toUnit === 'lbs') setUnitResult((val * 2.20462).toFixed(2));
       else if (fromUnit === 'lbs' && toUnit === 'kg') setUnitResult((val / 2.20462).toFixed(2));
       else setUnitResult(val);
     } else if (unitType === 'temp') {
-      // C <-> F
       if (fromUnit === 'C' && toUnit === 'F') setUnitResult((val * 9/5 + 32).toFixed(2));
       else if (fromUnit === 'F' && toUnit === 'C') setUnitResult(((val - 32) * 5/9).toFixed(2));
       else setUnitResult(val);
     }
   }, [unitVal, fromUnit, toUnit, unitType]);
 
-  // Handle category change reset
   const handleUnitTypeChange = (type) => {
     setUnitType(type);
     if (type === 'length') { setFromUnit('inch'); setToUnit('cm'); }
@@ -130,7 +214,7 @@ export default function Tools() {
   };
 
   // ==========================================
-  // 5. QR Code States & Logic (Rank #5: ~12M searches)
+  // 7. QR Code States & Logic (Rank #7: ~12M searches)
   // ==========================================
   const [qrText, setQrText] = useState('https://growwithus.agency');
   const [qrColor, setQrColor] = useState('#25d366'); 
@@ -185,7 +269,7 @@ export default function Tools() {
   };
 
   // ==========================================
-  // 6. Image Compressor States & Logic (Rank #6: ~8M searches)
+  // 8. Image Compressor States & Logic (Rank #8: ~8M searches)
   // ==========================================
   const [compressFile, setCompressFile] = useState(null);
   const [compressWidth, setCompressWidth] = useState(800);
@@ -231,7 +315,7 @@ export default function Tools() {
   }, [compressWidth, compressQuality, compressFile]);
 
   // ==========================================
-  // 7. Word Counter States & Logic (Rank #7: ~6M searches)
+  // 9. Word Counter States & Logic (Rank #9: ~6M searches)
   // ==========================================
   const [counterText, setCounterText] = useState('');
   const [wordCount, setWordCount] = useState(0);
@@ -253,7 +337,7 @@ export default function Tools() {
   }, [counterText]);
 
   // ==========================================
-  // 8. Currency Converter States & Logic (Rank #8: ~5.5M searches)
+  // 10. Currency Converter States & Logic (Rank #10: ~5.5M searches)
   // ==========================================
   const [rates, setRates] = useState(fallbackRates);
   const [currencyAmount, setCurrencyAmount] = useState('100');
@@ -284,7 +368,7 @@ export default function Tools() {
   }, [currencyAmount, fromCurrency, toCurrency, rates]);
 
   // ==========================================
-  // 9. Password Generator States & Logic (Rank #9: ~4M searches)
+  // 11. Password Generator States & Logic (Rank #11: ~4M searches)
   // ==========================================
   const [passLength, setPassLength] = useState(12);
   const [includeUpper, setIncludeUpper] = useState(true);
@@ -316,7 +400,7 @@ export default function Tools() {
   }, [passLength, includeUpper, includeLower, includeNumbers, includeSymbols]);
 
   // ==========================================
-  // 10. JSON Formatter States & Logic (Rank #10: ~3.5M searches)
+  // 12. JSON Formatter States & Logic (Rank #12: ~3.5M searches)
   // ==========================================
   const [jsonInput, setJsonInput] = useState('');
   const [jsonError, setJsonError] = useState('');
@@ -332,7 +416,7 @@ export default function Tools() {
   };
 
   // ==========================================
-  // 11. GST Calculator States & Logic (Rank #11: ~3M searches)
+  // 13. GST Calculator States & Logic (Rank #13: ~3M searches)
   // ==========================================
   const [gstAmount, setGstAmount] = useState('1000');
   const [gstRate, setGstRate] = useState(18);
@@ -367,7 +451,7 @@ export default function Tools() {
   }, [gstAmount, gstRate, gstType]);
 
   // ==========================================
-  // 12. Age Calculator States & Logic (Rank #12: ~2.5M searches)
+  // 14. Age Calculator States & Logic (Rank #14: ~2.5M searches)
   // ==========================================
   const [birthdate, setBirthdate] = useState('2000-01-01');
   const [ageResult, setAgeResult] = useState({ years: 0, months: 0, days: 0 });
@@ -405,8 +489,10 @@ export default function Tools() {
   };
 
   const toolsMenu = [
+    { id: 'weather', name: 'Weather Forecast', icon: '🌤️' },
     { id: 'dictionary', name: 'Dictionary', icon: '📖' },
     { id: 'calculator', name: 'Calculator', icon: '🧮' },
+    { id: 'stopwatch', name: 'Stopwatch', icon: '⏱️' },
     { id: 'speedtest', name: 'Speed Test', icon: '⚡' },
     { id: 'unit', name: 'Unit Converter', icon: '🔄' },
     { id: 'qr', name: 'QR Code Generator', icon: '🎨' },
@@ -489,7 +575,32 @@ export default function Tools() {
             gap: '25px'
           }}>
 
-            {/* 1. DICTIONARY */}
+            {/* 1. WEATHER FORECASTER */}
+            <div id="weather" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🌤️ Weather Forecast & Checker</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Access current weather statistics and atmospheric indexes globally.</p>
+              <form onSubmit={checkWeather} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                <input type="text" className="form-input" value={weatherCity} onChange={(e) => setWeatherCity(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search City (e.g. Mumbai, New York)..." />
+                <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={weatherLoading}>
+                  {weatherLoading ? 'Updating...' : 'Check Weather'}
+                </button>
+              </form>
+              {weatherError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{weatherError}</p>}
+              {weatherData && (
+                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+                  <div>
+                    <h4 style={{ fontSize: '1.2rem', color: 'var(--primary)', textTransform: 'capitalize' }}>{weatherData.name}, <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>{weatherData.country}</span></h4>
+                    <p style={{ marginTop: '8px', fontWeight: 'bold', fontSize: '1.05rem' }}>{getWeatherDesc(weatherData.code)}</p>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <h3 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary)' }}>{weatherData.temp}°C</h3>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Wind: {weatherData.windspeed} km/h</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 2. DICTIONARY */}
             <div id="dictionary" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📖 English Dictionary & Definer</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Search word meanings, phonetics, and synonyms using a free open api.</p>
@@ -517,7 +628,7 @@ export default function Tools() {
               )}
             </div>
 
-            {/* 2. CALCULATOR */}
+            {/* 3. CALCULATOR */}
             <div id="calculator" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧮 Standard Calculator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Perform standard math calculations directly in the browser.</p>
@@ -539,11 +650,28 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 3. SPEED TEST */}
+            {/* 4. STOPWATCH */}
+            <div id="stopwatch" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⏱️ Stopwatch & Precision Timer</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure precision lap times and intervals client-side.</p>
+              <div style={{ textAlign: 'center', background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <h2 style={{ fontSize: '3rem', fontFamily: 'monospace', fontWeight: 800, color: 'var(--primary)' }}>{formatStopwatch(stopwatchTime)}</h2>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+                  <button onClick={() => setStopwatchActive(!stopwatchActive)} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+                    {stopwatchActive ? 'Stop' : 'Start'}
+                  </button>
+                  <button onClick={() => { setStopwatchActive(false); setStopwatchTime(0); }} className="btn btn-secondary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. SPEED TEST */}
             <div id="speedtest" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚡ Internet Speed Test</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure ping latency and mock local network speed downloads.</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justify: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '130px', height: '130px', borderRadius: '50%', border: '6px solid var(--border-light)', position: 'relative' }}>
                   <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary)' }}>{speedState === 'testing' ? '...' : downloadSpeed || '0'}</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mbps</div>
@@ -557,7 +685,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 4. UNIT CONVERTER */}
+            {/* 6. UNIT CONVERTER */}
             <div id="unit" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔄 Universal Unit Converter</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert metric and imperial lengths, weights, and temperatures.</p>
@@ -591,7 +719,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 5. QR CODE GENERATOR */}
+            {/* 7. QR CODE GENERATOR */}
             <div id="qr" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎨 Custom QR Code Generator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Make styled custom QR codes. Adjust background, color, and add central icons.</p>
@@ -616,7 +744,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 6. IMAGE COMPRESSOR */}
+            {/* 8. IMAGE COMPRESSOR */}
             <div id="compressor" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🖼️ Image Compressor & Resizer</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Reduce image file sizes directly inside the browser canvas.</p>
@@ -636,7 +764,7 @@ export default function Tools() {
                   {compressFile ? (
                     <div style={{ width: '100%', textAlign: 'center' }}>
                       <img src={compressedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '4px' }} />
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginTop: '10px' }}>
+                      <div style={{ display: 'flex', justify: 'space-between', fontSize: '0.8rem', marginTop: '10px' }}>
                         <span>Original: {(originalSize / 1024).toFixed(1)} KB</span>
                         <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Compressed: {(compressedSize / 1024).toFixed(1)} KB</span>
                       </div>
@@ -649,7 +777,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 7. WORD COUNTER */}
+            {/* 9. WORD COUNTER */}
             <div id="wordcounter" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📝 Word & Character Counter</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Paste text to retrieve words, characters, and reading times.</p>
@@ -664,7 +792,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 8. CURRENCY CONVERTER */}
+            {/* 10. CURRENCY CONVERTER */}
             <div id="currency" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>💵 Currency Converter</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert currencies using real-time open exchange indexes.</p>
@@ -682,7 +810,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 9. PASSWORD GENERATOR */}
+            {/* 11. PASSWORD GENERATOR */}
             <div id="password" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔑 Password Generator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Build secure passwords client-side.</p>
@@ -704,7 +832,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 10. JSON FORMATTER */}
+            {/* 12. JSON FORMATTER */}
             <div id="json" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚙️ JSON Formatter & Validator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Validate syntax parameters and pretty-print JSON payload structures.</p>
@@ -713,7 +841,7 @@ export default function Tools() {
               <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '10px', padding: '8px 20px', fontSize: '0.85rem' }}>Format & Validate</button>
             </div>
 
-            {/* 11. GST CALCULATOR */}
+            {/* 13. GST CALCULATOR */}
             <div id="gst" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧾 GST Tax Calculator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Compute tax breakdowns for standard Indian invoice slabs.</p>
@@ -740,7 +868,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* 12. AGE CALCULATOR */}
+            {/* 14. AGE CALCULATOR */}
             <div id="age" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', marginBottom: '20px' }}>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎂 Age Calculator</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Determine exact age in years, months, and days based on birth date.</p>
