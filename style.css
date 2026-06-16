@@ -40,7 +40,7 @@
   
   /* Layout */
   --container-width: 1280px;
-  --header-height: 80px;
+  --header-height: 96px;
   --border-radius-sm: 10px;
   --border-radius-md: 18px;
   --border-radius-lg: 28px;
@@ -266,7 +266,7 @@ button, input, textarea, select {
   background-color: var(--bg-glass);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  height: 72px;
+  height: 84px;
   border-bottom: 1px solid var(--border-light);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
@@ -298,13 +298,13 @@ button, input, textarea, select {
 }
 
 .logo img {
-  height: 64px;
+  height: 76px;
   width: auto;
   transition: var(--transition-normal);
 }
 
 .footer-logo img {
-  height: 72px;
+  height: 96px;
   width: auto;
 }
 
