@@ -766,18 +766,27 @@ button, input, textarea, select {
   transform: scaleX(1);
 }
 
+.service-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
 .service-icon {
   background-color: rgba(255, 255, 255, 0.04);
   color: var(--primary);
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: var(--border-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: var(--transition-normal);
+  flex-shrink: 0;
 }
 
 .service-card:hover .service-icon {
@@ -789,9 +798,9 @@ button, input, textarea, select {
 }
 
 .service-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   letter-spacing: -0.5px;
 }
 
