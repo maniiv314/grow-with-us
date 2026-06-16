@@ -649,33 +649,7 @@ export default function Tools() {
 
         {/* CONDITION 2: DEDICATED TOOL SCREEN (activeTool is not null) */}
         {activeTool !== null && (
-          <div style={{ maxWidth: '750px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            
-            {/* Elegant and compact back navigation */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-              <button 
-                onClick={() => setActiveTool(null)}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '8px 14px',
-                  border: 'none',
-                  borderRadius: '6px',
-                  backgroundColor: 'rgba(118, 192, 0, 0.12)',
-                  color: 'var(--primary)',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  fontSize: '0.85rem',
-                  transition: 'all 0.15s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.2)'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.12)'}
-              >
-                <ArrowLeft size={14} />
-                <span>Back</span>
-              </button>
-            </div>
+          <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
             {/* Focused Active Tool Area */}
             <motion.div 
@@ -696,24 +670,50 @@ export default function Tools() {
                 const currentTool = toolsMenu.find(t => t.id === activeTool);
                 if (!currentTool) return null;
                 return (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '20px' }}>
-                    <div style={{ 
-                      width: '46px', 
-                      height: '46px', 
-                      borderRadius: '10px', 
-                      background: `${currentTool.color}18`, 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      boxShadow: `0 4px 14px ${currentTool.color}20`
-                    }}>
-                      <currentTool.icon size={24} style={{ color: currentTool.color }} />
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', marginBottom: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div style={{ 
+                        width: '46px', 
+                        height: '46px', 
+                        borderRadius: '10px', 
+                        background: `${currentTool.color}18`, 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        boxShadow: `0 4px 14px ${currentTool.color}20`
+                      }}>
+                        <currentTool.icon size={24} style={{ color: currentTool.color }} />
+                      </div>
+                      <div>
+                        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#ffffff', margin: 0, letterSpacing: '-0.3px' }}>
+                          {currentTool.name}
+                        </h2>
+                      </div>
                     </div>
-                    <div>
-                      <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#ffffff', margin: 0, letterSpacing: '-0.3px' }}>
-                        {currentTool.name}
-                      </h2>
-                    </div>
+
+                    {/* Elegant back button inside at top right */}
+                    <button 
+                      onClick={() => setActiveTool(null)}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 14px',
+                        border: 'none',
+                        borderRadius: '6px',
+                        backgroundColor: 'rgba(118, 192, 0, 0.12)',
+                        color: 'var(--primary)',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        fontSize: '0.85rem',
+                        transition: 'all 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.2)'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.12)'}
+                    >
+                      <ArrowLeft size={14} />
+                      <span>Back</span>
+                    </button>
                   </div>
                 );
               })()}
