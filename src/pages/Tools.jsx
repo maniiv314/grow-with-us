@@ -1084,7 +1084,7 @@ export default function Tools() {
               {/* Brand Attribution Footer */}
               <div style={{ textAlign: 'center', marginTop: '24px', borderTop: '1px solid var(--border-light)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', margin: 0 }}>
-                  Part of the <strong>Grow With Us Startup Utilities Suite</strong>. Built for conversion & operational velocity.
+                  Part of the <strong>Grow With Us Startup Utilities Suite</strong>. Built for conversion and operational velocity.
                 </p>
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', fontSize: '0.8rem' }}>
                   <Link to="/contact" style={{ color: 'var(--primary)', fontWeight: 600 }}>Need a custom dashboard or MVP? Get scoping audit</Link>
