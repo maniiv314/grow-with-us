@@ -14,17 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
       header.classList.remove('header-scrolled');
     }
 
-    // Active nav link highlight
+    // Active nav link highlight & dark section header adapter
     let currentId = '';
-    const scrollPosition = window.scrollY + 200;
+    let isCurrentSectionDark = false;
+    const scrollPosition = window.scrollY + 100; // Trigger slightly before it enters
 
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
       if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
         currentId = section.getAttribute('id');
+        isCurrentSectionDark = section.classList.contains('section-dark');
       }
     });
+
+    // Toggle header dark mode styles dynamically based on current section
+    if (isCurrentSectionDark) {
+      document.body.classList.add('section-dark-active');
+    } else {
+      document.body.classList.remove('section-dark-active');
+    }
 
     navLinks.forEach(link => {
       link.classList.remove('active');
@@ -74,9 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const filterValue = button.getAttribute('data-filter');
 
       portfolioItems.forEach(item => {
-        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+        const itemCategory = item.getAttribute('data-category');
+        if (filterValue === 'all' || itemCategory === filterValue) {
           item.style.display = 'grid';
-          // Force reflow for fade-in animations if needed
+          // Smooth fade in
           setTimeout(() => {
             item.style.opacity = '1';
             item.style.transform = 'translateY(0)';
@@ -102,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const parent = header.parentElement;
       const isActive = parent.classList.contains('active');
 
-      // Close all other FAQ items
+      // Close all FAQ items
       document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
       });
@@ -126,9 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Gather input data
       const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const budget = document.getElementById('budget').value;
-      const message = document.getElementById('message').value;
 
       // Simulate API post
       formStatus.textContent = 'Submitting message...';
@@ -156,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px' // Trigger slightly before element enters view
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
   });
 
   revealElements.forEach(element => {
