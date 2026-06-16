@@ -130,7 +130,7 @@ button, input, textarea, select {
 }
 
 .section {
-  padding: 120px 0;
+  padding: 60px 0;
   position: relative;
 }
 
@@ -151,7 +151,7 @@ button, input, textarea, select {
 
 .section-header {
   max-width: 750px;
-  margin: 0 auto 70px auto;
+  margin: 0 auto 40px auto;
 }
 
 .section-tag {
@@ -410,8 +410,8 @@ button, input, textarea, select {
    HERO SECTION
    ========================================== */
 .hero {
-  padding-top: 180px;
-  padding-bottom: 120px;
+  padding-top: 130px;
+  padding-bottom: 60px;
   background: radial-gradient(circle at 85% 15%, rgba(37, 99, 235, 0.06), transparent 50%),
               radial-gradient(circle at 15% 85%, rgba(6, 182, 212, 0.06), transparent 50%);
   overflow: hidden;
@@ -1566,7 +1566,7 @@ button, input, textarea, select {
 
 @media (max-width: 1024px) {
   .section {
-    padding: 90px 0;
+    padding: 45px 0;
   }
   .hero-grid {
     grid-template-columns: 1fr;
