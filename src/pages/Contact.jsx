@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -37,13 +38,28 @@ export default function Contact() {
   };
 
   return (
-    <section className="section section-dark" id="contact" style={{ paddingTop: '160px' }}>
+    <section className="section section-dark" id="contact" style={{ paddingTop: '110px', paddingBottom: '60px' }}>
       <div className="container cta-grid">
         <div className="cta-content reveal active" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <h2>Let's Build India's Next Digital Success Story</h2>
-          <p style={{ marginTop: '15px', color: 'var(--text-muted)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+          <p style={{ marginTop: '12px', color: '#cbd5e1', lineHeight: '1.5', fontSize: '0.95rem' }}>
             Fill out the estimate form. When submitted, it will immediately open WhatsApp to finalize your custom project discussion with our team.
           </p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '22px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', color: '#cbd5e1' }}>
+              <CheckCircle size={15} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+              <span>Direct connection to senior product engineers</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', color: '#cbd5e1' }}>
+              <CheckCircle size={15} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+              <span>Free custom quote & rough timeline estimate</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', color: '#cbd5e1' }}>
+              <CheckCircle size={15} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+              <span>Instant feedback, average response under 10 minutes</span>
+            </div>
+          </div>
         </div>
         
         <div className="contact-form-wrapper reveal active reveal-delay-1">
