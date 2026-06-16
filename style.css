@@ -295,30 +295,17 @@ button, input, textarea, select {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
 .logo img {
-  height: 54px;
+  height: 64px;
   width: auto;
   transition: var(--transition-normal);
 }
 
-.logo-text {
-  font-family: var(--font-heading);
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--text-dark);
-  letter-spacing: -0.5px;
-  transition: var(--transition-normal);
-}
-
-.section-dark-active .logo-text {
-  color: var(--text-white);
-}
-
-.footer-logo .logo-text {
-  color: var(--text-white);
+.footer-logo img {
+  height: 72px;
+  width: auto;
 }
 
 .logo-icon {
