@@ -295,12 +295,20 @@ button, input, textarea, select {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: var(--font-heading);
-  font-size: 25px;
-  font-weight: 800;
-  color: var(--text-dark);
-  letter-spacing: -0.5px;
+}
+
+.logo img {
+  height: 48px;
+  width: auto;
+  transition: var(--transition-normal);
+}
+
+.section-dark-active .logo img {
+  filter: brightness(0) invert(1);
+}
+
+.footer-logo img {
+  filter: brightness(0) invert(1);
 }
 
 .logo-icon {
