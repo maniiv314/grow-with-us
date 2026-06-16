@@ -70,6 +70,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tools" element={<Tools />} />
+          <Route path="/tools/:toolId" element={<Tools />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

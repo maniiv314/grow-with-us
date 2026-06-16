@@ -1,4 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  CloudSun, BookOpen, Calculator, Timer, Wifi, RefreshCw, QrCode, 
+  FileImage, Type, Coins, Key, Settings, Percent, Calendar, 
+  ArrowLeft, Copy, Check, Download, AlertCircle, HelpCircle, FileText
+} from 'lucide-react';
 
 // Common currency conversion constants (fallback if API fails)
 const fallbackRates = {
@@ -6,7 +13,48 @@ const fallbackRates = {
 };
 
 export default function Tools() {
-  const [activeTool, setActiveTool] = useState(null); // null means directory grid view
+  const { toolId } = useParams();
+  const navigate = useNavigate();
+  const activeTool = toolId || null;
+  const setActiveTool = (id) => {
+    if (id === null) {
+      navigate('/tools');
+    } else {
+      navigate(`/tools/${id}`);
+    }
+  };
+
+  useEffect(() => {
+    const defaultTitle = "Free Web Utilities Suite | Grow With Us Agency";
+    const defaultDesc = "Explore 14 free high-volume client-side utility tools including QR generator, converters, calculators, stopwatch, and image compressor.";
+    
+    if (!activeTool) {
+      document.title = defaultTitle;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', defaultDesc);
+    } else {
+      const toolNames = {
+        weather: 'Weather Forecast',
+        dictionary: 'Dictionary & Definer',
+        calculator: 'Standard Calculator',
+        stopwatch: 'Stopwatch & Precision Timer',
+        speedtest: 'Internet Speed Test',
+        unit: 'Universal Unit Converter',
+        qr: 'Custom QR Code Generator',
+        compressor: 'Image Compressor & Resizer',
+        wordcounter: 'Word & Character Counter',
+        currency: 'Live Currency Converter',
+        password: 'Secure Password Generator',
+        json: 'JSON Formatter & Validator',
+        gst: 'GST Invoice Tax Calculator',
+        age: 'Age Calculator in Days & Months'
+      };
+      const name = toolNames[activeTool] || activeTool;
+      document.title = `${name} | Free Online Tool | Grow With Us`;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', `Use our free, instant, browser-based ${name}. No sign-up required.`);
+    }
+  }, [activeTool]);
 
   // ==========================================
   // 1. Weather Forecaster (Rank #1: ~800M searches)
@@ -478,142 +526,131 @@ export default function Tools() {
   };
 
   const toolsMenu = [
-    { id: 'weather', name: 'Weather Forecast', icon: '🌤️', desc: 'Real-time temperature and climate stats globally.' },
-    { id: 'dictionary', name: 'Dictionary', icon: '📖', desc: 'Word meanings, definition checks, and synonyms.' },
-    { id: 'calculator', name: 'Calculator', icon: '🧮', desc: 'Sleek standard browser arithmetic calculator.' },
-    { id: 'stopwatch', name: 'Stopwatch', icon: '⏱️', desc: 'Lap and interval precision clock timing.' },
-    { id: 'speedtest', name: 'Speed Test', icon: '⚡', desc: 'Check network ping latency and connection download Mbps.' },
-    { id: 'unit', name: 'Unit Converter', icon: '🔄', desc: 'Metric & imperial length, weight, and temperature conversions.' },
-    { id: 'qr', name: 'QR Code Generator', icon: '🎨', desc: 'Branded QR code generator with adjustable colors.' },
-    { id: 'compressor', name: 'Image Compressor', icon: '🖼️', desc: 'Reduce file size and dimensions client-side.' },
-    { id: 'wordcounter', name: 'Word Counter', icon: '📝', desc: 'Text analytics displaying words, lines, and read time.' },
-    { id: 'currency', name: 'Currency Converter', icon: '💵', desc: 'Convert major currencies using daily updated forex rates.' },
-    { id: 'password', name: 'Password Generator', icon: '🔑', desc: 'Generate strong secure passwords with customizable parameters.' },
-    { id: 'json', name: 'JSON Formatter', icon: '⚙️', desc: 'Syntax validation and pretty printing for JSON.' },
-    { id: 'gst', name: 'GST Calculator', icon: '🧾', desc: 'Determine GST tax components and net invoice totals.' },
-    { id: 'age', name: 'Age Calculator', icon: '🎂', desc: 'Calculate exact age in years, months, and days.' }
+    { id: 'weather', name: 'Weather Forecast', icon: CloudSun, color: '#38bdf8', desc: 'Real-time temperature and climate stats globally.' },
+    { id: 'dictionary', name: 'Dictionary', icon: BookOpen, color: '#c084fc', desc: 'Word meanings, definition checks, and synonyms check.' },
+    { id: 'calculator', name: 'Calculator', icon: Calculator, color: '#fbbf24', desc: 'Sleek standard browser arithmetic calculator.' },
+    { id: 'stopwatch', name: 'Stopwatch', icon: Timer, color: '#f87171', desc: 'Lap and interval precision clock timing.' },
+    { id: 'speedtest', name: 'Speed Test', icon: Wifi, color: '#34d399', desc: 'Check network ping latency and connection download Mbps.' },
+    { id: 'unit', name: 'Unit Converter', icon: RefreshCw, color: '#60a5fa', desc: 'Metric & imperial length, weight, and temperature conversions.' },
+    { id: 'qr', name: 'QR Code Generator', icon: QrCode, color: '#f472b6', desc: 'Branded QR code generator with adjustable colors.' },
+    { id: 'compressor', name: 'Image Compressor', icon: FileImage, color: '#2dd4bf', desc: 'Reduce file size and dimensions client-side.' },
+    { id: 'wordcounter', name: 'Word Counter', icon: Type, color: '#a78bfa', desc: 'Text analytics displaying words, lines, and read time.' },
+    { id: 'currency', name: 'Currency Converter', icon: Coins, color: '#fbbf24', desc: 'Convert major currencies using daily updated forex rates.' },
+    { id: 'password', name: 'Password Generator', icon: Key, color: '#fb923c', desc: 'Generate strong secure passwords with customizable parameters.' },
+    { id: 'json', name: 'JSON Formatter', icon: Settings, color: '#94a3b8', desc: 'Syntax validation and pretty printing for JSON.' },
+    { id: 'gst', name: 'GST Calculator', icon: Percent, color: '#22d3ee', desc: 'Determine GST tax components and net invoice totals.' },
+    { id: 'age', name: 'Age Calculator', icon: Calendar, color: '#ec4899', desc: 'Calculate exact age in years, months, and days.' }
   ];
 
   return (
-    <section className="section" id="tools-hub-section" style={{ paddingTop: '100px', backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '60px' }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <section className="section" id="tools-hub-section" style={{ paddingTop: '65px', backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '40px' }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
         {/* Hub Header */}
-        <div style={{ textAlign: 'center', marginBottom: '15px' }}>
-          <span className="section-tag" style={{ textTransform: 'uppercase', fontSize: '0.8rem' }}>Utilities Portal</span>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginTop: '5px' }}>Free Web <span>Utilities Suite</span></h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '6px auto 0 auto' }}>
-            Instant, zero-installation frontend tools optimized for efficiency and speed.
+        <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+          <span className="section-tag" style={{ textTransform: 'uppercase', fontSize: '0.75rem' }}>Utilities Portal</span>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, marginTop: '3px' }}>Free Web <span>Utilities Suite</span></h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '500px', margin: '4px auto 0 auto', lineHeight: 1.4 }}>
+            Instant, browser-based tools. Clean, fast, and optimized for daily productivity.
           </p>
         </div>
 
         {/* CONDITION 1: DIRECTORY GRID VIEW (activeTool is null) */}
         {activeTool === null && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' }}>
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.04 } }
+            }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px' }}
+          >
             {toolsMenu.map(t => (
-              <div 
+              <motion.div 
                 key={t.id}
+                variants={{
+                  hidden: { opacity: 0, y: 12 },
+                  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
+                }}
+                whileHover={{ y: -5, scale: 1.015, boxShadow: 'var(--shadow-md)' }}
                 onClick={() => setActiveTool(t.id)}
                 style={{
                   background: '#ffffff',
-                  borderRadius: '10px',
-                  padding: '20px',
+                  borderRadius: '8px',
+                  padding: '16px',
                   border: '1px solid var(--border-light)',
                   boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                  gap: '8px'
                 }}
               >
-                <div style={{ fontSize: '2rem' }}>{t.icon}</div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-dark)' }}>{t.name}</h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>{t.desc}</p>
-                <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--primary)', marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ 
+                  width: '38px', 
+                  height: '38px', 
+                  borderRadius: '6px', 
+                  background: `${t.color}15`, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  marginBottom: '2px'
+                }}>
+                  <t.icon size={20} style={{ color: t.color }} />
+                </div>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-dark)' }}>{t.name}</h3>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.35, margin: 0 }}>{t.desc}</p>
+                <span style={{ fontSize: '0.76rem', fontWeight: 'bold', color: 'var(--primary)', marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '3px' }}>
                   Open Tool ➔
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {/* CONDITION 2: DEDICATED TOOL SCREEN (activeTool is not null) */}
         {activeTool !== null && (
-          <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <div style={{ maxWidth: '750px', width: '100%', margin: '0 auto' }}>
             
-            {/* Left Sidebar Table of Contents (for quick switching) */}
-            <div className="tools-sidebar" style={{
-              flex: '1 1 220px',
-              backgroundColor: '#ffffff',
-              borderRadius: '10px',
-              padding: '12px',
-              border: '1px solid var(--border-light)',
-              boxShadow: 'var(--shadow-sm)',
-              position: 'sticky',
-              top: '100px',
-              maxHeight: 'calc(100vh - 150px)',
-              overflowY: 'auto'
-            }}>
-              <button 
-                onClick={() => setActiveTool(null)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  width: '100%',
-                  padding: '10px 12px',
-                  border: 'none',
-                  borderRadius: '6px',
-                  backgroundColor: 'rgba(37, 211, 102, 0.08)',
-                  color: 'var(--primary)',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  marginBottom: '12px',
-                  fontSize: '0.85rem'
-                }}
-              >
-                ◀ Back to Directory
-              </button>
-              
-              <div className="sidebar-buttons-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                {toolsMenu.map(t => (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveTool(t.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      width: '100%',
-                      padding: '8px 12px',
-                      border: 'none',
-                      borderRadius: '6px',
-                      backgroundColor: activeTool === t.id ? 'var(--primary)' : 'transparent',
-                      color: activeTool === t.id ? '#ffffff' : 'var(--text-dark)',
-                      textAlign: 'left',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    <span style={{ fontSize: '1.1rem' }}>{t.icon}</span>
-                    <span style={{ fontSize: '0.9rem' }}>{t.name}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Elegant and compact back navigation */}
+            <button 
+              onClick={() => setActiveTool(null)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 12px',
+                border: 'none',
+                borderRadius: '4px',
+                backgroundColor: 'rgba(37, 211, 102, 0.08)',
+                color: 'var(--primary)',
+                fontWeight: '700',
+                cursor: 'pointer',
+                marginBottom: '12px',
+                fontSize: '0.8rem',
+                transition: 'all 0.15s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(37, 211, 102, 0.15)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(37, 211, 102, 0.08)'}
+            >
+              <ArrowLeft size={14} />
+              <span>Back to Directory</span>
+            </button>
 
             {/* Focused Active Tool Area */}
-            <div style={{ flex: '3 1 600px', background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-lg)' }}>
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              style={{ 
+                background: '#ffffff', 
+                borderRadius: '8px', 
+                padding: '20px', 
+                border: '1px solid var(--border-light)', 
+                boxShadow: 'var(--shadow-md)' 
+              }}
+            >
               
               {/* 1. WEATHER FORECASTER */}
               {activeTool === 'weather' && (
@@ -952,7 +989,7 @@ export default function Tools() {
                 </div>
               )}
 
-            </div>
+            </motion.div>
           </div>
         )}
 
