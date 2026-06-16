@@ -6,6 +6,8 @@ const fallbackRates = {
 };
 
 export default function Tools() {
+  const [activeTool, setActiveTool] = useState(null); // null means directory grid view
+
   // ==========================================
   // 1. Weather Forecaster (Rank #1: ~800M searches)
   // ==========================================
@@ -22,15 +24,12 @@ export default function Tools() {
     setWeatherData(null);
 
     try {
-      // Step 1: Geocoding search coordinates
       const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(weatherCity.trim())}&count=1&language=en&format=json`);
       if (!geoRes.ok) throw new Error("Location not found.");
       const geoData = await geoRes.json();
       if (!geoData.results || geoData.results.length === 0) throw new Error("City not found.");
       
       const { latitude, longitude, name, country } = geoData.results[0];
-
-      // Step 2: Fetch weather variables
       const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
       if (!weatherRes.ok) throw new Error("Weather metrics failed.");
       const weatherVal = await weatherRes.json();
@@ -45,7 +44,6 @@ export default function Tools() {
       });
     } catch (err) {
       setWeatherError(err.message);
-      // Fallback mock weather
       setWeatherData({
         name: weatherCity,
         country: 'India',
@@ -57,10 +55,6 @@ export default function Tools() {
       setWeatherLoading(false);
     }
   };
-
-  useEffect(() => {
-    checkWeather();
-  }, []);
 
   const getWeatherDesc = (code) => {
     if (code === 0) return '☀️ Clear Sky';
@@ -130,7 +124,7 @@ export default function Tools() {
   useEffect(() => {
     if (stopwatchActive) {
       stopwatchRef.current = setInterval(() => {
-        setStopwatchTime(prev => prev + 10); // in milliseconds
+        setStopwatchTime(prev => prev + 10);
       }, 10);
     } else {
       clearInterval(stopwatchRef.current);
@@ -483,411 +477,484 @@ export default function Tools() {
     alert("Copied!");
   };
 
-  const scrollToTool = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
-
   const toolsMenu = [
-    { id: 'weather', name: 'Weather Forecast', icon: '🌤️' },
-    { id: 'dictionary', name: 'Dictionary', icon: '📖' },
-    { id: 'calculator', name: 'Calculator', icon: '🧮' },
-    { id: 'stopwatch', name: 'Stopwatch', icon: '⏱️' },
-    { id: 'speedtest', name: 'Speed Test', icon: '⚡' },
-    { id: 'unit', name: 'Unit Converter', icon: '🔄' },
-    { id: 'qr', name: 'QR Code Generator', icon: '🎨' },
-    { id: 'compressor', name: 'Image Compressor', icon: '🖼️' },
-    { id: 'wordcounter', name: 'Word Counter', icon: '📝' },
-    { id: 'currency', name: 'Currency Converter', icon: '💵' },
-    { id: 'password', name: 'Password Generator', icon: '🔑' },
-    { id: 'json', name: 'JSON Formatter', icon: '⚙️' },
-    { id: 'gst', name: 'GST Calculator', icon: '🧾' },
-    { id: 'age', name: 'Age Calculator', icon: '🎂' }
+    { id: 'weather', name: 'Weather Forecast', icon: '🌤️', desc: 'Real-time temperature and climate stats globally.' },
+    { id: 'dictionary', name: 'Dictionary', icon: '📖', desc: 'Word meanings, definition checks, and synonyms.' },
+    { id: 'calculator', name: 'Calculator', icon: '🧮', desc: 'Sleek standard browser arithmetic calculator.' },
+    { id: 'stopwatch', name: 'Stopwatch', icon: '⏱️', desc: 'Lap and interval precision clock timing.' },
+    { id: 'speedtest', name: 'Speed Test', icon: '⚡', desc: 'Check network ping latency and connection download Mbps.' },
+    { id: 'unit', name: 'Unit Converter', icon: '🔄', desc: 'Metric & imperial length, weight, and temperature conversions.' },
+    { id: 'qr', name: 'QR Code Generator', icon: '🎨', desc: 'Branded QR code generator with adjustable colors.' },
+    { id: 'compressor', name: 'Image Compressor', icon: '🖼️', desc: 'Reduce file size and dimensions client-side.' },
+    { id: 'wordcounter', name: 'Word Counter', icon: '📝', desc: 'Text analytics displaying words, lines, and read time.' },
+    { id: 'currency', name: 'Currency Converter', icon: '💵', desc: 'Convert major currencies using daily updated forex rates.' },
+    { id: 'password', name: 'Password Generator', icon: '🔑', desc: 'Generate strong secure passwords with customizable parameters.' },
+    { id: 'json', name: 'JSON Formatter', icon: '⚙️', desc: 'Syntax validation and pretty printing for JSON.' },
+    { id: 'gst', name: 'GST Calculator', icon: '🧾', desc: 'Determine GST tax components and net invoice totals.' },
+    { id: 'age', name: 'Age Calculator', icon: '🎂', desc: 'Calculate exact age in years, months, and days.' }
   ];
 
   return (
-    <section className="section" id="tools-hub-section" style={{ paddingTop: '110px', backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '60px' }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+    <section className="section" id="tools-hub-section" style={{ paddingTop: '100px', backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '60px' }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         
-        {/* Header - Compact */}
-        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-          <span className="section-tag" style={{ textTransform: 'uppercase', fontSize: '0.8rem' }}>Daily Tech Utilities</span>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginTop: '5px' }}>Web <span>Utilities Suite</span></h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '600px', margin: '8px auto 0 auto' }}>
-            A comprehensive list of high-traffic tools, all built directly into the client-side of this page.
+        {/* Hub Header */}
+        <div style={{ textAlign: 'center', marginBottom: '15px' }}>
+          <span className="section-tag" style={{ textTransform: 'uppercase', fontSize: '0.8rem' }}>Utilities Portal</span>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginTop: '5px' }}>Free Web <span>Utilities Suite</span></h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '600px', margin: '6px auto 0 auto' }}>
+            Instant, zero-installation frontend tools optimized for efficiency and speed.
           </p>
         </div>
 
-        {/* Core Layout Structure */}
-        <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          
-          {/* Side Menu Table of Contents (Sticky navigation) */}
-          <div className="tools-sidebar" style={{
-            flex: '1 1 230px',
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-            padding: '12px',
-            border: '1px solid var(--border-light)',
-            boxShadow: 'var(--shadow-sm)',
-            position: 'sticky',
-            top: '100px',
-            maxHeight: 'calc(100vh - 140px)',
-            overflowY: 'auto'
-          }}>
-            <h4 style={{ fontWeight: 700, padding: '8px 12px', borderBottom: '1px solid var(--border-light)', marginBottom: '8px', fontSize: '0.85rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-              Table of Contents
-            </h4>
-            <div className="sidebar-buttons-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              {toolsMenu.map(t => (
-                <button
-                  key={t.id}
-                  onClick={() => scrollToTool(t.id)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    width: '100%',
-                    padding: '10px 12px',
-                    border: 'none',
-                    borderRadius: '6px',
-                    backgroundColor: 'transparent',
-                    color: 'var(--text-dark)',
-                    textAlign: 'left',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.03)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
-                >
-                  <span style={{ fontSize: '1.1rem' }}>{t.icon}</span>
-                  <span style={{ fontSize: '0.9rem' }}>{t.name}</span>
-                </button>
-              ))}
-            </div>
+        {/* CONDITION 1: DIRECTORY GRID VIEW (activeTool is null) */}
+        {activeTool === null && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' }}>
+            {toolsMenu.map(t => (
+              <div 
+                key={t.id}
+                onClick={() => setActiveTool(t.id)}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: '10px',
+                  padding: '20px',
+                  border: '1px solid var(--border-light)',
+                  boxShadow: 'var(--shadow-sm)',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                }}
+              >
+                <div style={{ fontSize: '2rem' }}>{t.icon}</div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-dark)' }}>{t.name}</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>{t.desc}</p>
+                <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--primary)', marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  Open Tool ➔
+                </span>
+              </div>
+            ))}
           </div>
+        )}
 
-          {/* All Tools Display Column */}
-          <div className="tools-scroll-panel" style={{
-            flex: '3 1 600px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '25px'
-          }}>
-
-            {/* 1. WEATHER FORECASTER */}
-            <div id="weather" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🌤️ Weather Forecast & Checker</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Access current weather statistics and atmospheric indexes globally.</p>
-              <form onSubmit={checkWeather} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                <input type="text" className="form-input" value={weatherCity} onChange={(e) => setWeatherCity(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search City (e.g. Mumbai, New York)..." />
-                <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={weatherLoading}>
-                  {weatherLoading ? 'Updating...' : 'Check Weather'}
-                </button>
-              </form>
-              {weatherError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{weatherError}</p>}
-              {weatherData && (
-                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
-                  <div>
-                    <h4 style={{ fontSize: '1.2rem', color: 'var(--primary)', textTransform: 'capitalize' }}>{weatherData.name}, <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>{weatherData.country}</span></h4>
-                    <p style={{ marginTop: '8px', fontWeight: 'bold', fontSize: '1.05rem' }}>{getWeatherDesc(weatherData.code)}</p>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <h3 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary)' }}>{weatherData.temp}°C</h3>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Wind: {weatherData.windspeed} km/h</span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 2. DICTIONARY */}
-            <div id="dictionary" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📖 English Dictionary & Definer</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Search word meanings, phonetics, and synonyms using a free open api.</p>
-              <form onSubmit={lookupWord} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                <input type="text" className="form-input" value={dictWord} onChange={(e) => setDictWord(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search English word..." />
-                <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={dictLoading}>
-                  {dictLoading ? 'Looking up...' : 'Search'}
-                </button>
-              </form>
-              {dictError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{dictError}</p>}
-              {dictResult && (
-                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
-                  <h4 style={{ textTransform: 'capitalize', fontSize: '1.2rem', color: 'var(--primary)' }}>{dictResult.word} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>{dictResult.phonetic}</span></h4>
-                  {dictResult.meanings?.slice(0, 2).map((meaning, mIdx) => (
-                    <div key={mIdx} style={{ marginTop: '12px' }}>
-                      <span style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{meaning.partOfSpeech}</span>
-                      <ul style={{ paddingLeft: '20px', marginTop: '6px', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        {meaning.definitions?.slice(0, 2).map((def, dIdx) => (
-                          <li key={dIdx}>{def.definition}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* 3. CALCULATOR */}
-            <div id="calculator" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧮 Standard Calculator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Perform standard math calculations directly in the browser.</p>
-              <div style={{ maxWidth: '280px', margin: '0 auto', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
-                <div style={{ background: '#ffffff', padding: '10px', fontSize: '1.5rem', borderRadius: '6px', textAlign: 'right', minHeight: '50px', marginBottom: '15px', border: '1px solid var(--border-light)', wordBreak: 'break-all' }}>
-                  {calcInput || '0'}
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-                  {['C', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '='].map(char => (
-                    <button
-                      key={char}
-                      onClick={() => handleCalcClick(char)}
-                      style={{ padding: '10px', fontSize: '1.1rem', fontWeight: 700, borderRadius: '6px', border: '1px solid var(--border-light)', backgroundColor: char === '=' ? 'var(--primary)' : char === 'C' ? '#ff3b30' : '#ffffff', color: (char === '=' || char === 'C') ? '#ffffff' : 'var(--text-dark)', cursor: 'pointer', gridColumn: char === '0' ? 'span 2' : 'span 1' }}
-                    >
-                      {char}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* 4. STOPWATCH */}
-            <div id="stopwatch" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⏱️ Stopwatch & Precision Timer</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure precision lap times and intervals client-side.</p>
-              <div style={{ textAlign: 'center', background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <h2 style={{ fontSize: '3rem', fontFamily: 'monospace', fontWeight: 800, color: 'var(--primary)' }}>{formatStopwatch(stopwatchTime)}</h2>
-                <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                  <button onClick={() => setStopwatchActive(!stopwatchActive)} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
-                    {stopwatchActive ? 'Stop' : 'Start'}
-                  </button>
-                  <button onClick={() => { setStopwatchActive(false); setStopwatchTime(0); }} className="btn btn-secondary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* 5. SPEED TEST */}
-            <div id="speedtest" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚡ Internet Speed Test</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure ping latency and mock local network speed downloads.</p>
-              <div style={{ display: 'flex', alignItems: 'center', justify: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '130px', height: '130px', borderRadius: '50%', border: '6px solid var(--border-light)', position: 'relative' }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary)' }}>{speedState === 'testing' ? '...' : downloadSpeed || '0'}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mbps</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div>Latency: <strong>{ping ? `${ping} ms` : '--'}</strong></div>
-                  <button onClick={runSpeedTest} disabled={speedState === 'testing'} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
-                    {speedState === 'testing' ? 'Testing...' : 'Test Connection'}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* 6. UNIT CONVERTER */}
-            <div id="unit" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔄 Universal Unit Converter</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert metric and imperial lengths, weights, and temperatures.</p>
+        {/* CONDITION 2: DEDICATED TOOL SCREEN (activeTool is not null) */}
+        {activeTool !== null && (
+          <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            
+            {/* Left Sidebar Table of Contents (for quick switching) */}
+            <div className="tools-sidebar" style={{
+              flex: '1 1 220px',
+              backgroundColor: '#ffffff',
+              borderRadius: '10px',
+              padding: '12px',
+              border: '1px solid var(--border-light)',
+              boxShadow: 'var(--shadow-sm)',
+              position: 'sticky',
+              top: '100px',
+              maxHeight: 'calc(100vh - 150px)',
+              overflowY: 'auto'
+            }}>
+              <button 
+                onClick={() => setActiveTool(null)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: 'none',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(37, 211, 102, 0.08)',
+                  color: 'var(--primary)',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  marginBottom: '12px',
+                  fontSize: '0.85rem'
+                }}
+              >
+                ◀ Back to Directory
+              </button>
               
-              <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
-                {['length', 'weight', 'temp'].map(type => (
-                  <button key={type} onClick={() => handleUnitTypeChange(type)} style={{ padding: '6px 12px', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border-light)', background: unitType === type ? 'var(--primary)' : '#fff', color: unitType === type ? '#fff' : 'var(--text-dark)', cursor: 'pointer', textTransform: 'capitalize' }}>
-                    {type}
+              <div className="sidebar-buttons-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {toolsMenu.map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => setActiveTool(t.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: 'none',
+                      borderRadius: '6px',
+                      backgroundColor: activeTool === t.id ? 'var(--primary)' : 'transparent',
+                      color: activeTool === t.id ? '#ffffff' : 'var(--text-dark)',
+                      textAlign: 'left',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <span style={{ fontSize: '1.1rem' }}>{t.icon}</span>
+                    <span style={{ fontSize: '0.9rem' }}>{t.name}</span>
                   </button>
                 ))}
               </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px', alignItems: 'center' }}>
-                <div>
-                  <input type="number" className="form-input" value={unitVal} onChange={(e) => setUnitVal(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} />
-                  <select className="form-input" value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} style={{ width: '100%', padding: '6px', marginTop: '5px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
-                    {unitType === 'length' && <><option value="inch">Inches</option><option value="cm">Centimeters</option></>}
-                    {unitType === 'weight' && <><option value="kg">Kilograms</option><option value="lbs">Pounds</option></>}
-                    {unitType === 'temp' && <><option value="C">Celsius</option><option value="F">Fahrenheit</option></>}
-                  </select>
-                </div>
-                <div style={{ textAlign: 'center', fontSize: '1.5rem', color: 'var(--text-muted)' }}>=</div>
-                <div>
-                  <div style={{ padding: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '6px', minHeight: '44px', fontWeight: 'bold' }}>{unitResult}</div>
-                  <select className="form-input" value={toUnit} onChange={(e) => setToUnit(e.target.value)} style={{ width: '100%', padding: '6px', marginTop: '5px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
-                    {unitType === 'length' && <><option value="cm">Centimeters</option><option value="inch">Inches</option></>}
-                    {unitType === 'weight' && <><option value="lbs">Pounds</option><option value="kg">Kilograms</option></>}
-                    {unitType === 'temp' && <><option value="F">Fahrenheit</option><option value="C">Celsius</option></>}
-                  </select>
-                </div>
-              </div>
             </div>
 
-            {/* 7. QR CODE GENERATOR */}
-            <div id="qr" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎨 Custom QR Code Generator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Make styled custom QR codes. Adjust background, color, and add central icons.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <input type="text" className="form-input" value={qrText} onChange={(e) => setQrText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Target Link URL..." />
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <div style={{ flex: 1 }}><label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Foreground</label><input type="color" value={qrColor} onChange={(e) => setQrColor(e.target.value)} style={{ width: '100%', height: '32px', border: 'none', cursor: 'pointer' }} /></div>
-                    <div style={{ flex: 1 }}><label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Background</label><input type="color" value={qrBg} onChange={(e) => setQrBg(e.target.value)} style={{ width: '100%', height: '32px', border: 'none', cursor: 'pointer' }} /></div>
-                  </div>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: 600 }}><input type="checkbox" checked={qrLogo} onChange={(e) => setQrLogo(e.target.checked)} style={{ width: '16px', height: '16px', accentColor: 'var(--primary)' }} /><span>Embed Brand Logo</span></label>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '10px' }}>
-                  <div style={{ background: '#fff', padding: '8px', borderRadius: '6px', position: 'relative' }}>
-                    <img src={generatedQr} alt="QR Code" style={{ width: '140px', height: '140px', display: 'block' }} />
-                    {qrLogo && (
-                      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: qrBg, width: '26px', height: '26px', borderRadius: '3px', display: 'flex', alignItems: 'center', justify: 'center', fontWeight: 'bold', fontSize: '10px', color: qrColor, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>G</div>
-                    )}
-                  </div>
-                  <button onClick={downloadQRCode} className="btn btn-primary" style={{ marginTop: '12px', width: '100%', padding: '8px 0', fontSize: '0.85rem' }}>Download PNG</button>
-                </div>
-              </div>
-            </div>
-
-            {/* 8. IMAGE COMPRESSOR */}
-            <div id="compressor" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🖼️ Image Compressor & Resizer</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Reduce image file sizes directly inside the browser canvas.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <input type="file" accept="image/*" onChange={handleImageUpload} style={{ width: '100%', fontSize: '0.85rem' }} />
-                  {compressFile && (
-                    <>
-                      <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Width: {compressWidth}px</label>
-                      <input type="range" min="200" max="1500" step="50" value={compressWidth} onChange={(e) => setCompressWidth(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
-                      <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Quality: {compressQuality}%</label>
-                      <input type="range" min="10" max="100" step="5" value={compressQuality} onChange={(e) => setCompressQuality(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
-                    </>
-                  )}
-                </div>
-                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  {compressFile ? (
-                    <div style={{ width: '100%', textAlign: 'center' }}>
-                      <img src={compressedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '4px' }} />
-                      <div style={{ display: 'flex', justify: 'space-between', fontSize: '0.8rem', marginTop: '10px' }}>
-                        <span>Original: {(originalSize / 1024).toFixed(1)} KB</span>
-                        <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Compressed: {(compressedSize / 1024).toFixed(1)} KB</span>
+            {/* Focused Active Tool Area */}
+            <div style={{ flex: '3 1 600px', background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-lg)' }}>
+              
+              {/* 1. WEATHER FORECASTER */}
+              {activeTool === 'weather' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🌤️ Weather Forecast & Checker</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Access current weather statistics and atmospheric indexes globally.</p>
+                  <form onSubmit={checkWeather} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                    <input type="text" className="form-input" value={weatherCity} onChange={(e) => setWeatherCity(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search City..." />
+                    <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={weatherLoading}>
+                      {weatherLoading ? 'Updating...' : 'Check Weather'}
+                    </button>
+                  </form>
+                  {weatherError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{weatherError}</p>}
+                  {weatherData && (
+                    <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+                      <div>
+                        <h4 style={{ fontSize: '1.2rem', color: 'var(--primary)', textTransform: 'capitalize' }}>{weatherData.name}, <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>{weatherData.country}</span></h4>
+                        <p style={{ marginTop: '8px', fontWeight: 'bold', fontSize: '1.05rem' }}>{getWeatherDesc(weatherData.code)}</p>
                       </div>
-                      <button onClick={downloadCompressedImage} className="btn btn-primary" style={{ marginTop: '10px', width: '100%', padding: '8px 0', fontSize: '0.85rem' }}>Download Image</button>
+                      <div style={{ textAlign: 'right' }}>
+                        <h3 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary)' }}>{weatherData.temp}°C</h3>
+                        <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Wind: {weatherData.windspeed} km/h</span>
+                      </div>
                     </div>
-                  ) : (
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Upload file to begin</span>
                   )}
                 </div>
-              </div>
-            </div>
+              )}
 
-            {/* 9. WORD COUNTER */}
-            <div id="wordcounter" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📝 Word & Character Counter</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Paste text to retrieve words, characters, and reading times.</p>
-              <textarea className="form-input" rows="4" placeholder="Type or paste text..." value={counterText} onChange={(e) => setCounterText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.95rem', fontFamily: 'inherit' }} />
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '15px' }}>
-                {[['Words', wordCount], ['Characters', charCount], ['Read Time', `${readingTime}m`]].map(([lbl, val]) => (
-                  <div key={lbl} style={{ background: 'var(--bg-secondary)', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid var(--border-light)' }}>
-                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary)' }}>{val}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{lbl}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 10. CURRENCY CONVERTER */}
-            <div id="currency" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>💵 Currency Converter</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert currencies using real-time open exchange indexes.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', alignItems: 'center' }}>
-                <input type="number" className="form-input" value={currencyAmount} onChange={(e) => setCurrencyAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} />
-                <select className="form-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
-                  {Object.keys(rates).map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-                <select className="form-input" value={toCurrency} onChange={(e) => setToCurrency(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
-                  {Object.keys(rates).map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-              <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', marginTop: '15px', textAlign: 'center' }}>
-                <h3 style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '1.8rem' }}>{conversionResult} {toCurrency}</h3>
-              </div>
-            </div>
-
-            {/* 11. PASSWORD GENERATOR */}
-            <div id="password" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔑 Password Generator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Build secure passwords client-side.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <label style={{ fontSize: '0.85rem' }}>Length: {passLength}</label>
-                  <input type="range" min="8" max="24" value={passLength} onChange={(e) => setPassLength(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
-                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', fontSize: '0.85rem' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeUpper} onChange={(e) => setIncludeUpper(e.target.checked)} /><span>ABC</span></label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeLower} onChange={(e) => setIncludeLower(e.target.checked)} /><span>abc</span></label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeNumbers} onChange={(e) => setIncludeNumbers(e.target.checked)} /><span>123</span></label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeSymbols} onChange={(e) => setIncludeSymbols(e.target.checked)} /><span>#$&</span></label>
-                  </div>
+              {/* 2. DICTIONARY */}
+              {activeTool === 'dictionary' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📖 English Dictionary & Definer</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Search word meanings, phonetics, and synonyms using a free open api.</p>
+                  <form onSubmit={lookupWord} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                    <input type="text" className="form-input" value={dictWord} onChange={(e) => setDictWord(e.target.value)} style={{ flex: 1, padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Search English word..." />
+                    <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }} disabled={dictLoading}>
+                      {dictLoading ? 'Looking up...' : 'Search'}
+                    </button>
+                  </form>
+                  {dictError && <p style={{ color: 'red', fontSize: '0.9rem' }}>{dictError}</p>}
+                  {dictResult && (
+                    <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
+                      <h4 style={{ textTransform: 'capitalize', fontSize: '1.2rem', color: 'var(--primary)' }}>{dictResult.word} <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>{dictResult.phonetic}</span></h4>
+                      {dictResult.meanings?.slice(0, 2).map((meaning, mIdx) => (
+                        <div key={mIdx} style={{ marginTop: '12px' }}>
+                          <span style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{meaning.partOfSpeech}</span>
+                          <ul style={{ paddingLeft: '20px', marginTop: '6px', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            {meaning.definitions?.slice(0, 2).map((def, dIdx) => (
+                              <li key={dIdx}>{def.definition}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center' }}>
-                  <div style={{ background: '#fff', padding: '8px', border: '1px solid var(--border-light)', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', fontSize: '0.95rem', wordBreak: 'break-all' }}>{generatedPassword}</div>
-                  <button onClick={() => copyToClipboard(generatedPassword)} className="btn btn-primary" style={{ width: '100%', padding: '6px 0', fontSize: '0.8rem' }}>Copy Password</button>
-                </div>
-              </div>
-            </div>
+              )}
 
-            {/* 12. JSON FORMATTER */}
-            <div id="json" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚙️ JSON Formatter & Validator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Validate syntax parameters and pretty-print JSON payload structures.</p>
-              <textarea className="form-input" rows="5" placeholder="Paste minified JSON here..." value={jsonInput} onChange={(e) => { setJsonInput(e.target.value); setJsonError(''); }} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.85rem', fontFamily: 'monospace' }} />
-              {jsonError && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '5px', fontFamily: 'monospace' }}>Error: {jsonError}</div>}
-              <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '10px', padding: '8px 20px', fontSize: '0.85rem' }}>Format & Validate</button>
-            </div>
-
-            {/* 13. GST CALCULATOR */}
-            <div id="gst" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧾 GST Tax Calculator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Compute tax breakdowns for standard Indian invoice slabs.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <input type="number" className="form-input" value={gstAmount} onChange={(e) => setGstAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Amount..." />
-                  <select className="form-input" value={gstRate} onChange={(e) => setGstRate(parseInt(e.target.value))} style={{ width: '100%', padding: '8px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
-                    <option value="5">5% Rate</option>
-                    <option value="12">12% Rate</option>
-                    <option value="18">18% Rate</option>
-                    <option value="28">28% Rate</option>
-                  </select>
-                  <div style={{ display: 'flex', gap: '15px', fontSize: '0.85rem' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="radio" checked={gstType === 'exclusive'} onChange={() => setGstType('exclusive')} /><span>Exclusive</span></label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="radio" checked={gstType === 'inclusive'} onChange={() => setGstType('inclusive')} /><span>Inclusive</span></label>
+              {/* 3. CALCULATOR */}
+              {activeTool === 'calculator' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧮 Standard Calculator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Perform standard math calculations directly in the browser.</p>
+                  <div style={{ maxWidth: '280px', margin: '0 auto', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
+                    <div style={{ background: '#ffffff', padding: '10px', fontSize: '1.5rem', borderRadius: '6px', textAlign: 'right', minHeight: '50px', marginBottom: '15px', border: '1px solid var(--border-light)', wordBreak: 'break-all' }}>
+                      {calcInput || '0'}
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                      {['C', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '='].map(char => (
+                        <button
+                          key={char}
+                          onClick={() => handleCalcClick(char)}
+                          style={{ padding: '10px', fontSize: '1.1rem', fontWeight: 700, borderRadius: '6px', border: '1px solid var(--border-light)', backgroundColor: char === '=' ? 'var(--primary)' : char === 'C' ? '#ff3b30' : '#ffffff', color: (char === '=' || char === 'C') ? '#ffffff' : 'var(--text-dark)', cursor: 'pointer', gridColumn: char === '0' ? 'span 2' : 'span 1' }}
+                        >
+                          {char}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', fontSize: '0.9rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>Net:</span><strong>₹{gstResult.baseAmount}</strong></div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>CGST ({gstRate/2}%):</span><strong>₹{gstResult.cgst}</strong></div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>SGST ({gstRate/2}%):</span><strong>₹{gstResult.sgst}</strong></div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-light)', paddingTop: '8px', marginTop: '8px', fontSize: '1.05rem' }}><span style={{ fontWeight: 700 }}>Total Value:</span><strong style={{ color: 'var(--primary)' }}>₹{gstResult.totalAmount}</strong></div>
-                </div>
-              </div>
-            </div>
+              )}
 
-            {/* 14. AGE CALCULATOR */}
-            <div id="age" style={{ background: '#ffffff', borderRadius: '10px', padding: '30px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎂 Age Calculator</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Determine exact age in years, months, and days based on birth date.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', alignItems: 'center' }}>
-                <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Date of Birth</label>
-                  <input type="date" className="form-input" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }} />
+              {/* 4. STOPWATCH */}
+              {activeTool === 'stopwatch' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⏱️ Stopwatch & Precision Timer</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure precision lap times and intervals client-side.</p>
+                  <div style={{ textAlign: 'center', background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <h2 style={{ fontSize: '3rem', fontFamily: 'monospace', fontWeight: 800, color: 'var(--primary)' }}>{formatStopwatch(stopwatchTime)}</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+                      <button onClick={() => setStopwatchActive(!stopwatchActive)} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+                        {stopwatchActive ? 'Stop' : 'Start'}
+                      </button>
+                      <button onClick={() => { setStopwatchActive(false); setStopwatchTime(0); }} className="btn btn-secondary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+                        Reset
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div style={{ background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', textAlign: 'center' }}>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Exact Age</span>
-                  <h4 style={{ color: 'var(--primary)', fontSize: '1.4rem', fontWeight: 800, marginTop: '5px' }}>
-                    {ageResult.years} Years, {ageResult.months} Months, {ageResult.days} Days
-                  </h4>
-                </div>
-              </div>
-            </div>
+              )}
 
+              {/* 5. SPEED TEST */}
+              {activeTool === 'speedtest' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚡ Internet Speed Test</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Measure ping latency and mock local network speed downloads.</p>
+                  <div style={{ display: 'flex', alignItems: 'center', justify: 'center', gap: '40px', flexWrap: 'wrap', padding: '20px 0' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '130px', height: '130px', borderRadius: '50%', border: '6px solid var(--border-light)', position: 'relative' }}>
+                      <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary)' }}>{speedState === 'testing' ? '...' : downloadSpeed || '0'}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mbps</div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div>Latency: <strong>{ping ? `${ping} ms` : '--'}</strong></div>
+                      <button onClick={runSpeedTest} disabled={speedState === 'testing'} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
+                        {speedState === 'testing' ? 'Testing...' : 'Test Connection'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 6. UNIT CONVERTER */}
+              {activeTool === 'unit' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔄 Universal Unit Converter</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert metric and imperial lengths, weights, and temperatures.</p>
+                  <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
+                    {['length', 'weight', 'temp'].map(type => (
+                      <button key={type} onClick={() => handleUnitTypeChange(type)} style={{ padding: '6px 12px', fontSize: '0.85rem', borderRadius: '6px', border: '1px solid var(--border-light)', background: unitType === type ? 'var(--primary)' : '#fff', color: unitType === type ? '#fff' : 'var(--text-dark)', cursor: 'pointer', textTransform: 'capitalize' }}>
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px', alignItems: 'center' }}>
+                    <div>
+                      <input type="number" className="form-input" value={unitVal} onChange={(e) => setUnitVal(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} />
+                      <select className="form-input" value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} style={{ width: '100%', padding: '6px', marginTop: '5px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
+                        {unitType === 'length' && <><option value="inch">Inches</option><option value="cm">Centimeters</option></>}
+                        {unitType === 'weight' && <><option value="kg">Kilograms</option><option value="lbs">Pounds</option></>}
+                        {unitType === 'temp' && <><option value="C">Celsius</option><option value="F">Fahrenheit</option></>}
+                      </select>
+                    </div>
+                    <div style={{ textAlign: 'center', fontSize: '1.5rem', color: 'var(--text-muted)' }}>=</div>
+                    <div>
+                      <div style={{ padding: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '6px', minHeight: '44px', fontWeight: 'bold' }}>{unitResult}</div>
+                      <select className="form-input" value={toUnit} onChange={(e) => setToUnit(e.target.value)} style={{ width: '100%', padding: '6px', marginTop: '5px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
+                        {unitType === 'length' && <><option value="cm">Centimeters</option><option value="inch">Inches</option></>}
+                        {unitType === 'weight' && <><option value="lbs">Pounds</option><option value="kg">Kilograms</option></>}
+                        {unitType === 'temp' && <><option value="F">Fahrenheit</option><option value="C">Celsius</option></>}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 7. QR CODE GENERATOR */}
+              {activeTool === 'qr' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎨 Custom QR Code Generator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Make styled custom QR codes. Adjust background, color, and add central icons.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                      <input type="text" className="form-input" value={qrText} onChange={(e) => setQrText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Target Link URL..." />
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <div style={{ flex: 1 }}><label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Foreground</label><input type="color" value={qrColor} onChange={(e) => setQrColor(e.target.value)} style={{ width: '100%', height: '32px', border: 'none', cursor: 'pointer' }} /></div>
+                        <div style={{ flex: 1 }}><label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Background</label><input type="color" value={qrBg} onChange={(e) => setQrBg(e.target.value)} style={{ width: '100%', height: '32px', border: 'none', cursor: 'pointer' }} /></div>
+                      </div>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: 600 }}><input type="checkbox" checked={qrLogo} onChange={(e) => setQrLogo(e.target.checked)} style={{ width: '16px', height: '16px', accentColor: 'var(--primary)' }} /><span>Embed Brand Logo</span></label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '10px' }}>
+                      <div style={{ background: '#fff', padding: '8px', borderRadius: '6px', position: 'relative' }}>
+                        <img src={generatedQr} alt="QR Code" style={{ width: '140px', height: '140px', display: 'block' }} />
+                        {qrLogo && (
+                          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: qrBg, width: '26px', height: '26px', borderRadius: '3px', display: 'flex', alignItems: 'center', justify: 'center', fontWeight: 'bold', fontSize: '10px', color: qrColor, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>G</div>
+                        )}
+                      </div>
+                      <button onClick={downloadQRCode} className="btn btn-primary" style={{ marginTop: '12px', width: '100%', padding: '8px 0', fontSize: '0.85rem' }}>Download PNG</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 8. IMAGE COMPRESSOR */}
+              {activeTool === 'compressor' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🖼️ Image Compressor & Resizer</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Reduce image file sizes directly inside the browser canvas.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <input type="file" accept="image/*" onChange={handleImageUpload} style={{ width: '100%', fontSize: '0.85rem' }} />
+                      {compressFile && (
+                        <>
+                          <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Width: {compressWidth}px</label>
+                          <input type="range" min="200" max="1500" step="50" value={compressWidth} onChange={(e) => setCompressWidth(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
+                          <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Quality: {compressQuality}%</label>
+                          <input type="range" min="10" max="100" step="5" value={compressQuality} onChange={(e) => setCompressQuality(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
+                        </>
+                      )}
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                      {compressFile ? (
+                        <div style={{ width: '100%', textAlign: 'center' }}>
+                          <img src={compressedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '4px' }} />
+                          <div style={{ display: 'flex', justify: 'space-between', fontSize: '0.8rem', marginTop: '10px' }}>
+                            <span>Original: {(originalSize / 1024).toFixed(1)} KB</span>
+                            <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Compressed: {(compressedSize / 1024).toFixed(1)} KB</span>
+                          </div>
+                          <button onClick={downloadCompressedImage} className="btn btn-primary" style={{ marginTop: '10px', width: '100%', padding: '8px 0', fontSize: '0.85rem' }}>Download Image</button>
+                        </div>
+                      ) : (
+                        <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Upload file to begin</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 9. WORD COUNTER */}
+              {activeTool === 'wordcounter' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>📝 Word & Character Counter</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Paste text to retrieve words, characters, and reading times.</p>
+                  <textarea className="form-input" rows="4" placeholder="Type or paste text..." value={counterText} onChange={(e) => setCounterText(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.95rem', fontFamily: 'inherit' }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '15px' }}>
+                    {[['Words', wordCount], ['Characters', charCount], ['Read Time', `${readingTime}m`]].map(([lbl, val]) => (
+                      <div key={lbl} style={{ background: 'var(--bg-secondary)', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid var(--border-light)' }}>
+                        <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary)' }}>{val}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{lbl}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 10. CURRENCY CONVERTER */}
+              {activeTool === 'currency' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>💵 Currency Converter</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Convert currencies using real-time open exchange indexes.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', alignItems: 'center' }}>
+                    <input type="number" className="form-input" value={currencyAmount} onChange={(e) => setCurrencyAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} />
+                    <select className="form-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
+                      {Object.keys(rates).map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <select className="form-input" value={toCurrency} onChange={(e) => setToCurrency(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
+                      {Object.keys(rates).map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', marginTop: '15px', textAlign: 'center' }}>
+                    <h3 style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '1.8rem' }}>{conversionResult} {toCurrency}</h3>
+                  </div>
+                </div>
+              )}
+
+              {/* 11. PASSWORD GENERATOR */}
+              {activeTool === 'password' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🔑 Password Generator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Build secure passwords client-side.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <label style={{ fontSize: '0.85rem' }}>Length: {passLength}</label>
+                      <input type="range" min="8" max="24" value={passLength} onChange={(e) => setPassLength(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--primary)' }} />
+                      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', fontSize: '0.85rem' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeUpper} onChange={(e) => setIncludeUpper(e.target.checked)} /><span>ABC</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeLower} onChange={(e) => setIncludeLower(e.target.checked)} /><span>abc</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeNumbers} onChange={(e) => setIncludeNumbers(e.target.checked)} /><span>123</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="checkbox" checked={includeSymbols} onChange={(e) => setIncludeSymbols(e.target.checked)} /><span>#$&</span></label>
+                      </div>
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center' }}>
+                      <div style={{ background: '#fff', padding: '8px', border: '1px solid var(--border-light)', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', fontSize: '0.95rem', wordBreak: 'break-all' }}>{generatedPassword}</div>
+                      <button onClick={() => copyToClipboard(generatedPassword)} className="btn btn-primary" style={{ width: '100%', padding: '6px 0', fontSize: '0.8rem' }}>Copy Password</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 12. JSON FORMATTER */}
+              {activeTool === 'json' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>⚙️ JSON Formatter & Validator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Validate syntax parameters and pretty-print JSON payload structures.</p>
+                  <textarea className="form-input" rows="5" placeholder="Paste minified JSON here..." value={jsonInput} onChange={(e) => { setJsonInput(e.target.value); setJsonError(''); }} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', fontSize: '0.85rem', fontFamily: 'monospace' }} />
+                  {jsonError && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '5px', fontFamily: 'monospace' }}>Error: {jsonError}</div>}
+                  <button onClick={formatJSON} className="btn btn-primary" style={{ marginTop: '10px', padding: '8px 20px', fontSize: '0.85rem' }}>Format & Validate</button>
+                </div>
+              )}
+
+              {/* 13. GST CALCULATOR */}
+              {activeTool === 'gst' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🧾 GST Tax Calculator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Compute tax breakdowns for standard Indian invoice slabs.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      <input type="number" className="form-input" value={gstAmount} onChange={(e) => setGstAmount(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px' }} placeholder="Amount..." />
+                      <select className="form-input" value={gstRate} onChange={(e) => setGstRate(parseInt(e.target.value))} style={{ width: '100%', padding: '8px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }}>
+                        <option value="5">5% Rate</option>
+                        <option value="12">12% Rate</option>
+                        <option value="18">18% Rate</option>
+                        <option value="28">28% Rate</option>
+                      </select>
+                      <div style={{ display: 'flex', gap: '15px', fontSize: '0.85rem' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="radio" checked={gstType === 'exclusive'} onChange={() => setGstType('exclusive')} /><span>Exclusive</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><input type="radio" checked={gstType === 'inclusive'} onChange={() => setGstType('inclusive')} /><span>Inclusive</span></label>
+                      </div>
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-light)', fontSize: '0.9rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>Net:</span><strong>₹{gstResult.baseAmount}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>CGST ({gstRate/2}%):</span><strong>₹{gstResult.cgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}><span>SGST ({gstRate/2}%):</span><strong>₹{gstResult.sgst}</strong></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-light)', paddingTop: '8px', marginTop: '8px', fontSize: '1.05rem' }}><span style={{ fontWeight: 700 }}>Total Value:</span><strong style={{ color: 'var(--primary)' }}>₹{gstResult.totalAmount}</strong></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 14. AGE CALCULATOR */}
+              {activeTool === 'age' && (
+                <div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>🎂 Age Calculator</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Determine exact age in years, months, and days based on birth date.</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', alignItems: 'center' }}>
+                    <div className="form-group">
+                      <label style={{ fontSize: '0.85rem', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Date of Birth</label>
+                      <input type="date" className="form-input" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid var(--border-light)', borderRadius: '6px', background: '#fff' }} />
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border-light)', textAlign: 'center' }}>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Exact Age</span>
+                      <h4 style={{ color: 'var(--primary)', fontSize: '1.4rem', fontWeight: 800, marginTop: '5px' }}>
+                        {ageResult.years} Years, {ageResult.months} Months, {ageResult.days} Days
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </section>
