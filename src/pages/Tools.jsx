@@ -709,9 +709,6 @@ export default function Tools() {
                       <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>
                         {currentTool.name}
                       </h2>
-                      <p style={{ color: 'var(--text-muted)', fontSize: '0.76rem', margin: '2px 0 0 0', lineHeight: 1.3 }}>
-                        {currentTool.desc}
-                      </p>
                     </div>
                   </div>
                 );
