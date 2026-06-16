@@ -547,9 +547,11 @@ export default function Tools() {
       <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         
         {/* Hub Header */}
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, color: '#ffffff' }}>Free Web <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Utilities Suite</span></h1>
-        </div>
+        {activeTool === null && (
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, color: '#ffffff' }}>Free Web <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Utilities Suite</span></h1>
+          </div>
+        )}
 
         {/* CONDITION 1: DIRECTORY GRID VIEW (activeTool is null) */}
         {activeTool === null && (
@@ -647,32 +649,33 @@ export default function Tools() {
 
         {/* CONDITION 2: DEDICATED TOOL SCREEN (activeTool is not null) */}
         {activeTool !== null && (
-          <div style={{ maxWidth: '750px', width: '100%', margin: '0 auto' }}>
+          <div style={{ maxWidth: '750px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
             {/* Elegant and compact back navigation */}
-            <button 
-              onClick={() => setActiveTool(null)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 14px',
-                border: 'none',
-                borderRadius: '6px',
-                backgroundColor: 'rgba(118, 192, 0, 0.1)',
-                color: 'var(--primary)',
-                fontWeight: '700',
-                cursor: 'pointer',
-                marginBottom: '16px',
-                fontSize: '0.85rem',
-                transition: 'all 0.15s ease'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.18)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.1)'}
-            >
-              <ArrowLeft size={14} />
-              <span>Back to Directory</span>
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+              <button 
+                onClick={() => setActiveTool(null)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 14px',
+                  border: 'none',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(118, 192, 0, 0.12)',
+                  color: 'var(--primary)',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.2)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(118, 192, 0, 0.12)'}
+              >
+                <ArrowLeft size={14} />
+                <span>Back</span>
+              </button>
+            </div>
 
             {/* Focused Active Tool Area */}
             <motion.div 
@@ -693,20 +696,21 @@ export default function Tools() {
                 const currentTool = toolsMenu.find(t => t.id === activeTool);
                 if (!currentTool) return null;
                 return (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '20px' }}>
                     <div style={{ 
-                      width: '40px', 
-                      height: '40px', 
-                      borderRadius: '8px', 
-                      background: `${currentTool.color}15`, 
+                      width: '46px', 
+                      height: '46px', 
+                      borderRadius: '10px', 
+                      background: `${currentTool.color}18`, 
                       display: 'flex', 
                       alignItems: 'center', 
-                      justifyContent: 'center' 
+                      justifyContent: 'center',
+                      boxShadow: `0 4px 14px ${currentTool.color}20`
                     }}>
-                      <currentTool.icon size={20} style={{ color: currentTool.color }} />
+                      <currentTool.icon size={24} style={{ color: currentTool.color }} />
                     </div>
                     <div>
-                      <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                      <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#ffffff', margin: 0, letterSpacing: '-0.3px' }}>
                         {currentTool.name}
                       </h2>
                     </div>
