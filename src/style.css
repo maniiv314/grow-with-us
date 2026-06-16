@@ -51,31 +51,6 @@
   --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.dark-theme {
-  --bg-primary: #090d16;
-  --bg-secondary: #111827;
-  --bg-dark: #090d16;
-  --bg-dark-accent: #111827;
-  --bg-glass: rgba(9, 13, 22, 0.85);
-  --bg-glass-dark: rgba(9, 13, 22, 0.85);
-  
-  --primary: #76c000;
-  --primary-hover: #609d00;
-  --primary-light: rgba(118, 192, 0, 0.1);
-  --accent: #00bcd4;
-  --accent-light: rgba(0, 188, 212, 0.15);
-  --success: #10b981;
-  --glow-color: rgba(118, 192, 0, 0.2);
-  
-  --text-dark: #ffffff;
-  --text-muted: #cbd5e1;
-  --text-light: #94a3b8;
-  --text-white: #ffffff;
-  
-  --border-light: #1f2937;
-  --border-dark: #1f2937;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
